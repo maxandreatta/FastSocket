@@ -1,0 +1,22 @@
+//
+//  Reference.swift
+//  CustomTCP
+//
+//  Created by Vinzenz Weist on 02.04.19.
+//  Copyright © 2019 Vinzenz Weist. All rights reserved.
+//
+
+import Foundation
+
+enum ControlCode: UInt8 {
+    case continueByte = 0x0
+    case acceptByte =   0xFE
+    case finByte =      0xFF
+}
+
+enum Opcode: UInt8 {
+    case text =                 0x1
+    case binary =               0x2
+    // 3-7 reserved.
+    case connectionClose =      0x8
+}
