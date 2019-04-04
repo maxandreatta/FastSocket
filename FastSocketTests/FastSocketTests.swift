@@ -51,10 +51,6 @@ class FastSocketTests: XCTestCase {
                 datacount += count
                 print(datacount)
             }
-            sockets[i].on.dataRead = { count in
-                datacount += count
-                print(datacount)
-            }
             sockets[i].connect()
         }
         wait(for: [exp], timeout: 100.0)
