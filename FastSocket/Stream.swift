@@ -63,10 +63,10 @@ internal class NetworkStream: TransferProtocol {
     
     internal func send(data: Data) {
         guard self.connectionState == .ready  else { print("Connection is \(self.connectionState), not ready to send..."); return }
-        let queued = data.chunked(by: 8192)
+        let queued = data.chunked(by: Constant.maximumLength)
         for i in 0...queued.count - 1 {
             self.connection.send(content: Data(queued[i]), completion: .contentProcessed({ error in
-                self.on.outputData(queued[i].count)
+                self.on.dataInput(queued[i].count)
             }))
         }
     }
@@ -82,7 +82,8 @@ extension NetworkStream {
         if !self.isRunning {
             return
         }
-        self.connection.receive(minimumIncompleteLength: 1, maximumLength: 8192, completion: {[weak self] (data, context, isComplete, error) in
+
+        self.connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength, completion: {[weak self] (data, context, isComplete, error) in
             guard let s = self else {return}
             if let err = error {
                 s.on.error(err)
@@ -90,7 +91,7 @@ extension NetworkStream {
             }
             if let data = data {
                 s.on.data(data)
-                s.on.inputData(data.count)
+                s.on.dataInput(data.count)
             }
             // this is the indicator, that the connection is dead and will be closed
             if isComplete && data == nil, context == nil, error == nil {

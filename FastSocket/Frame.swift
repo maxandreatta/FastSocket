@@ -25,6 +25,7 @@ import Foundation
  +---+------------------------------+-+
  */
 internal class Frame {
+    // TODO: Generify this
     internal var onBinaryFrame: (_ data: Data) -> () = { _ in }
     internal var onTextFrame: (_ data: Data) -> () = { _ in }
     internal var outputFrame: Data

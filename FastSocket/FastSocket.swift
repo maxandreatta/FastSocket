@@ -16,8 +16,10 @@ public class FastSocket {
     private var frame: Frame = Frame()
     private var transfer: TransferProtocol
     private var queue: DispatchQueue
+    // TODO: get this as an environment or build variable
     private var socketKey: String = "6D8EDFD9-541C-4391-9171-AD519876B32E"
     private var locked = false
+
     public required init(host: NWEndpoint.Host, port: NWEndpoint.Port) {
         self.transfer = NetworkStream(host: host, port: port)
         self.queue = DispatchQueue(label: "Core.Socket.Dispatch.\(UUID().uuidString)", qos: .background, attributes: .concurrent)
@@ -25,7 +27,7 @@ public class FastSocket {
     
     public func connect() {
         self.frame = Frame()
-        self.transferListner()
+        self.transferListener()
         self.messageListener()
         self.transfer.connect()
     }
@@ -59,7 +61,7 @@ private extension FastSocket {
         self.transfer.send(data: keyData!)
     }
 
-    private func transferListner() {
+    private func transferListener() {
         self.transfer.on.ready = {
             self.handShake()
         }
@@ -78,18 +80,11 @@ private extension FastSocket {
                 self.on.ready()
             }
         }
-        self.transfer.on.close = {
-            self.on.close()
-        }
-        self.transfer.on.error = { error in
-            self.on.error(error)
-        }
-        self.transfer.on.inputData = { bytesCount in
-            self.on.receivedData(bytesCount)
-        }
-        self.transfer.on.outputData = { bytesCount in
-            self.on.writtenData(bytesCount)
-        }
+        self.transfer.on.close = self.on.close
+        self.transfer.on.error = self.on.error
+        self.transfer.on.dataInput = self.on.dataRead
+        self.transfer.on.dataOutput = self.on.dataWritten
+
     }
     
     private func messageListener() {
