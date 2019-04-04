@@ -11,15 +11,7 @@ import XCTest
 
 class FastSocketTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
+    func testDownload() {
         let exp = expectation(description: "Blub")
         let buffer = Data(count: 100000)
         var core = Array<FastSocket>()
@@ -38,11 +30,11 @@ class FastSocketTests: XCTestCase {
                 print("RECEIVED FROM: \(i) THIS COUNT: \(data.count)")
                 core[i].send(text: "1000000")
             }
-//            core[i].on.writtenData = { count in
+//            core[i].on.dataWritten = { count in
 //                datacount += count
 //                print(datacount)
 //            }
-            core[i].on.receivedData = { count in
+            core[i].on.dataRead = { count in
                 datacount += count
                 print(datacount)
             }
@@ -51,12 +43,5 @@ class FastSocketTests: XCTestCase {
         }
         wait(for: [exp], timeout: 100.0)
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
+    
 }
