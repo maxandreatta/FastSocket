@@ -38,16 +38,16 @@ internal class Frame {
     internal func create(data: Data, opcode: Opcode) -> Data {
         self.outputFrame = Data()
         self.outputFrame.append(opcode.rawValue)
-        self.outputFrame.append(ControlCode.continueByte.rawValue)
+        self.outputFrame.append(ControlCode.continue.rawValue)
         self.outputFrame.append(data)
-        self.outputFrame.append(ControlCode.finByte.rawValue)
+        self.outputFrame.append(ControlCode.finish.rawValue)
         return self.outputFrame
     }
     
     internal func parse(data: Data) {
         guard data.count > 0 else { return }
         self.readBuffer.append(data)
-        guard data[data.count - 1] == ControlCode.finByte.rawValue else { return }
+        guard data[data.count - 1] == ControlCode.finish.rawValue else { return }
         if self.readBuffer[0] == Opcode.text.rawValue {
             self.inputFrame = self.readBuffer.dropFirst()
             self.inputFrame = self.inputFrame.dropFirst()

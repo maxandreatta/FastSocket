@@ -9,9 +9,9 @@
 import Foundation
 
 enum ControlCode: UInt8 {
-    case continueByte = 0x0
-    case acceptByte =   0xFE
-    case finByte =      0xFF
+    case `continue` = 0x0
+    case accept =   0xFE
+    case finish = 0xFF
 }
 
 enum Opcode: UInt8 {

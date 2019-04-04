@@ -9,6 +9,8 @@
 import Foundation
 import Network
 
+// TODO: Document
+
 public class FastSocket {
     public var on: FastSocketEvents = FastSocketEvents()
     private var frame: Frame = Frame()
@@ -24,7 +26,7 @@ public class FastSocket {
     public func connect() {
         self.frame = Frame()
         self.transferListner()
-        self.messageListner()
+        self.messageListener()
         self.transfer.connect()
     }
     
@@ -66,7 +68,7 @@ private extension FastSocket {
                 self.frame.parse(data: data)
             }
             if self.locked == false {
-                guard data[0] == ControlCode.acceptByte.rawValue else {
+                guard data[0] == ControlCode.accept.rawValue else {
                     self.disconnect()
                     self.on.error(SocketError.handShakeFailed)
                     self.on.error(SocketError.socketUnexpectedClosed)
@@ -90,7 +92,7 @@ private extension FastSocket {
         }
     }
     
-    private func messageListner() {
+    private func messageListener() {
         self.frame.onTextFrame = { data in
             guard let string = String(data: data, encoding: .utf8) else {
                 self.on.error(SocketError.parsingFailure)
