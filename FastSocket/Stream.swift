@@ -63,9 +63,12 @@ internal class NetworkStream: TransferProtocol {
     
     internal func send(data: Data) {
         guard self.connectionState == .ready  else { print("Connection is \(self.connectionState), not ready to send..."); return }
-        self.connection.send(content: data, completion: .contentProcessed({ error in
-            self.on.outputData(data.count)
-        }))
+        let queued = data.chunked(by: 8192)
+        for i in 0...queued.count - 1 {
+            self.connection.send(content: Data(queued[i]), completion: .contentProcessed({ error in
+                self.on.outputData(queued[i].count)
+            }))
+        }
     }
 }
 
