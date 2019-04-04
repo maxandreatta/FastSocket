@@ -28,14 +28,13 @@ internal class Frame {
     // TODO: Generify this
     internal var onBinaryFrame: (_ data: Data) -> () = { _ in }
     internal var onTextFrame: (_ data: Data) -> () = { _ in }
-    internal var outputFrame: Data
-    internal var inputFrame: Data
-    internal var readBuffer: Data
+    internal var outputFrame: Data = Data()
+    internal var inputFrame: Data = Data()
+    internal var readBuffer: Data = Data()
+
     internal init() {
-        self.inputFrame = Data()
-        self.outputFrame = Data()
-        self.readBuffer = Data()
     }
+
     internal func create(data: Data, opcode: Opcode) -> Data {
         self.outputFrame = Data()
         self.outputFrame.append(opcode.rawValue)
@@ -46,21 +45,40 @@ internal class Frame {
     }
     
     internal func parse(data: Data) {
-        guard data.count > 0 else { return }
+        guard data.count > 0 else {
+            // TODO: Throw error?
+            return
+        }
         self.readBuffer.append(data)
-        guard data[data.count - 1] == ControlCode.finish.rawValue else { return }
-        if self.readBuffer[0] == Opcode.text.rawValue {
-            self.inputFrame = self.readBuffer.dropFirst()
-            self.inputFrame = self.inputFrame.dropFirst()
-            self.inputFrame = self.inputFrame.dropLast()
-            self.onTextFrame(self.inputFrame)
+
+        guard data.last == ControlCode.finish.rawValue else {
+            // Do nothing, keep reading, keep walking
+            return
         }
-        if self.readBuffer[0] == Opcode.binary.rawValue {
-            self.inputFrame = self.readBuffer.dropFirst()
-            self.inputFrame = self.inputFrame.dropFirst()
-            self.inputFrame = self.inputFrame.dropLast()
-            self.onBinaryFrame(self.inputFrame)
+        guard let opcode = self.readBuffer.first else {
+            // TODO: throw error...?
+            return
         }
+        switch opcode {
+        case Opcode.text.rawValue:
+            self.onTextFrame(trimmedFrame())
+        case Opcode.binary.rawValue:
+            self.onBinaryFrame(trimmedFrame())
+        default:
+            // throw error, undefined
+            break
+        }
+        initializeFrame()
+    }
+
+    private func trimmedFrame() -> Data {
+        self.inputFrame = self.readBuffer.dropFirst()
+        self.inputFrame = self.inputFrame.dropFirst()
+        self.inputFrame = self.inputFrame.dropLast()
+        return self.inputFrame
+    }
+
+    private func initializeFrame() {
         self.readBuffer = Data()
         self.inputFrame = Data()
     }
