@@ -66,7 +66,7 @@ internal class NetworkStream: TransferProtocol {
         let queued = data.chunked(by: Constant.maximumLength)
         for i in 0...queued.count - 1 {
             self.connection.send(content: Data(queued[i]), completion: .contentProcessed({ error in
-                self.on.dataInput(queued[i].count)
+                self.on.dataOutput(queued[i].count)
             }))
         }
     }
