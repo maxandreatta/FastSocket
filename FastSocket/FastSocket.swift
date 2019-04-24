@@ -18,7 +18,7 @@ public class FastSocket: FastSocketProtocol {
     public var on: FastSocketClosures = FastSocketClosures()
     public var parameters: NWParameters = NWParameters(tls: nil)
     private var frame: Frame = Frame()
-    private var transfer: TransferProtocol!
+    private var transfer: TransferProtocol?
     private var host: String
     private var port: UInt16
     private var queue: DispatchQueue
@@ -44,7 +44,7 @@ public class FastSocket: FastSocketProtocol {
             self.frame = Frame()
             self.transferClosures()
             self.frameClosures()
-            self.transfer.connect()
+            self.transfer?.connect()
             self.startTimeout()
         }
     }
@@ -52,7 +52,8 @@ public class FastSocket: FastSocketProtocol {
     /// closes the connection `normally`
     public func disconnect() {
         self.queue.async {
-            self.transfer.disconnect()
+            guard let transfer = self.transfer else { return }
+            transfer.disconnect()
         }
     }
     /// send a data message
@@ -65,7 +66,8 @@ public class FastSocket: FastSocketProtocol {
                 return
             }
             let frame = self.frame.create(data: data, opcode: .binary)
-            self.transfer.send(data: frame)
+            guard let transfer = self.transfer else { return }
+            transfer.send(data: frame)
         }
     }
     /// send a string message
@@ -78,7 +80,8 @@ public class FastSocket: FastSocketProtocol {
                 return
             }
             let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .string)
-            self.transfer.send(data: frame)
+            guard let transfer = self.transfer else { return }
+            transfer.send(data: frame)
         }
     }
 }
@@ -87,15 +90,15 @@ private extension FastSocket {
     /// send the handshake frame
     private func handShake() {
         let keyData = Constant.socketID.data(using: .utf8)
-        self.transfer.send(data: keyData!)
+        self.transfer?.send(data: keyData!)
     }
     /// closures from the transfer protocol
     /// handles incoming data and handshake
     private func transferClosures() {
-        self.transfer.on.ready = {
+        self.transfer?.on.ready = {
             self.handShake()
         }
-        self.transfer.on.data = { data in
+        self.transfer?.on.data = { data in
             if self.locked {
                 do {
                     try self.frame.parse(data: data)
@@ -115,10 +118,10 @@ private extension FastSocket {
                 self.on.ready()
             }
         }
-        self.transfer.on.close = self.on.close
-        self.transfer.on.error = self.on.error
-        self.transfer.on.dataInput = self.on.dataRead
-        self.transfer.on.dataOutput = self.on.dataWritten
+        self.transfer?.on.close = self.on.close
+        self.transfer?.on.error = self.on.error
+        self.transfer?.on.dataInput = self.on.dataRead
+        self.transfer?.on.dataOutput = self.on.dataWritten
     }
     /// closures from Frame
     /// returns the parsed messages
