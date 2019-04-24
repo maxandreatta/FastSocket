@@ -1,6 +1,6 @@
 //
 //  Frame.swift
-//  CustomTCP
+//  FastSocket
 //
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.

@@ -1,12 +1,11 @@
 //
 //  TransferProtocol.swift
-//  CustomTCP
+//  FastSocket
 //
 //  Created by Vinzenz Weist on 02.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Network
-
 /// TransferProtocol is the conformance for the FastSocket Protocol `Engine`
 /// this will be used to implement a fallback with foundation in the future
 internal protocol TransferProtocol {

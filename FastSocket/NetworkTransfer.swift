@@ -1,12 +1,11 @@
 //
 //  Stream.swift
-//  CustomTCP
+//  FastSocket
 //
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Network
-
 /// NetworkTransfer is a raw TCP transfer
 /// it uses the Network.framework. This is
 /// the `Engine` of the FastSocket Protocol.
@@ -65,24 +64,20 @@ extension NetworkTransfer {
     private func connectionStateHandler() {
         self.connection.stateUpdateHandler = { state in
             self.connectionState = state
-            switch state {
-            case .ready:
+            if case .ready = state {
                 self.on.ready()
-                self.doConnect(nil)
-            case .waiting(let error):
+                self.doConnect()
+            }
+            if case .waiting(let error) = state {
                 self.on.error(error)
-            case .cancelled:
-                self.doConnect(nil)
-            case .failed(let error):
-                self.doConnect(error)
-            case .setup, .preparing:
-                break
+            }
+            if case .failed(let error) = state {
+                self.on.error(error)
             }
         }
     }
     /// helper on connecting
-    private func doConnect(_ error: Error?) {
-        self.on.error(error)
+    private func doConnect() {
         guard !isConnected else { return }
         self.isConnected = true
         self.isRunning = true
@@ -98,23 +93,23 @@ extension NetworkTransfer {
     private func readLoop() {
         guard self.isRunning else { return }
         self.connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength, completion: {[weak self] (data, context, isComplete, error) in
-            guard let s = self else {return}
+            guard let this = self else {return}
             if let error = error {
                 guard error != NWError.posix(POSIXErrorCode(rawValue: 89)!) else { return }
-                s.on.error(error)
+                this.on.error(error)
                 return
             }
             if let data = data {
-                s.on.data(data)
-                s.on.dataInput(data.count)
+                this.on.data(data)
+                this.on.dataInput(data.count)
             }
             // connection is dead and will be closed
             if isComplete && data == nil, context == nil, error == nil {
-                s.on.close()
-                s.clean()
+                this.on.close()
+                this.clean()
                 return
             }
-            s.readLoop()
+            this.readLoop()
         })
     }
 }

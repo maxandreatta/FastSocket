@@ -94,6 +94,14 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		AC1536F22270D1A300F3A2E2 /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				AC55EDA02253B21800D4063A /* NetworkTransfer.swift */,
+			);
+			name = Transfer;
+			sourceTree = "<group>";
+		};
 		AC55ED762253B1ED00D4063A = {
 			isa = PBXGroup;
 			children = (
@@ -117,7 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				AC55ED9F2253B21800D4063A /* FastSocket.swift */,
-				AC55EDA02253B21800D4063A /* NetworkTransfer.swift */,
+				AC1536F22270D1A300F3A2E2 /* Transfer */,
 				AC8138832253B57D0035733B /* Error */,
 				AC8138822253B5680035733B /* Protocols */,
 				AC8138812253B55D0035733B /* Model */,
@@ -235,10 +243,11 @@
 				TargetAttributes = {
 					AC55ED7F2253B1ED00D4063A = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 					AC55ED882253B1ED00D4063A = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -248,6 +257,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = AC55ED762253B1ED00D4063A;
 			productRefGroup = AC55ED812253B1ED00D4063A /* Products */;
@@ -461,7 +471,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -487,7 +497,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocket;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -506,7 +516,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -525,7 +535,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

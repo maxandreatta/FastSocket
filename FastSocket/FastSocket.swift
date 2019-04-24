@@ -1,12 +1,11 @@
 //
-//  Core.swift
-//  CustomTCP
+//  FastSocket.swift
+//  FastSocket
 //
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Network
-
 /// FastSocket is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
@@ -39,50 +38,46 @@ public class FastSocket: FastSocketProtocol {
     /// try to establish a connection to a
     /// FastSocket compliant server
     public func connect() {
-        self.queue.async {
-            self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters)
-            self.frame = Frame()
-            self.transferClosures()
-            self.frameClosures()
-            self.transfer?.connect()
-            self.startTimeout()
+        self.queue.async { [weak self] in
+            guard let this = self else { return }
+            this.transfer = NetworkTransfer(host: this.host, port: this.port, parameters: this.parameters)
+            this.frame = Frame()
+            this.transferClosures()
+            this.frameClosures()
+            this.transfer?.connect()
+            this.startTimeout()
         }
     }
     /// disconnect from the server
     /// closes the connection `normally`
     public func disconnect() {
-        self.queue.async {
-            guard let transfer = self.transfer else { return }
-            transfer.disconnect()
-        }
+        guard let transfer = self.transfer else { return }
+        transfer.disconnect()
+        self.stopTimeout()
     }
     /// send a data message
     /// - parameters:
     ///     - data: the data that should be send
     public func send(data: Data) {
-        self.queue.async {
-            guard self.locked else {
-                self.on.error(FastSocketError.sendToEarly)
-                return
-            }
-            let frame = self.frame.create(data: data, opcode: .binary)
-            guard let transfer = self.transfer else { return }
-            transfer.send(data: frame)
+        guard self.locked else {
+            self.on.error(FastSocketError.sendToEarly)
+            return
         }
+        let frame = self.frame.create(data: data, opcode: .binary)
+        guard let transfer = self.transfer else { return }
+        transfer.send(data: frame)
     }
     /// send a string message
     /// - parameters:
     ///     - string: the string that should be send
     public func send(string: String) {
-        self.queue.async {
-            guard self.locked else {
-                self.on.error(FastSocketError.sendToEarly)
-                return
-            }
-            let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .string)
-            guard let transfer = self.transfer else { return }
-            transfer.send(data: frame)
+        guard self.locked else {
+            self.on.error(FastSocketError.sendToEarly)
+            return
         }
+        let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .string)
+        guard let transfer = self.transfer else { return }
+        transfer.send(data: frame)
     }
 }
 
@@ -154,7 +149,7 @@ private extension FastSocket {
 /// DEBUG STUFF
 #if DEBUG
 internal extension FastSocket {
-    internal func getQueueLabel() -> String {
+    func getQueueLabel() -> String {
         return self.queue.label
     }
 }
