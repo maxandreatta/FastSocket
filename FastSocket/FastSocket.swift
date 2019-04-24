@@ -7,10 +7,6 @@
 //
 import Network
 
-// TODO:
-//  - generify some things
-//  - more unit tests 🙈
-
 /// FastSocket is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
