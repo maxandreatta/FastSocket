@@ -6,9 +6,9 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 
-extension Data {
+internal extension Data {
     /// slice data into chunks:
-    func chunked(by size: Int) -> [[Element]] {
+    internal func chunked(by size: Int) -> [[Element]] {
         return stride(from: 0, to: self.count, by: size).map {
             Array(self[$0..<Swift.min($0 + size, self.count)])
         }

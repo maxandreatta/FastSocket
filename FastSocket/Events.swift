@@ -5,10 +5,7 @@
 //  Created by Vinzenz Weist on 02.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
-import Foundation
-
-internal struct NetworkStreamEvents {
+internal struct TransferClosures {
     internal var ready: Callback = { }
     internal var close: Callback = { }
     internal var data: CallbackData = { data in }
@@ -17,11 +14,11 @@ internal struct NetworkStreamEvents {
     internal var dataOutput: CallbackInt = { bytes in }
 }
 
-public struct FastSocketEvents {
+public struct FastSocketClosures {
     public var ready: Callback = { }
     public var close: Callback = { }
-    public var text: CallbackString = { text in }
-    public var binary: CallbackData = { data in }
+    public var string: CallbackString = { string in }
+    public var data: CallbackData = { data in }
     public var error: CallbackError = { error in }
     public var dataRead: CallbackInt = { bytes in }
     public var dataWritten: CallbackInt = { bytes in }

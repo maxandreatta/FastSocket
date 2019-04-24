@@ -5,17 +5,19 @@
 //  Created by Vinzenz Weist on 16.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
-import Foundation
 import Network
 
 public protocol FastSocketProtocol {
+    /// public access to the Network.framework parameter options
+    /// that gives you the ability (for example) to define on which
+    /// interface the traffic should be send
+    var parameters: NWParameters { get set }
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    ///     - options: Network.framework TCP options `optional`
-    init(host: NWEndpoint.Host, port: NWEndpoint.Port, options: NWProtocolTCP.Options, queue: DispatchQueue)
+    ///     - queue: Dispatch Queue `optional`
+    init(host: String, port: UInt16, queue: DispatchQueue)
     /// connect to the server
     /// try to establish a connection to a
     /// FastSocket compliant server

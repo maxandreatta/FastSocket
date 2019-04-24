@@ -5,8 +5,6 @@
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-import Foundation
-
 // +---+------------------------------+-+
 // |0 1|         ... Continue         |N|
 // +---+------------------------------+-+
@@ -63,7 +61,7 @@ internal class Frame {
             throw FastSocketError.invalidMessageType
         }
         switch opcode {
-        case Opcode.text.rawValue:
+        case Opcode.string.rawValue:
             self.onTextFrame(trimmedFrame())
         case Opcode.binary.rawValue:
             self.onBinaryFrame(trimmedFrame())

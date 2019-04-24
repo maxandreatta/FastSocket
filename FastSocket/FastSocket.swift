@@ -5,13 +5,9 @@
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
-import Foundation
 import Network
 
 // TODO:
-//  - fix error on reconnecting after connection close
-//  - implement timeout if connection is pending to long
 //  - generify some things
 //  - more unit tests 🙈
 
@@ -23,18 +19,24 @@ import Network
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public class FastSocket: FastSocketProtocol {
-    public var on: FastSocketEvents = FastSocketEvents()
+    public var on: FastSocketClosures = FastSocketClosures()
+    public var parameters: NWParameters = NWParameters(tls: nil)
     private var frame: Frame = Frame()
-    private var transfer: TransferProtocol
+    private var transfer: TransferProtocol!
+    private var host: String
+    private var port: UInt16
     private var queue: DispatchQueue
+    private var timer: DispatchSourceTimer?
     private var locked = false
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    ///     - options: Network.framework TCP options `optional`
-    public required init(host: NWEndpoint.Host, port: NWEndpoint.Port, options: NWProtocolTCP.Options = NWProtocolTCP.Options(), queue: DispatchQueue = DispatchQueue(label: "FastSocket.Dispatch.\(UUID().uuidString)", qos: .background, attributes: .concurrent)) {
-        self.transfer = NetworkStream(host: host, port: port, options: options)
+    ///     - parameters: Network.framework Parameters `optional`
+    ///     - queue: Dispatch Queue `optional`
+    public required init(host: String, port: UInt16, queue: DispatchQueue = DispatchQueue(label: "FastSocket.Dispatch.\(UUID().uuidString)", qos: .background, attributes: .concurrent)) {
+        self.host = host
+        self.port = port
         self.queue = queue
     }
     /// connect to the server
@@ -42,10 +44,12 @@ public class FastSocket: FastSocketProtocol {
     /// FastSocket compliant server
     public func connect() {
         self.queue.async {
+            self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters)
             self.frame = Frame()
-            self.transferListener()
-            self.messageListener()
+            self.transferClosures()
+            self.frameClosures()
             self.transfer.connect()
+            self.startTimeout()
         }
     }
     /// disconnect from the server
@@ -60,7 +64,7 @@ public class FastSocket: FastSocketProtocol {
     ///     - data: the data that should be send
     public func send(data: Data) {
         self.queue.async {
-            guard self.locked == true else {
+            guard self.locked else {
                 self.on.error(FastSocketError.sendToEarly)
                 return
             }
@@ -73,42 +77,45 @@ public class FastSocket: FastSocketProtocol {
     ///     - string: the string that should be send
     public func send(string: String) {
         self.queue.async {
-            guard self.locked == true else {
+            guard self.locked else {
                 self.on.error(FastSocketError.sendToEarly)
                 return
             }
-            let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .text)
+            let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .string)
             self.transfer.send(data: frame)
         }
     }
 }
 
 private extension FastSocket {
+    /// send the handshake frame
     private func handShake() {
         let keyData = Constant.socketID.data(using: .utf8)
         self.transfer.send(data: keyData!)
     }
-
-    private func transferListener() {
+    /// closures from the transfer protocol
+    /// handles incoming data and handshake
+    private func transferClosures() {
         self.transfer.on.ready = {
             self.handShake()
         }
         self.transfer.on.data = { data in
-            if self.locked == true {
+            if self.locked {
                 do {
                     try self.frame.parse(data: data)
                 } catch {
                     self.on.error(error)
                 }
             }
-            if self.locked == false {
-                guard data[0] == ControlCode.accept.rawValue else {
+            if !self.locked {
+                guard data.first == ControlCode.accept.rawValue else {
                     self.disconnect()
                     self.on.error(FastSocketError.handShakeFailed)
                     self.on.error(FastSocketError.socketUnexpectedClosed)
                     return
                 }
                 self.locked = true
+                self.stopTimeout()
                 self.on.ready()
             }
         }
@@ -116,20 +123,40 @@ private extension FastSocket {
         self.transfer.on.error = self.on.error
         self.transfer.on.dataInput = self.on.dataRead
         self.transfer.on.dataOutput = self.on.dataWritten
-
     }
-    
-    private func messageListener() {
+    /// closures from Frame
+    /// returns the parsed messages
+    private func frameClosures() {
         self.frame.onTextFrame = { data in
             guard let string = String(data: data, encoding: .utf8) else {
                 self.on.error(FastSocketError.parsingFailure)
                 return
             }
-            self.on.text(string)
+            self.on.string(string)
         }
         
         self.frame.onBinaryFrame = { data in
-            self.on.binary(data)
+            self.on.data(data)
         }
     }
+    /// start timeout on connecting
+    private func startTimeout() {
+        self.timer = Timer.interval(interval: Constant.timeout, withRepeat: false) {
+            self.disconnect()
+            self.on.error(FastSocketError.timeoutError)
+        }
+    }
+    /// stops timeout on successfully connection
+    private func stopTimeout() {
+        guard let timer = self.timer else { return }
+        timer.suspend()
+    }
 }
+/// DEBUG STUFF
+#if DEBUG
+internal extension FastSocket {
+    internal func getQueueLabel() -> String {
+        return self.queue.label
+    }
+}
+#endif
