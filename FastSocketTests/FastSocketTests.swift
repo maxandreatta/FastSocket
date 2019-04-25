@@ -11,52 +11,63 @@ import XCTest
 
 class FastSocketTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        let exp = expectation(description: "Blub")
-        let buffer = Data(count: 100000)
-        var core = Array<FastSocket>()
+    func testDownload() {
+        let exp = expectation(description: "Wait for speed test to finish")
+        var sockets = [FastSocket]()
         var datacount = 0
         for i in 0...9 {
-            core.append(FastSocket(host: "socket.weist.it", port: 3333))
-            core[i].on.ready = {
-                //core[i].send(data: buffer)
-                core[i].send(text: "1000000")
+            sockets.append(FastSocket(host: "socket.weist.it", port: 3333))
+            sockets[i].on.ready = {
+                sockets[i].send(string: "1000000")
             }
-            core[i].on.text = { text in
-                print("RECEIVED FROM: \(i) THIS COUNT: \(text)")
-                //core[i].send(data: buffer)
-            }
-            core[i].on.binary = { data in
+            sockets[i].on.binary = { data in
                 print("RECEIVED FROM: \(i) THIS COUNT: \(data.count)")
-                core[i].send(text: "1000000")
+                sockets[i].send(string: "1000000")
             }
-//            core[i].on.writtenData = { count in
-//                datacount += count
-//                print(datacount)
-//            }
-            core[i].on.receivedData = { count in
+            sockets[i].on.dataRead = { count in
                 datacount += count
                 print(datacount)
             }
-
-            core[i].connect()
+            sockets[i].connect()
         }
         wait(for: [exp], timeout: 100.0)
     }
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testUpload() {
+        let exp = expectation(description: "Wait for speed test to finish")
+        let buffer = Data(count: 10000)
+        var sockets = [FastSocket]()
+        var datacount = 0
+        for i in 0...9 {
+            sockets.append(FastSocket(host: "socket.weist.it", port: 3333))
+            sockets[i].on.ready = {
+                sockets[i].send(data: buffer)
+            }
+            sockets[i].on.text = { text in
+                print("RECEIVED FROM: \(i) THIS COUNT: \(text)")
+                sockets[i].send(data: buffer)
+            }
+            sockets[i].on.dataWritten = { count in
+                datacount += count
+                print(datacount)
+            }
+            sockets[i].connect()
         }
+        wait(for: [exp], timeout: 100.0)
     }
-
+    
+    func testClose() {
+        let exp = expectation(description: "Wait for connection close")
+        let socket = FastSocket(host: "socket.weist.it", port: 3333)
+        socket.on.ready = {
+            print("connection established")
+            socket.disconnect()
+        }
+        socket.on.close = {
+            print("connection successfully closed")
+            exp.fulfill()
+        }
+        socket.connect()
+        wait(for: [exp], timeout: 100.0)
+    }
 }

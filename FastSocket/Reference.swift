@@ -7,24 +7,25 @@
 //
 
 import Foundation
-
+/// ControlCode is used by the FastSocket Protocol
+/// to determine when a message begins and when
+/// a message is finished
 enum ControlCode: UInt8 {
-    case continueByte = 0x0
-    case acceptByte =   0xFE
-    case finByte =      0xFF
+    /// continue is currently a placeholder byte
+    case `continue` = 0x0
+    /// accept byte is used by the handshake
+    case accept =     0xFE
+    /// finish byte is used on every end of a message
+    case finish =     0xFF
 }
-
+/// Opcodes are used to evaluate the message type
 enum Opcode: UInt8 {
-    case text =                 0x1
-    case binary =               0x2
+    /// text byte for string based messages
+    case text =            0x1
+    /// binary byte for data bases messages
+    case binary =          0x2
     // 3-7 reserved.
-    case connectionClose =      0x8
-}
-
-extension Data {
-    func chunked(by chunkSize: Int) -> [[Element]] {
-        return stride(from: 0, to: self.count, by: chunkSize).map {
-            Array(self[$0..<Swift.min($0 + chunkSize, self.count)])
-        }
-    }
+    /// connectionClose byte to determine if the backend has
+    /// closed the connection
+    case connectionClose = 0x8
 }
