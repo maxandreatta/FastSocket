@@ -9,7 +9,6 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      #- run: brew install swiftlint
       - run: bundle install
       - run:
           name: Fastlane
