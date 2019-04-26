@@ -78,7 +78,9 @@ private extension NetworkTransfer {
     }
     /// helper on connecting
     private func doConnect() {
-        guard !isConnected else { return }
+        guard !isConnected else {
+            return
+        }
         self.isConnected = true
         self.isRunning = true
     }
@@ -91,25 +93,31 @@ private extension NetworkTransfer {
     }
     /// readloop for the tcp socket incoming data
     private func readLoop() {
-        guard self.isRunning else { return }
+        guard self.isRunning else {
+            return
+        }
         self.connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength, completion: {[weak self] (data, context, isComplete, error) in
-            guard let this = self else {return}
+            guard let self = self else {
+                return
+            }
             if let error = error {
-                guard error != NWError.posix(POSIXErrorCode(rawValue: 89)!) else { return }
-                this.on.error(error)
+                guard error != NWError.posix(POSIXErrorCode(rawValue: 89)!) else {
+                    return
+                }
+                self.on.error(error)
                 return
             }
             if let data = data {
-                this.on.data(data)
-                this.on.dataInput(data.count)
+                self.on.data(data)
+                self.on.dataInput(data.count)
             }
             // connection is dead and will be closed
             if isComplete && data == nil, context == nil, error == nil {
-                this.on.close()
-                this.clean()
+                self.on.close()
+                self.clean()
                 return
             }
-            this.readLoop()
+            self.readLoop()
         })
     }
 }
