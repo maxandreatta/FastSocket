@@ -9,13 +9,11 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - run: brew install swiftlint
+      #- run: brew install swiftlint
       - run: bundle install
       - run:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
-          environment:
-          SCAN_DEVICE: iPhone 8
 
   test:
     macos:
@@ -29,12 +27,12 @@ jobs:
       - run:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
-          environment:
-          SCAN_DEVICE: iPhone 8
 
 workflows:
   version: 2
   build-and-test:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            build
