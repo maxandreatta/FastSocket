@@ -11,7 +11,7 @@ import Network
 /// the `Engine` of the FastSocket Protocol.
 /// It allows to enter directly the TCP Options
 internal class NetworkTransfer: TransferProtocol {
-    internal var on: TransferClosures = TransferClosures()
+    internal var on = TransferClosures()
     private var connection: NWConnection
     private var queue: DispatchQueue
     private var isRunning: Bool = false
@@ -31,7 +31,9 @@ internal class NetworkTransfer: TransferProtocol {
     /// prevent reconnecting after a connection
     /// was successfully established
     internal func connect() {
-        guard !self.isConnected else { return }
+        guard !self.isConnected else {
+            return
+        }
         self.connectionStateHandler()
         self.connection.start(queue: self.queue)
         self.isRunning = true
@@ -48,11 +50,15 @@ internal class NetworkTransfer: TransferProtocol {
     /// - parameters:
     ///     - data: the data which should be written on the socket
     internal func send(data: Data) {
-        guard self.connectionState == .ready else { return }
+        guard self.connectionState == .ready else {
+            return
+        }
         let queued = data.chunked(by: Constant.maximumLength)
-        guard !queued.isEmpty else { return }
+        guard !queued.isEmpty else {
+            return
+        }
         for i in 0...queued.count - 1 {
-            self.connection.send(content: Data(queued[i]), completion: .contentProcessed({ error in
+            self.connection.send(content: Data(queued[i]), completion: .contentProcessed({ _ in
                 self.on.dataOutput(queued[i].count)
             }))
         }
@@ -96,7 +102,7 @@ private extension NetworkTransfer {
         guard self.isRunning else {
             return
         }
-        self.connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength, completion: {[weak self] (data, context, isComplete, error) in
+        self.connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength) { [weak self] data, context, isComplete, error in
             guard let self = self else {
                 return
             }
@@ -118,6 +124,6 @@ private extension NetworkTransfer {
                 return
             }
             self.readLoop()
-        })
+        }
     }
 }

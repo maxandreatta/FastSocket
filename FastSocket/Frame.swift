@@ -25,9 +25,9 @@
 internal class Frame {
     internal var onBinaryFrame: CallbackData = { _ in }
     internal var onTextFrame: CallbackData = { _ in }
-    private var outputFrame: Data = Data()
-    private var inputFrame: Data = Data()
-    private var readBuffer: Data = Data()
+    private var outputFrame = Data()
+    private var inputFrame = Data()
+    private var readBuffer = Data()
 
     internal init() {
     }
@@ -62,8 +62,10 @@ internal class Frame {
         switch opcode {
         case Opcode.string.rawValue:
             self.onTextFrame(trimmedFrame())
+
         case Opcode.binary.rawValue:
             self.onBinaryFrame(trimmedFrame())
+
         default:
             throw FastSocketError.unknownOpcode
         }

@@ -40,7 +40,7 @@ opt_in_rules:
   - fallthrough
   - fatal_error_message
   - first_where
-  - force_unwrapping
+  #- force_unwrapping
   - function_default_parameter_at_end
   - identical_operands
   - implicit_return

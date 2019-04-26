@@ -14,12 +14,12 @@ import Network
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public class FastSocket: FastSocketProtocol {
-    public var on: FastSocketClosures = FastSocketClosures()
-    public var parameters: NWParameters = NWParameters(tls: nil)
+    public var on = FastSocketClosures()
+    public var parameters = NWParameters(tls: nil)
     private var host: String
     private var port: UInt16
     private var queue: DispatchQueue
-    private var frame: Frame = Frame()
+    private var frame = Frame()
     private var transfer: TransferProtocol?
     private var timer: DispatchSourceTimer?
     private var locked = false
@@ -47,7 +47,9 @@ public class FastSocket: FastSocketProtocol {
     /// disconnect from the server
     /// closes the connection `normally`
     public func disconnect() {
-        guard let transfer = self.transfer else { return }
+        guard let transfer = self.transfer else {
+            return
+        }
         transfer.disconnect()
         self.clean(nil)
     }
@@ -60,7 +62,9 @@ public class FastSocket: FastSocketProtocol {
             return
         }
         let frame = self.frame.create(data: data, opcode: .binary)
-        guard let transfer = self.transfer else { return }
+        guard let transfer = self.transfer else {
+            return
+        }
         transfer.send(data: frame)
     }
     /// send a string message
@@ -72,7 +76,9 @@ public class FastSocket: FastSocketProtocol {
             return
         }
         let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .string)
-        guard let transfer = self.transfer else { return }
+        guard let transfer = self.transfer else {
+            return
+        }
         transfer.send(data: frame)
     }
 }
@@ -83,7 +89,9 @@ private extension FastSocket {
         if let timer = self.timer {
             timer.suspend()
         }
-        guard let error = error else { return }
+        guard let error = error else {
+            return
+        }
         self.on.error(error)
     }
     /// send the handshake frame
@@ -132,7 +140,7 @@ private extension FastSocket {
             }
             self.on.string(string)
         }
-        
+
         self.frame.onBinaryFrame = { data in
             self.on.data(data)
         }

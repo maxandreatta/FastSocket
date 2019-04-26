@@ -38,24 +38,34 @@ extension FastSocketError: CustomNSError {
         switch self {
         case .none:
             return [NSLocalizedDescriptionKey: "null"]
+
         case .handShakeFailed:
             return [NSLocalizedDescriptionKey: "handshake failure, not protocol compliant"]
+
         case .timeoutError:
             return [NSLocalizedDescriptionKey: "connection timeout error"]
+
         case .sendFailed:
             return [NSLocalizedDescriptionKey: "send failure, data was not written"]
+
         case .sendToEarly:
             return [NSLocalizedDescriptionKey: "socket is not ready, could not send"]
+
         case .socketClosed:
             return [NSLocalizedDescriptionKey: "socket was closed"]
+
         case .socketUnexpectedClosed:
             return [NSLocalizedDescriptionKey: "socket was unexpected closed"]
+
         case .parsingFailure:
             return [NSLocalizedDescriptionKey: "message parsing error, no valid UTF-8"]
+
         case .zeroData:
             return [NSLocalizedDescriptionKey: "data is empty cannot parse into message"]
+
         case .invalidMessageType:
             return [NSLocalizedDescriptionKey: "unknown opcode for message type, cannot parse message"]
+
         case .unknownOpcode:
             return [NSLocalizedDescriptionKey: "unknown opcode, cannot parse message"]
         }

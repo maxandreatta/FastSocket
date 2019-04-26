@@ -6,7 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 /// Constants used by the protocol
-internal struct Constant {
+internal enum Constant {
     /// for tcp socket reading, minimum stream length
     static let minimumIncompleteLength: Int = 1
     /// maximum tcp frame size
