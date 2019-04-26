@@ -53,14 +53,14 @@ public class FastSocket: FastSocketProtocol {
     public func disconnect() {
         guard let transfer = self.transfer else { return }
         transfer.disconnect()
-        self.stopTimeout()
+        self.clean(nil)
     }
     /// send a data message
     /// - parameters:
     ///     - data: the data that should be send
     public func send(data: Data) {
         guard self.locked else {
-            self.on.error(FastSocketError.sendToEarly)
+            self.clean(FastSocketError.sendToEarly)
             return
         }
         let frame = self.frame.create(data: data, opcode: .binary)
@@ -72,7 +72,7 @@ public class FastSocket: FastSocketProtocol {
     ///     - string: the string that should be send
     public func send(string: String) {
         guard self.locked else {
-            self.on.error(FastSocketError.sendToEarly)
+            self.clean(FastSocketError.sendToEarly)
             return
         }
         let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .string)
@@ -82,6 +82,14 @@ public class FastSocket: FastSocketProtocol {
 }
 
 private extension FastSocket {
+    /// suspends timeout and report on error
+    private func clean(_ error: Error?) {
+        if let timer = self.timer {
+            timer.suspend()
+        }
+        guard let error = error else { return }
+        self.on.error(error)
+    }
     /// send the handshake frame
     private func handShake() {
         let keyData = Constant.socketID.data(using: .utf8)
@@ -98,23 +106,23 @@ private extension FastSocket {
                 do {
                     try self.frame.parse(data: data)
                 } catch {
-                    self.on.error(error)
+                    self.clean(error)
                 }
             }
             if !self.locked {
                 guard data.first == ControlCode.accept.rawValue else {
                     self.disconnect()
-                    self.on.error(FastSocketError.handShakeFailed)
-                    self.on.error(FastSocketError.socketUnexpectedClosed)
+                    self.clean(FastSocketError.handShakeFailed)
+                    self.clean(FastSocketError.socketUnexpectedClosed)
                     return
                 }
                 self.locked = true
-                self.stopTimeout()
+                self.clean(nil)
                 self.on.ready()
             }
         }
         self.transfer?.on.close = self.on.close
-        self.transfer?.on.error = self.on.error
+        self.transfer?.on.error = self.clean
         self.transfer?.on.dataInput = self.on.dataRead
         self.transfer?.on.dataOutput = self.on.dataWritten
     }
@@ -123,7 +131,7 @@ private extension FastSocket {
     private func frameClosures() {
         self.frame.onTextFrame = { data in
             guard let string = String(data: data, encoding: .utf8) else {
-                self.on.error(FastSocketError.parsingFailure)
+                self.clean(FastSocketError.parsingFailure)
                 return
             }
             self.on.string(string)
@@ -137,13 +145,8 @@ private extension FastSocket {
     private func startTimeout() {
         self.timer = Timer.interval(interval: Constant.timeout, withRepeat: false) {
             self.disconnect()
-            self.on.error(FastSocketError.timeoutError)
+            self.clean(FastSocketError.timeoutError)
         }
-    }
-    /// stops timeout on successfully connection
-    private func stopTimeout() {
-        guard let timer = self.timer else { return }
-        timer.suspend()
     }
 }
 /// DEBUG STUFF

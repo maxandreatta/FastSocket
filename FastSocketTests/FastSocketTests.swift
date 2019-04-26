@@ -17,7 +17,7 @@ class FastSocketTests: XCTestCase {
         let buffer = "1000000"
         var sockets = [FastSocket]()
         var datacount = 0
-        for i in 0...9 {
+        for i in 0...4 {
             sockets.append(self.getSocket())
             print("Socket ID: \(sockets[i].getQueueLabel())")
             sockets[i].on.ready = {
@@ -42,7 +42,7 @@ class FastSocketTests: XCTestCase {
 
     func testUpload() {
         let exp = expectation(description: "Wait for speed test to finish")
-        let buffer = Data(count: 1000000)
+        let buffer = Data(count: 50000)
         var sockets = [FastSocket]()
         var datacount = 0
         for i in 0...9 {
@@ -82,8 +82,10 @@ class FastSocketTests: XCTestCase {
 extension FastSocketTests {
     func getSocket() -> FastSocket {
         let socket = FastSocket(host: "socket.weist.it", port: 3333)
-        //socket.parameters.serviceClass = .signaling
-        //socket.parameters.requiredInterfaceType = .wifi
+        socket.parameters.serviceClass = .interactiveVoice
+        socket.parameters.allowFastOpen = true
+        socket.parameters.acceptLocalOnly = true
+        socket.parameters.requiredInterfaceType = .wiredEthernet
         return socket
     }
 }
