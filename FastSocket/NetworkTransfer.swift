@@ -50,7 +50,7 @@ internal class NetworkTransfer: TransferProtocol {
     internal func send(data: Data) {
         guard self.connectionState == .ready else { return }
         let queued = data.chunked(by: Constant.maximumLength)
-        guard queued.count > 0 else { return }
+        guard !queued.isEmpty else { return }
         for i in 0...queued.count - 1 {
             self.connection.send(content: Data(queued[i]), completion: .contentProcessed({ error in
                 self.on.dataOutput(queued[i].count)

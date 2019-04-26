@@ -47,7 +47,7 @@ internal class Frame {
     /// - parameters:
     ///     - data: the received data
     internal func parse(data: Data) throws {
-        guard data.count > 0 else {
+        guard !data.isEmpty else {
             throw FastSocketError.zeroData
         }
         self.readBuffer.append(data)

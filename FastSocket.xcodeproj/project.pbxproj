@@ -203,6 +203,7 @@
 			buildConfigurationList = AC55ED942253B1ED00D4063A /* Build configuration list for PBXNativeTarget "FastSocket" */;
 			buildPhases = (
 				AC55ED7B2253B1ED00D4063A /* Headers */,
+				235B1AA22273588A001960A9 /* SwiftLint */,
 				AC55ED7C2253B1ED00D4063A /* Sources */,
 				AC55ED7D2253B1ED00D4063A /* Frameworks */,
 				AC55ED7E2253B1ED00D4063A /* Resources */,
@@ -291,6 +292,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		235B1AA22273588A001960A9 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\nswiftlint lint --config \"$SRCROOT/.swiftlint.yml\"\nelse\n    echo \"warning: SwiftLint not installed. Install using brew install swiftlint or using mint or whatever other package manager you use.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AC55ED7C2253B1ED00D4063A /* Sources */ = {
