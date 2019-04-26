@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-and-test:
+  build:
     macos:
       xcode: "10.2.0"
     environment:
@@ -9,7 +9,23 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
+      - run: brew install swiftlint
       - run: bundle install
+      - run:
+          name: Fastlane
+          command: bundle exec fastlane $FASTLANE_LANE
+          environment:
+          SCAN_DEVICE: iPhone 8
+
+  test:
+    macos:
+      xcode: "10.2.0"
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: test_xcode
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout
       - run:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
@@ -20,4 +36,5 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - build-and-test
+      - build
+      - test

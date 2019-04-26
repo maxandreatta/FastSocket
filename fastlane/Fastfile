@@ -25,6 +25,13 @@ platform :ios do
     )
   end
 
+  desc "Run unit tests with XCode"
+  lane :test_xcode do
+    run_tests(
+      scheme: "FastSocket"
+    )
+  end
+
   desc "Build with Carthage"
   lane :build_carthage do
     carthage(
