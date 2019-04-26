@@ -11,6 +11,13 @@
 - [X] allows you to chose the network interface!
 - [X] Zer0 dependencies, native swift implementation with Network.framework
 
+## Build Status
+|      Branch      |                                                                                                            Status                                                                                                           |
+|:----------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|      master      | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/master.svg?style=svg&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/master)                         |
+|      develop     | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop.svg?style=svg&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/master)                        |
+| feature/fastlane | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/feature%2Ffastlane.svg?style=svg&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/feature%2Ffastlane) |
+
 ## Installation
 
 ### CocoaPods
@@ -72,7 +79,7 @@ socket.on.error = { error in
 
 ```
 
-### Connect
+## Connect
 
 ```swift
 // try to connect to the host
@@ -80,7 +87,7 @@ socket.on.error = { error in
 socket.connect()
 ```
 
-### Disconnect
+## Disconnect
 
 ```swift
 // closes the connection
@@ -88,7 +95,7 @@ socket.disconnect()
 
 ```
 
-### Additional Parameters
+## Additional Parameters
 
 ```swift
 // FastSocket was build in top of Apple's Network.framework
