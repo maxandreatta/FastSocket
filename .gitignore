@@ -11,6 +11,7 @@
 ## Build generated
 build/
 DerivedData/
+*.xcarchive
 
 ## Various settings
 *.pbxuser
@@ -49,6 +50,9 @@ playground.xcworkspace
 Pods/
 
 # Carthage - Refactored to standalone file
+Carthage/
+carthage.log
+FastSocket.framework.zip
 
 # fastlane
 #
@@ -61,6 +65,7 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
+fastlane/README.md
 
 
 # End of https://www.gitignore.io/api/swift
