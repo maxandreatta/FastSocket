@@ -10,6 +10,8 @@
 		23795EF22256976A00622CB4 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23795EF12256976A00622CB4 /* Typealiases.swift */; };
 		23795EF622569A2B00622CB4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23795EF522569A2B00622CB4 /* Constants.swift */; };
 		23795EF922569A5800622CB4 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23795EF822569A5800622CB4 /* Data+Extensions.swift */; };
+		AC0EF7BA227078DC00024EA5 /* Timer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0EF7B9227078DC00024EA5 /* Timer+Extension.swift */; };
+		AC1536F6227341FF00F3A2E2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AC1536F5227341FF00F3A2E2 /* README.md */; };
 		AC55ED8A2253B1ED00D4063A /* FastSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC55ED802253B1ED00D4063A /* FastSocket.framework */; };
 		AC55ED8F2253B1ED00D4063A /* FastSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED8E2253B1ED00D4063A /* FastSocketTests.swift */; };
 		AC55ED912253B1ED00D4063A /* FastSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AC55ED832253B1ED00D4063A /* FastSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -18,7 +20,7 @@
 		AC55EDA52253B21800D4063A /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9C2253B21800D4063A /* Frame.swift */; };
 		AC55EDA62253B21800D4063A /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9E2253B21800D4063A /* TransferProtocol.swift */; };
 		AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9F2253B21800D4063A /* FastSocket.swift */; };
-		AC55EDA82253B21800D4063A /* NetworkStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA02253B21800D4063A /* NetworkStream.swift */; };
+		AC55EDA82253B21800D4063A /* NetworkTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA02253B21800D4063A /* NetworkTransfer.swift */; };
 		AC55EDA92253B21800D4063A /* Reference.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA22253B21800D4063A /* Reference.swift */; };
 		AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AC55EDAB2253B37C00D4063A /* FastSocket.podspec */; };
 		AC635E06226549AA00CFFBAD /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */; };
@@ -38,6 +40,8 @@
 		23795EF12256976A00622CB4 /* Typealiases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealiases.swift; sourceTree = "<group>"; };
 		23795EF522569A2B00622CB4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		23795EF822569A5800622CB4 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		AC0EF7B9227078DC00024EA5 /* Timer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Extension.swift"; sourceTree = "<group>"; };
+		AC1536F5227341FF00F3A2E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AC55ED802253B1ED00D4063A /* FastSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FastSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC55ED832253B1ED00D4063A /* FastSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastSocket.h; sourceTree = "<group>"; };
 		AC55ED842253B1ED00D4063A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,7 +53,7 @@
 		AC55ED9C2253B21800D4063A /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		AC55ED9E2253B21800D4063A /* TransferProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
 		AC55ED9F2253B21800D4063A /* FastSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocket.swift; sourceTree = "<group>"; };
-		AC55EDA02253B21800D4063A /* NetworkStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStream.swift; sourceTree = "<group>"; };
+		AC55EDA02253B21800D4063A /* NetworkTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransfer.swift; sourceTree = "<group>"; };
 		AC55EDA22253B21800D4063A /* Reference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reference.swift; sourceTree = "<group>"; };
 		AC55EDAB2253B37C00D4063A /* FastSocket.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = FastSocket.podspec; sourceTree = "<group>"; };
 		AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
@@ -87,13 +91,23 @@
 			isa = PBXGroup;
 			children = (
 				23795EF822569A5800622CB4 /* Data+Extensions.swift */,
+				AC0EF7B9227078DC00024EA5 /* Timer+Extension.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		AC1536F22270D1A300F3A2E2 /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				AC55EDA02253B21800D4063A /* NetworkTransfer.swift */,
+			);
+			name = Transfer;
 			sourceTree = "<group>";
 		};
 		AC55ED762253B1ED00D4063A = {
 			isa = PBXGroup;
 			children = (
+				AC1536F5227341FF00F3A2E2 /* README.md */,
 				AC55EDAB2253B37C00D4063A /* FastSocket.podspec */,
 				AC55ED822253B1ED00D4063A /* FastSocket */,
 				AC55ED8D2253B1ED00D4063A /* FastSocketTests */,
@@ -114,7 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				AC55ED9F2253B21800D4063A /* FastSocket.swift */,
-				AC55EDA02253B21800D4063A /* NetworkStream.swift */,
+				AC1536F22270D1A300F3A2E2 /* Transfer */,
 				AC8138832253B57D0035733B /* Error */,
 				AC8138822253B5680035733B /* Protocols */,
 				AC8138812253B55D0035733B /* Model */,
@@ -189,6 +203,7 @@
 			buildConfigurationList = AC55ED942253B1ED00D4063A /* Build configuration list for PBXNativeTarget "FastSocket" */;
 			buildPhases = (
 				AC55ED7B2253B1ED00D4063A /* Headers */,
+				235B1AA22273588A001960A9 /* SwiftLint */,
 				AC55ED7C2253B1ED00D4063A /* Sources */,
 				AC55ED7D2253B1ED00D4063A /* Frameworks */,
 				AC55ED7E2253B1ED00D4063A /* Resources */,
@@ -232,10 +247,11 @@
 				TargetAttributes = {
 					AC55ED7F2253B1ED00D4063A = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 					AC55ED882253B1ED00D4063A = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -245,6 +261,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = AC55ED762253B1ED00D4063A;
 			productRefGroup = AC55ED812253B1ED00D4063A /* Products */;
@@ -262,6 +279,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC1536F6227341FF00F3A2E2 /* README.md in Resources */,
 				AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,6 +293,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		235B1AA22273588A001960A9 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\nswiftlint lint --config \"$SRCROOT/.swiftlint.yml\"\nelse\n    echo \"warning: SwiftLint not installed. Install using brew install swiftlint or using mint or whatever other package manager you use.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AC55ED7C2253B1ED00D4063A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -282,9 +321,10 @@
 			files = (
 				23795EF22256976A00622CB4 /* Typealiases.swift in Sources */,
 				AC55EDA62253B21800D4063A /* TransferProtocol.swift in Sources */,
-				AC55EDA82253B21800D4063A /* NetworkStream.swift in Sources */,
+				AC55EDA82253B21800D4063A /* NetworkTransfer.swift in Sources */,
 				AC55EDA92253B21800D4063A /* Reference.swift in Sources */,
 				AC55EDA52253B21800D4063A /* Frame.swift in Sources */,
+				AC0EF7BA227078DC00024EA5 /* Timer+Extension.swift in Sources */,
 				AC55EDA42253B21800D4063A /* Events.swift in Sources */,
 				AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */,
 				AC55EDA32253B21800D4063A /* Error.swift in Sources */,
@@ -457,7 +497,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -483,7 +523,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocket;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -502,7 +542,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -521,7 +561,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

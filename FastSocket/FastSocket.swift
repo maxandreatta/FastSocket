@@ -1,20 +1,11 @@
 //
-//  Core.swift
-//  CustomTCP
+//  FastSocket.swift
+//  FastSocket
 //
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
-import Foundation
 import Network
-
-// TODO:
-//  - fix error on reconnecting after connection close
-//  - implement timeout if connection is pending to long
-//  - generify some things
-//  - more unit tests 🙈
-
 /// FastSocket is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
@@ -23,113 +14,142 @@ import Network
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public class FastSocket: FastSocketProtocol {
-    public var on: FastSocketEvents = FastSocketEvents()
-    private var frame: Frame = Frame()
-    private var transfer: TransferProtocol
+    public var on = FastSocketClosures()
+    public var parameters = NWParameters(tls: nil)
+    private var host: String
+    private var port: UInt16
     private var queue: DispatchQueue
+    private var frame = Frame()
+    private var transfer: TransferProtocol?
+    private var timer: DispatchSourceTimer?
     private var locked = false
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    ///     - options: Network.framework TCP options `optional`
-    public required init(host: NWEndpoint.Host, port: NWEndpoint.Port, options: NWProtocolTCP.Options = NWProtocolTCP.Options(), queue: DispatchQueue = DispatchQueue(label: "FastSocket.Dispatch.\(UUID().uuidString)", qos: .background, attributes: .concurrent)) {
-        self.transfer = NetworkStream(host: host, port: port, options: options)
+    ///     - parameters: Network.framework Parameters `optional`
+    ///     - queue: Dispatch Queue `optional`
+    public required init(host: String, port: UInt16, queue: DispatchQueue = DispatchQueue(label: "FastSocket.Dispatch.\(UUID().uuidString)", qos: .background, attributes: .concurrent)) {
+        self.host = host
+        self.port = port
         self.queue = queue
     }
     /// connect to the server
     /// try to establish a connection to a
     /// FastSocket compliant server
     public func connect() {
-        self.queue.async {
-            self.frame = Frame()
-            self.transferListener()
-            self.messageListener()
-            self.transfer.connect()
-        }
+        self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters, queue: self.queue)
+        self.transferClosures()
+        self.frameClosures()
+        self.transfer?.connect()
+        self.startTimeout()
     }
     /// disconnect from the server
     /// closes the connection `normally`
     public func disconnect() {
-        self.queue.async {
-            self.transfer.disconnect()
+        guard let transfer = self.transfer else {
+            return
         }
+        transfer.disconnect()
+        self.clean(nil)
     }
     /// send a data message
     /// - parameters:
     ///     - data: the data that should be send
     public func send(data: Data) {
-        self.queue.async {
-            guard self.locked == true else {
-                self.on.error(FastSocketError.sendToEarly)
-                return
-            }
-            let frame = self.frame.create(data: data, opcode: .binary)
-            self.transfer.send(data: frame)
+        guard self.locked else {
+            self.clean(FastSocketError.sendToEarly)
+            return
         }
+        let frame = self.frame.create(data: data, opcode: .binary)
+        guard let transfer = self.transfer else {
+            return
+        }
+        transfer.send(data: frame)
     }
     /// send a string message
     /// - parameters:
     ///     - string: the string that should be send
     public func send(string: String) {
-        self.queue.async {
-            guard self.locked == true else {
-                self.on.error(FastSocketError.sendToEarly)
-                return
-            }
-            let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .text)
-            self.transfer.send(data: frame)
+        guard self.locked else {
+            self.clean(FastSocketError.sendToEarly)
+            return
         }
+        let frame = self.frame.create(data: string.data(using: .utf8)!, opcode: .string)
+        guard let transfer = self.transfer else {
+            return
+        }
+        transfer.send(data: frame)
     }
 }
 
 private extension FastSocket {
+    /// suspends timeout and report on error
+    private func clean(_ error: Error?) {
+        if let timer = self.timer {
+            timer.suspend()
+        }
+        guard let error = error else {
+            return
+        }
+        self.on.error(error)
+    }
+    /// send the handshake frame
     private func handShake() {
         let keyData = Constant.socketID.data(using: .utf8)
-        self.transfer.send(data: keyData!)
+        self.transfer?.send(data: keyData!)
     }
-
-    private func transferListener() {
-        self.transfer.on.ready = {
+    /// closures from the transfer protocol
+    /// handles incoming data and handshake
+    private func transferClosures() {
+        self.transfer?.on.ready = {
             self.handShake()
         }
-        self.transfer.on.data = { data in
-            if self.locked == true {
+        self.transfer?.on.data = { data in
+            if self.locked {
                 do {
                     try self.frame.parse(data: data)
                 } catch {
-                    self.on.error(error)
+                    self.clean(error)
                 }
             }
-            if self.locked == false {
-                guard data[0] == ControlCode.accept.rawValue else {
+            if !self.locked {
+                guard data.first == ControlCode.accept.rawValue else {
                     self.disconnect()
-                    self.on.error(FastSocketError.handShakeFailed)
-                    self.on.error(FastSocketError.socketUnexpectedClosed)
+                    self.clean(FastSocketError.handShakeFailed)
+                    self.clean(FastSocketError.socketUnexpectedClosed)
                     return
                 }
                 self.locked = true
+                self.clean(nil)
                 self.on.ready()
             }
         }
-        self.transfer.on.close = self.on.close
-        self.transfer.on.error = self.on.error
-        self.transfer.on.dataInput = self.on.dataRead
-        self.transfer.on.dataOutput = self.on.dataWritten
-
+        self.transfer?.on.close = self.on.close
+        self.transfer?.on.error = self.clean
+        self.transfer?.on.dataInput = self.on.dataRead
+        self.transfer?.on.dataOutput = self.on.dataWritten
     }
-    
-    private func messageListener() {
+    /// closures from Frame
+    /// returns the parsed messages
+    private func frameClosures() {
         self.frame.onTextFrame = { data in
             guard let string = String(data: data, encoding: .utf8) else {
-                self.on.error(FastSocketError.parsingFailure)
+                self.clean(FastSocketError.parsingFailure)
                 return
             }
-            self.on.text(string)
+            self.on.string(string)
         }
-        
+
         self.frame.onBinaryFrame = { data in
-            self.on.binary(data)
+            self.on.data(data)
+        }
+    }
+    /// start timeout on connecting
+    private func startTimeout() {
+        self.timer = Timer.interval(interval: Constant.timeout, withRepeat: false) {
+            self.disconnect()
+            self.clean(FastSocketError.timeoutError)
         }
     }
 }

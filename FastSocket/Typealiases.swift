@@ -6,8 +6,6 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 
-import Foundation
-
 public typealias Callback = () -> Void
 public typealias CallbackData = (Data) -> Void
 public typealias CallbackError = (Error?) -> Void

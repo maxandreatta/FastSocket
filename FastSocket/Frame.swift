@@ -1,12 +1,10 @@
 //
 //  Frame.swift
-//  CustomTCP
+//  FastSocket
 //
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-import Foundation
-
 // +---+------------------------------+-+
 // |0 1|         ... Continue         |N|
 // +---+------------------------------+-+
@@ -25,12 +23,11 @@ import Foundation
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal class Frame {
-    // TODO: Generify this
     internal var onBinaryFrame: CallbackData = { _ in }
     internal var onTextFrame: CallbackData = { _ in }
-    internal var outputFrame: Data = Data()
-    internal var inputFrame: Data = Data()
-    internal var readBuffer: Data = Data()
+    private var outputFrame = Data()
+    private var inputFrame = Data()
+    private var readBuffer = Data()
 
     internal init() {
     }
@@ -50,7 +47,7 @@ internal class Frame {
     /// - parameters:
     ///     - data: the received data
     internal func parse(data: Data) throws {
-        guard data.count > 0 else {
+        guard !data.isEmpty else {
             throw FastSocketError.zeroData
         }
         self.readBuffer.append(data)
@@ -63,15 +60,20 @@ internal class Frame {
             throw FastSocketError.invalidMessageType
         }
         switch opcode {
-        case Opcode.text.rawValue:
+        case Opcode.string.rawValue:
             self.onTextFrame(trimmedFrame())
+
         case Opcode.binary.rawValue:
             self.onBinaryFrame(trimmedFrame())
+
         default:
             throw FastSocketError.unknownOpcode
         }
         initializeFrame()
     }
+}
+
+private extension Frame {
     /// helper function to parse the frame
     private func trimmedFrame() -> Data {
         self.inputFrame = self.readBuffer.dropFirst()
