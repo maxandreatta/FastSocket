@@ -59,7 +59,7 @@ internal class NetworkTransfer: TransferProtocol {
     }
 }
 
-extension NetworkTransfer {
+private extension NetworkTransfer {
     /// check connection state
     private func connectionStateHandler() {
         self.connection.stateUpdateHandler = { state in

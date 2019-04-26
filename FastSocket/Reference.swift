@@ -8,7 +8,7 @@
 /// ControlCode is used by the FastSocket Protocol
 /// to determine when a message begins and when
 /// a message is finished
-enum ControlCode: UInt8 {
+internal enum ControlCode: UInt8 {
     /// continue is currently a placeholder byte
     case `continue` = 0x0
     /// accept byte is used by the handshake
@@ -17,7 +17,7 @@ enum ControlCode: UInt8 {
     case finish =     0xFF
 }
 /// Opcodes are used to evaluate the message type
-enum Opcode: UInt8 {
+internal enum Opcode: UInt8 {
     /// text byte for string based messages
     case string =            0x1
     /// binary byte for data bases messages

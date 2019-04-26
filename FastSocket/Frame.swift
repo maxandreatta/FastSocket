@@ -23,12 +23,11 @@
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal class Frame {
-    // TODO: Generify this
     internal var onBinaryFrame: CallbackData = { _ in }
     internal var onTextFrame: CallbackData = { _ in }
-    internal var outputFrame: Data = Data()
-    internal var inputFrame: Data = Data()
-    internal var readBuffer: Data = Data()
+    private var outputFrame: Data = Data()
+    private var inputFrame: Data = Data()
+    private var readBuffer: Data = Data()
 
     internal init() {
     }
@@ -70,6 +69,9 @@ internal class Frame {
         }
         initializeFrame()
     }
+}
+
+private extension Frame {
     /// helper function to parse the frame
     private func trimmedFrame() -> Data {
         self.inputFrame = self.readBuffer.dropFirst()

@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "FastSocket"
-  spec.version      = "0.2.3"
+  spec.version      = "0.2.5"
   spec.summary      = "Fast Socket is a Custom TCP Communication Protocol"
 
   # This description is used to generate tags and improve search results.

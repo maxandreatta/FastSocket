@@ -16,11 +16,11 @@ import Network
 public class FastSocket: FastSocketProtocol {
     public var on: FastSocketClosures = FastSocketClosures()
     public var parameters: NWParameters = NWParameters(tls: nil)
-    private var frame: Frame = Frame()
-    private var transfer: TransferProtocol?
     private var host: String
     private var port: UInt16
     private var queue: DispatchQueue
+    private var frame: Frame = Frame()
+    private var transfer: TransferProtocol?
     private var timer: DispatchSourceTimer?
     private var locked = false
     /// create a instance of FastSocket
@@ -38,15 +38,11 @@ public class FastSocket: FastSocketProtocol {
     /// try to establish a connection to a
     /// FastSocket compliant server
     public func connect() {
-        self.queue.async { [weak self] in
-            guard let this = self else { return }
-            this.transfer = NetworkTransfer(host: this.host, port: this.port, parameters: this.parameters)
-            this.frame = Frame()
-            this.transferClosures()
-            this.frameClosures()
-            this.transfer?.connect()
-            this.startTimeout()
-        }
+        self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters, queue: self.queue)
+        self.transferClosures()
+        self.frameClosures()
+        self.transfer?.connect()
+        self.startTimeout()
     }
     /// disconnect from the server
     /// closes the connection `normally`
@@ -149,11 +145,3 @@ private extension FastSocket {
         }
     }
 }
-/// DEBUG STUFF
-#if DEBUG
-internal extension FastSocket {
-    func getQueueLabel() -> String {
-        return self.queue.label
-    }
-}
-#endif

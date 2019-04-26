@@ -12,7 +12,7 @@ internal extension Timer {
     ///     - interval: TimerInterval in Seconds
     ///     - withRepeat: true if you want to repeat, false for only call it once
     ///     - block: closure
-    class func interval(interval: TimeInterval, withRepeat: Bool, block: @escaping ()->()) -> DispatchSourceTimer {
+    static func interval(interval: TimeInterval, withRepeat: Bool, block: @escaping ()->()) -> DispatchSourceTimer {
         let dispatchTimer = DispatchSource.makeTimerSource(flags: .strict, queue: DispatchQueue(label: "Timer.\(UUID().uuidString)"))
         dispatchTimer.setEventHandler(handler: block)
         if withRepeat {
