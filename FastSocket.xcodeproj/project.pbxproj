@@ -11,6 +11,7 @@
 		23795EF622569A2B00622CB4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23795EF522569A2B00622CB4 /* Constants.swift */; };
 		23795EF922569A5800622CB4 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23795EF822569A5800622CB4 /* Data+Extensions.swift */; };
 		AC0EF7BA227078DC00024EA5 /* Timer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0EF7B9227078DC00024EA5 /* Timer+Extension.swift */; };
+		AC1536F6227341FF00F3A2E2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AC1536F5227341FF00F3A2E2 /* README.md */; };
 		AC55ED8A2253B1ED00D4063A /* FastSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC55ED802253B1ED00D4063A /* FastSocket.framework */; };
 		AC55ED8F2253B1ED00D4063A /* FastSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED8E2253B1ED00D4063A /* FastSocketTests.swift */; };
 		AC55ED912253B1ED00D4063A /* FastSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AC55ED832253B1ED00D4063A /* FastSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -40,6 +41,7 @@
 		23795EF522569A2B00622CB4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		23795EF822569A5800622CB4 /* Data+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		AC0EF7B9227078DC00024EA5 /* Timer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Extension.swift"; sourceTree = "<group>"; };
+		AC1536F5227341FF00F3A2E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AC55ED802253B1ED00D4063A /* FastSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FastSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC55ED832253B1ED00D4063A /* FastSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastSocket.h; sourceTree = "<group>"; };
 		AC55ED842253B1ED00D4063A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		AC55ED762253B1ED00D4063A = {
 			isa = PBXGroup;
 			children = (
+				AC1536F5227341FF00F3A2E2 /* README.md */,
 				AC55EDAB2253B37C00D4063A /* FastSocket.podspec */,
 				AC55ED822253B1ED00D4063A /* FastSocket */,
 				AC55ED8D2253B1ED00D4063A /* FastSocketTests */,
@@ -275,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC1536F6227341FF00F3A2E2 /* README.md in Resources */,
 				AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
