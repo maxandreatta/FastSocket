@@ -13,6 +13,7 @@ import Network
 internal class NetworkTransfer: TransferProtocol {
     internal var on = TransferClosures()
     private var connection: NWConnection
+    private var monitor: NWPathMonitor
     private var queue: DispatchQueue
     private var isRunning: Bool = false
     private var isConnected: Bool = false
@@ -25,6 +26,7 @@ internal class NetworkTransfer: TransferProtocol {
     ///     - queue: Dispatch Qeue `optional`
     required init(host: String, port: UInt16, parameters: NWParameters = NWParameters(tls: nil), queue: DispatchQueue = DispatchQueue(label: "NetworkTransfer.Queue.\(UUID().uuidString)", qos: .background, attributes: .concurrent)) {
         self.connection = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: port)!, using: parameters)
+        self.monitor = NWPathMonitor()
         self.queue = queue
     }
     /// connect to a host
@@ -35,6 +37,7 @@ internal class NetworkTransfer: TransferProtocol {
             return
         }
         self.connectionStateHandler()
+        self.networkPathMonitor()
         self.connection.start(queue: self.queue)
         self.isRunning = true
         self.readLoop()
@@ -43,7 +46,6 @@ internal class NetworkTransfer: TransferProtocol {
     /// cleanup the connection
     internal func disconnect() {
         self.clean()
-        self.on.close()
     }
     /// write data async on tcp socket
     /// slices big data into chunks and send it stacked
@@ -80,6 +82,9 @@ private extension NetworkTransfer {
             if case .failed(let error) = state {
                 self.on.error(error)
             }
+            if case .cancelled = state {
+                // use case ?
+            }
         }
     }
     /// helper on connecting
@@ -95,7 +100,19 @@ private extension NetworkTransfer {
     private func clean() {
         self.isRunning = false
         self.isConnected = false
+        self.on.close()
         self.connection.cancel()
+    }
+    /// a network path monitor
+    /// used to detect if network is unrechable
+    private func networkPathMonitor() {
+        self.monitor.pathUpdateHandler = { path in
+            if path.status == .unsatisfied {
+                self.clean()
+                self.on.error(FastSocketError.networkUnreachable)
+            }
+        }
+        self.monitor.start(queue: self.queue)
     }
     /// readloop for the tcp socket incoming data
     private func readLoop() {
@@ -119,7 +136,6 @@ private extension NetworkTransfer {
             }
             // connection is dead and will be closed
             if isComplete && data == nil, context == nil, error == nil {
-                self.on.close()
                 self.clean()
                 return
             }

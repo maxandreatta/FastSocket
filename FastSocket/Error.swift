@@ -13,6 +13,8 @@ public enum FastSocketError: Int, Error {
     case handShakeFailed = 100
     /// thrown on connection timeout
     case timeoutError = 101
+    /// thrown if the could not connect to a network or loses connection
+    case networkUnreachable = 102
     /// thrown if sending failed
     case sendFailed = 200
     /// thrown if sending before connection is ready
@@ -44,6 +46,9 @@ extension FastSocketError: CustomNSError {
 
         case .timeoutError:
             return [NSLocalizedDescriptionKey: "connection timeout error"]
+
+        case .networkUnreachable:
+            return [NSLocalizedDescriptionKey: "network is down or not reachable"]
 
         case .sendFailed:
             return [NSLocalizedDescriptionKey: "send failure, data was not written"]

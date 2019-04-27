@@ -82,7 +82,7 @@ class FastSocketTests: XCTestCase {
 
 extension FastSocketTests {
     func createSocket() -> FastSocket {
-        let socket = FastSocket(host: "socket.weist.it", port: 3333)
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
         socket.parameters.serviceClass = .interactiveVoice
         return socket
     }
