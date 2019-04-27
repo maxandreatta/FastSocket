@@ -45,7 +45,7 @@ workflows:
   build-and-test:
     jobs:
       - swiftlint
-      - build
+      - build:
           requires:
             - swiftlint
       - test:
