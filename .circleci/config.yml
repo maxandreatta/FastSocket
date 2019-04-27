@@ -28,7 +28,7 @@ jobs:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
 
-swiftlint:
+ swiftlint:
     docker:
       - image: dantoml/swiftlint:latest
     steps:
@@ -39,9 +39,6 @@ swiftlint:
       - store_test_results:
           path: result.xml
           
-dependencies:
-  override:
-    - brew install swiftlint
 
 workflows:
   version: 2
@@ -53,4 +50,5 @@ workflows:
             - swiftlint
       - test:
           requires:
+            - swiftlint
             - build
