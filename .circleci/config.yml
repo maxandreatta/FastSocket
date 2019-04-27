@@ -28,7 +28,7 @@ jobs:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
 
- swiftlint:
+  swiftlint:
     docker:
       - image: dantoml/swiftlint:latest
     steps:
