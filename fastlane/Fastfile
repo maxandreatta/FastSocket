@@ -28,6 +28,18 @@ platform :ios do
   lane :test_xcode do 
     UI.message "Performing unit tests"
       scan
+
+      slather(
+        proj: "FastSocket.xcodeproj",
+        scheme: "FastSocket",
+        source_directory: "./FastSocket",
+        output_directory: "./fastlane/test_output/slather",
+        cobertura_xml: true
+      )
+
+      codecov_reporter(
+        token: "91fd39fd-4849-4057-b98a-72039d7c15da"
+      )
     UI.success "Finished unit tests"
   end
 
