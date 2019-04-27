@@ -107,10 +107,11 @@ private extension NetworkTransfer {
     /// used to detect if network is unrechable
     private func networkPathMonitor() {
         self.monitor.pathUpdateHandler = { path in
-            if path.status == .unsatisfied {
-                self.clean()
-                self.on.error(FastSocketError.networkUnreachable)
+            guard path.status == .unsatisfied else {
+                return
             }
+            self.clean()
+            self.on.error(FastSocketError.networkUnreachable)
         }
         self.monitor.start(queue: self.queue)
     }
