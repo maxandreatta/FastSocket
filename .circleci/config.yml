@@ -27,6 +27,9 @@ jobs:
       - run:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
+    post:
+      - bundle exec slather
+      - bash <(curl -s https://codecov.io/bash) -f path/to/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode -t 91fd39fd-4849-4057-b98a-72039d7c15da
 
   swiftlint:
     docker:
@@ -38,13 +41,7 @@ jobs:
           path: result.xml
       - store_test_results:
           path: result.xml
-      
-  slather:
-    post:
-      - bundle exec slather
-      - bash <(curl -s https://codecov.io/bash) -f path/to/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode -t 91fd39fd-4849-4057-b98a-72039d7c15da
-          
-
+        
 workflows:
   version: 2
   build-and-test:
@@ -57,8 +54,3 @@ workflows:
           requires:
             - swiftlint
             - build
-      - slather:
-          required:
-            - swiftlint
-            - build
-            - test
