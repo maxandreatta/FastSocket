@@ -1,5 +1,5 @@
 //
-//  Stream.swift
+//  NetworkTransfer.swift
 //  FastSocket
 //
 //  Created by Vinzenz Weist on 25.03.19.
