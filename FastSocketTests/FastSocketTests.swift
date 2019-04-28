@@ -11,38 +11,29 @@ import Network
 @testable import FastSocket
 
 class FastSocketTests: XCTestCase {
-    var socket: FastSocket!
     var timer: DispatchSourceTimer?
-    override func setUp() {
-        self.socket = FastSocket(host: "socket.weist.it", port: 8080)
-        self.socket.parameters.serviceClass = .interactiveVoice
-    }
-    
-    override func tearDown() {
-        self.socket = nil
-    }
     
     func testDownload() {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "10000"
         var datacount = 0
-        self.socket = FastSocket(host: "socket.weist.it", port: 8080)
-        self.socket.on.ready = {
-            self.socket.send(string: buffer)
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
+        socket.on.ready = {
+            socket.send(string: buffer)
         }
-        self.socket.on.data = { data in
+        socket.on.data = { data in
             print("RECEIVED THIS COUNT: \(data.count)")
             exp.fulfill()
         }
-        self.socket.on.dataRead = { count in
+        socket.on.dataRead = { count in
             datacount += count
             print(datacount)
         }
-        self.socket.on.error = { error in
+        socket.on.error = { error in
             guard let error = error else { return }
             XCTFail("Failed with Error: \(error)")
         }
-        self.socket.connect()
+        socket.connect()
         wait(for: [exp], timeout: 10.0)
     }
 
@@ -50,40 +41,40 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 10000)
         var datacount = 0
-        self.socket = FastSocket(host: "socket.weist.it", port: 8080)
-        self.socket.on.ready = {
-            self.socket.send(data: buffer)
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
+        socket.on.ready = {
+            socket.send(data: buffer)
         }
-        self.socket.on.string = { text in
+        socket.on.string = { text in
             print("RECEIVED THIS COUNT: \(text)")
             exp.fulfill()
         }
-        self.socket.on.dataWritten = { count in
+        socket.on.dataWritten = { count in
             datacount += count
             print(datacount)
         }
-        self.socket.on.error = { error in
+        socket.on.error = { error in
             guard let error = error else { return }
             XCTFail("Failed with Error: \(error)")
         }
-        self.socket.connect()
+        socket.connect()
         wait(for: [exp], timeout: 10.0)
     }
     
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        self.socket = FastSocket(host: "socket.weist.it", port: 8080)
-        self.socket.on.ready = {
-            self.socket.disconnect()
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
+        socket.on.ready = {
+            socket.disconnect()
         }
-        self.socket.on.close = {
+        socket.on.close = {
             exp.fulfill()
         }
-        self.socket.on.error = { error in
+        socket.on.error = { error in
             guard let error = error else { return }
             XCTFail("Failed with Error: \(error)")
         }
-        self.socket.connect()
+        socket.connect()
         wait(for: [exp], timeout: 5.0)
     }
 
