@@ -26,6 +26,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "10000"
         var datacount = 0
+        self.socket = FastSocket(host: "socket.weist.it", port: 8080)
         self.socket.on.ready = {
             self.socket.send(string: buffer)
         }
@@ -49,6 +50,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 10000)
         var datacount = 0
+        self.socket = FastSocket(host: "socket.weist.it", port: 8080)
         self.socket.on.ready = {
             self.socket.send(data: buffer)
         }
@@ -70,6 +72,7 @@ class FastSocketTests: XCTestCase {
     
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
+        self.socket = FastSocket(host: "socket.weist.it", port: 8080)
         self.socket.on.ready = {
             self.socket.disconnect()
         }
