@@ -7,6 +7,10 @@ jobs:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: build_xcode
     shell: /bin/bash --login -o pipefail
+    branches:
+      only:
+        - master
+        - develop
     steps:
       - checkout
       - run: bundle install
@@ -21,6 +25,10 @@ jobs:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: test_xcode
     shell: /bin/bash --login -o pipefail
+    branches:
+      only:
+        - master
+        - develop
     steps:
       - checkout
       - run: bundle install
@@ -31,6 +39,10 @@ jobs:
   swiftlint:
     docker:
       - image: dantoml/swiftlint:latest
+    branches:
+      only:
+        - master
+        - develop
     steps:
       - checkout
       - run: swiftlint lint --reporter junit | tee result.xml
@@ -49,5 +61,4 @@ workflows:
             - swiftlint
       - test:
           requires:
-            - swiftlint
             - build
