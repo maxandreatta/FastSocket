@@ -15,7 +15,7 @@ class FastSocketTests: XCTestCase {
     
     func testDownload() {
         let exp = expectation(description: "Wait for speed test to finish")
-        let buffer = "10000"
+        let buffer = "1000000"
         var datacount = 0
         let socket = FastSocket(host: "159.69.154.143", port: 8080)
         socket.on.ready = {
@@ -39,7 +39,7 @@ class FastSocketTests: XCTestCase {
 
     func testUpload() {
         let exp = expectation(description: "Wait for speed test to finish")
-        let buffer = Data(count: 10000)
+        let buffer = Data(count: 1000000)
         var datacount = 0
         let socket = FastSocket(host: "159.69.154.143", port: 8080)
         socket.on.ready = {
@@ -137,11 +137,12 @@ class FastSocketTests: XCTestCase {
     func testATimer() {
         let exp = expectation(description: "Timer")
         var isCalledTwice = false
-        self.timer = Timer.interval(interval: 0.5, withRepeat: true) {
+        self.timer = Timer.interval(interval: 1.0, withRepeat: true) {
             guard isCalledTwice else {
                 isCalledTwice = true
                 return
             }
+            self.timer?.cancel()
             exp.fulfill()
         }
         wait(for: [exp], timeout: 2.0)
