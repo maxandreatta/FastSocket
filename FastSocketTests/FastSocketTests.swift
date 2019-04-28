@@ -17,7 +17,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "1000000"
         var datacount = 0
-        let socket = FastSocket(host: "159.69.154.143", port: 8080)
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
         socket.on.ready = {
             socket.send(string: buffer)
         }
@@ -41,7 +41,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 1000000)
         var datacount = 0
-        let socket = FastSocket(host: "159.69.154.143", port: 8080)
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
         socket.on.ready = {
             socket.send(data: buffer)
         }
@@ -63,7 +63,7 @@ class FastSocketTests: XCTestCase {
     
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: "159.69.154.143", port: 8080)
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
         socket.on.ready = {
             socket.disconnect()
         }
@@ -115,6 +115,22 @@ class FastSocketTests: XCTestCase {
         transferClosures.dataInput(Int())
         transferClosures.dataOutput(Int())
         transferClosures.error(FastSocketError.none)
+    }
+    
+    func testSendStringError() {
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
+        socket.on.error = { error in
+            XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
+        }
+        socket.send(string: "")
+    }
+    
+    func testSendDataError() {
+        let socket = FastSocket(host: "socket.weist.it", port: 8080)
+        socket.on.error = { error in
+            XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
+        }
+        socket.send(data: Data())
     }
     
     func testError() {
