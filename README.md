@@ -1,7 +1,7 @@
 <div align="center">
     <h1>
         <br>
-            <a href="https://github.com/Vinz1911/NWKit"><img src="http://weist.it/content/assets/images/fastsocket.svg" alt="NWKit" width="600"></a>
+            <a href="https://github.com/Vinz1911/FastSocket"><img src="http://weist.it/content/assets/images/fastsocket.svg" alt="FastSocket" width="600"></a>
         <br>
             FastSocket
         <br>
