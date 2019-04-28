@@ -43,11 +43,25 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - swiftlint
+      - swiftlint:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - build:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
           requires:
             - swiftlint
       - test:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
           requires:
-            - swiftlint
             - build
