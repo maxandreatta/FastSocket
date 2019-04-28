@@ -1,4 +1,12 @@
-# FastSocket
+<div align="center">
+    <h1>
+        <br>
+            <a href="https://github.com/Vinz1911/NWKit"><img src="http://weist.it/content/assets/images/fastsocket.svg" alt="NWKit" width="600"></a>
+        <br>
+            FastSocket
+        <br>
+    </h1>
+</div>
 
 `FastSocket` is a proprietary bi-directional message based communication protocol on top of TCP (optionally over other layers in the future). The idea behind this project was, to create a TCP communication like the [WebSocket Protocol](https://tools.ietf.org/html/rfc6455) with less overhead and the ability to track every 8192 bytes read or written on the socket without waiting for the whole message to be transmitted. This allows it to use it as **protocol for speed tests** for measuring the TCP throughput performance. Our server-sided implementation is written in [golang](https://golang.org/) and it's optimized for maximum speed and performance.
 
