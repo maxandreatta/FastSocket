@@ -38,6 +38,7 @@ public class FastSocket: FastSocketProtocol {
     /// try to establish a connection to a
     /// FastSocket compliant server
     public func connect() {
+        self.locked = false
         self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters, queue: self.queue)
         self.transferClosures()
         self.frameClosures()
@@ -87,7 +88,7 @@ private extension FastSocket {
     /// suspends timeout and report on error
     private func clean(_ error: Error?) {
         if let timer = self.timer {
-            timer.suspend()
+            timer.cancel()
         }
         guard let error = error else {
             return

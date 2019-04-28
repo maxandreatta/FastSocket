@@ -27,16 +27,16 @@ public enum FastSocketError: Int, Error {
     case parsingFailure = 300
     /// thrown if message parser get's zer0 data
     case zeroData = 301
-    /// thrown if message type was unknown
-    case invalidMessageType = 302
+    /// thrown if something werid happen to the readbuffer
+    case readBufferIssue = 302
     /// thrown if opcode was unknown
     case unknownOpcode = 1000
 }
 
-extension FastSocketError: CustomNSError {
-    public static var errorDomain: String { return "fastsocket.error" }
-    public var errorCode: Int { return self.rawValue }
-    public var errorUserInfo: [String: Any] {
+public extension FastSocketError {
+    static var errorDomain: String { return "fastsocket.error" }
+    var errorCode: Int { return self.rawValue }
+    var errorUserInfo: [String: String] {
         switch self {
         case .none:
             return [NSLocalizedDescriptionKey: "null"]
@@ -68,8 +68,8 @@ extension FastSocketError: CustomNSError {
         case .zeroData:
             return [NSLocalizedDescriptionKey: "data is empty cannot parse into message"]
 
-        case .invalidMessageType:
-            return [NSLocalizedDescriptionKey: "unknown opcode for message type, cannot parse message"]
+        case .readBufferIssue:
+            return [NSLocalizedDescriptionKey: "readbuffer issue, is empty or wrong data"]
 
         case .unknownOpcode:
             return [NSLocalizedDescriptionKey: "unknown opcode, cannot parse message"]

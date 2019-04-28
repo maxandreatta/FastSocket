@@ -57,7 +57,7 @@ internal class Frame {
             return
         }
         guard let opcode = self.readBuffer.first else {
-            throw FastSocketError.invalidMessageType
+            throw FastSocketError.readBufferIssue
         }
         switch opcode {
         case Opcode.string.rawValue:
