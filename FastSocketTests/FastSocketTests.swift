@@ -76,7 +76,7 @@ class FastSocketTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 10.0)
+        wait(for: [exp], timeout: 15.0)
     }
 
     func testFrameErrorZeroData() {
