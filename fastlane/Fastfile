@@ -1,0 +1,70 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Build with XCode tools"
+  lane :build_xcode do
+    xcodebuild(
+      archive: false,
+      scheme: "FastSocket"
+    )
+  end
+
+  lane :test_xcode do 
+    UI.message "Performing unit tests"
+      scan
+
+      slather(
+        proj: "FastSocket.xcodeproj",
+        scheme: "FastSocket",
+        source_directory: "./FastSocket",
+        output_directory: "./fastlane/test_output/slather",
+        cobertura_xml: true
+      )
+
+      codecov_reporter(
+        token: "91fd39fd-4849-4057-b98a-72039d7c15da"
+      )
+    UI.success "Finished unit tests"
+  end
+
+  desc "Build with Carthage"
+  lane :build_carthage do
+    carthage(
+      command: "build",       # One of: build, bootstrap, update, archive. (default: bootstrap)
+      no_skip_current: true,     # Don't skip building the current project (only for frameworks)
+      verbose: false,   # Print xcodebuild output inline
+      platform: "all",  # Define which platform to build for (one of ‘all’, ‘Mac’, ‘iOS’, ‘watchOS’, ‘tvOS‘, or comma-separated values of the formers except for ‘all’)
+      log_path: "carthage.log"    # Path to the xcode build output
+    )
+  end
+
+  lane :archive_carthage do
+    carthage(
+      output: "FastSocket.framework.zip",      # Specify the output archive name (only for the archive command)
+      command: "archive",       # One of: build, bootstrap, update, archive. (default: bootstrap)
+      verbose: false,   # Print xcodebuild output inline
+    )
+  end
+
+  desc "Update and commit the podspec"
+  lane :update_podspec do
+    # get version from branch
+    # update podspec, commit and push
+  end
+end

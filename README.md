@@ -1,8 +1,16 @@
-# FastSocket
+<div align="center">
+    <h1>
+        <br>
+            <a href="https://github.com/Vinz1911/FastSocket"><img src="http://weist.it/content/assets/images/fastsocket.svg" alt="FastSocket" width="600"></a>
+        <br>
+            FastSocket
+        <br>
+    </h1>
+</div>
 
 `FastSocket` is a proprietary bi-directional message based communication protocol on top of TCP (optionally over other layers in the future). The idea behind this project was, to create a TCP communication like the [WebSocket Protocol](https://tools.ietf.org/html/rfc6455) with less overhead and the ability to track every 8192 bytes read or written on the socket without waiting for the whole message to be transmitted. This allows it to use it as **protocol for speed tests** for measuring the TCP throughput performance. Our server-sided implementation is written in [golang](https://golang.org/) and it's optimized for maximum speed and performance.
 
-## Features
+## Features:
 
 - [X] send and receive text and data messages
 - [X] async, non-blocking & very fast
@@ -11,7 +19,14 @@
 - [X] allows you to chose the network interface!
 - [X] Zer0 dependencies, native swift implementation with Network.framework
 
-## Installation
+## Build Status:
+
+|      Branch      |                                                                                                         Build Status                                                                                                        |                                                                            Coverage                                                                           |
+|:----------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|      master      | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/master.svg?style=svg&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/master)                         | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/master/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)             |
+|      develop     | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop.svg?style=svg&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop )                      | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/develop/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)            |
+
+## Installation:
 
 ### CocoaPods
 
@@ -72,7 +87,7 @@ socket.on.error = { error in
 
 ```
 
-### Connect
+## Connect:
 
 ```swift
 // try to connect to the host
@@ -80,7 +95,7 @@ socket.on.error = { error in
 socket.connect()
 ```
 
-### Disconnect
+## Disconnect:
 
 ```swift
 // closes the connection
@@ -88,7 +103,7 @@ socket.disconnect()
 
 ```
 
-### Additional Parameters
+## Additional Parameters:
 
 ```swift
 // FastSocket was build in top of Apple's Network.framework
