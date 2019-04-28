@@ -83,7 +83,7 @@ private extension NetworkTransfer {
                 self.on.error(error)
             }
             if case .cancelled = state {
-                // use case ?
+                self.on.close()
             }
         }
     }
@@ -100,7 +100,6 @@ private extension NetworkTransfer {
     private func clean() {
         self.isRunning = false
         self.isConnected = false
-        self.on.close()
         self.connection.cancel()
     }
     /// a network path monitor
@@ -138,6 +137,7 @@ private extension NetworkTransfer {
             // connection is dead and will be closed
             if isComplete && data == nil, context == nil, error == nil {
                 self.clean()
+                self.on.close()
                 return
             }
             self.readLoop()
