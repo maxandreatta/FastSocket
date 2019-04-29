@@ -61,28 +61,38 @@ let socket = FastSocket(host: "example.com", port: 8081)
 
 ```swift
 socket.on.ready = {
-// this is called after the connection
-// was successfully established and is ready
+    // this is called after the connection
+    // was successfully established and is ready
 }
+
 socket.on.data = { data in
-// this is called everytime
-// a data message was received
+    // this is called everytime
+    // a data message was received
 }
+
 socket.on.string = { string in
-// this is called everytime
-// a text message was received
+    // this is called everytime
+    // a text message was received
 }
+
 socket.on.dataRead = { count in
-// this is called every 8192 bytes
-// are readed from the socket
+    // this is called every 8192 bytes
+    // are readed from the socket
 }
+
 socket.on.dataWritten = { count in
-// this is called every 8192 bytes
-// are written on the socket
+    // this is called every 8192 bytes
+    // are written on the socket
 }
+
+socket.on.close = {
+    // this is called after
+    // the socket was closed
+}
+
 socket.on.error = { error in
-// this is called everytime
-// an error appeared
+    // this is called everytime
+    // an error appeared
 }
 
 ```
@@ -103,6 +113,15 @@ socket.disconnect()
 
 ```
 
+## Send Messages:
+```swift
+// send a text based message to the backend
+socket.send(string: String)
+
+// send a binary based message to the backend
+socket.send(data: Data)
+```
+
 ## Additional Parameters:
 
 ```swift
@@ -112,8 +131,10 @@ socket.disconnect()
 
 // set the traffics service class
 socket.parameters.serviceClass = .interactiveVoice
+
 // enable fast open
 socket.parameters.allowFastOpen = true
+
 // select the interface type
 // if it's not available, it will cancel with an error
 socket.parameters.requiredInterfaceType = .cellular
