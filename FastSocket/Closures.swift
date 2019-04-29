@@ -1,10 +1,16 @@
 //
-//  Events.swift
+//  Closures.swift
 //  FastSocket
 //
 //  Created by Vinzenz Weist on 02.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
+
+internal struct FrameClosures {
+    internal var dataFrame: CallbackData = { _ in }
+    internal var stringFrame: CallbackData = { _ in }
+}
+
 internal struct TransferClosures {
     internal var ready: Callback = { }
     internal var close: Callback = { }

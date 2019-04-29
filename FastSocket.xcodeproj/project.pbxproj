@@ -18,7 +18,7 @@
 		AC55ED8F2253B1ED00D4063A /* FastSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED8E2253B1ED00D4063A /* FastSocketTests.swift */; };
 		AC55ED912253B1ED00D4063A /* FastSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AC55ED832253B1ED00D4063A /* FastSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC55EDA32253B21800D4063A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9A2253B21800D4063A /* Error.swift */; };
-		AC55EDA42253B21800D4063A /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9B2253B21800D4063A /* Events.swift */; };
+		AC55EDA42253B21800D4063A /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9B2253B21800D4063A /* Closures.swift */; };
 		AC55EDA52253B21800D4063A /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9C2253B21800D4063A /* Frame.swift */; };
 		AC55EDA62253B21800D4063A /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9E2253B21800D4063A /* TransferProtocol.swift */; };
 		AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9F2253B21800D4063A /* FastSocket.swift */; };
@@ -26,6 +26,7 @@
 		AC55EDA92253B21800D4063A /* Reference.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA22253B21800D4063A /* Reference.swift */; };
 		AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AC55EDAB2253B37C00D4063A /* FastSocket.podspec */; };
 		AC635E06226549AA00CFFBAD /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */; };
+		AC86306722771B78002C553C /* FrameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86306622771B78002C553C /* FrameProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +54,7 @@
 		AC55ED8E2253B1ED00D4063A /* FastSocketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketTests.swift; sourceTree = "<group>"; };
 		AC55ED902253B1ED00D4063A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC55ED9A2253B21800D4063A /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		AC55ED9B2253B21800D4063A /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		AC55ED9B2253B21800D4063A /* Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
 		AC55ED9C2253B21800D4063A /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		AC55ED9E2253B21800D4063A /* TransferProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
 		AC55ED9F2253B21800D4063A /* FastSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocket.swift; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 		AC55EDA22253B21800D4063A /* Reference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reference.swift; sourceTree = "<group>"; };
 		AC55EDAB2253B37C00D4063A /* FastSocket.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = FastSocket.podspec; sourceTree = "<group>"; };
 		AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
+		AC86306622771B78002C553C /* FrameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				AC55ED9C2253B21800D4063A /* Frame.swift */,
-				AC55ED9B2253B21800D4063A /* Events.swift */,
+				AC55ED9B2253B21800D4063A /* Closures.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -177,6 +179,7 @@
 			children = (
 				AC55ED9E2253B21800D4063A /* TransferProtocol.swift */,
 				AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */,
+				AC86306622771B78002C553C /* FrameProtocol.swift */,
 				23795EF12256976A00622CB4 /* Typealiases.swift */,
 			);
 			name = Protocols;
@@ -331,9 +334,10 @@
 				AC55EDA62253B21800D4063A /* TransferProtocol.swift in Sources */,
 				AC55EDA82253B21800D4063A /* NetworkTransfer.swift in Sources */,
 				AC55EDA92253B21800D4063A /* Reference.swift in Sources */,
+				AC86306722771B78002C553C /* FrameProtocol.swift in Sources */,
 				AC55EDA52253B21800D4063A /* Frame.swift in Sources */,
 				AC0EF7BA227078DC00024EA5 /* Timer+Extension.swift in Sources */,
-				AC55EDA42253B21800D4063A /* Events.swift in Sources */,
+				AC55EDA42253B21800D4063A /* Closures.swift in Sources */,
 				AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */,
 				AC55EDA32253B21800D4063A /* Error.swift in Sources */,
 				23795EF622569A2B00622CB4 /* Constants.swift in Sources */,

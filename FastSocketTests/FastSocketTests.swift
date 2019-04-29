@@ -98,8 +98,19 @@ class FastSocketTests: XCTestCase {
     }
     
     func testClosureCall() {
+        let frameClosures = FrameClosures()
         let transferClosures = TransferClosures()
         let fastSocketClosures = FastSocketClosures()
+        
+        frameClosures.dataFrame(Data())
+        frameClosures.stringFrame(Data())
+        
+        transferClosures.ready()
+        transferClosures.close()
+        transferClosures.data(Data())
+        transferClosures.dataInput(Int())
+        transferClosures.dataOutput(Int())
+        transferClosures.error(FastSocketError.none)
         
         fastSocketClosures.ready()
         fastSocketClosures.close()
@@ -108,13 +119,6 @@ class FastSocketTests: XCTestCase {
         fastSocketClosures.dataRead(Int())
         fastSocketClosures.dataWritten(Int())
         fastSocketClosures.error(FastSocketError.none)
-        
-        transferClosures.ready()
-        transferClosures.close()
-        transferClosures.data(Data())
-        transferClosures.dataInput(Int())
-        transferClosures.dataOutput(Int())
-        transferClosures.error(FastSocketError.none)
     }
     
     func testSendStringError() {

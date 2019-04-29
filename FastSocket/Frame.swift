@@ -22,14 +22,13 @@
 /// Frame is a helper class for the FastSocket Protocol
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
-internal class Frame {
-    internal var onBinaryFrame: CallbackData = { _ in }
-    internal var onTextFrame: CallbackData = { _ in }
+internal class Frame: FrameProtocol {
+    internal var on = FrameClosures()
     private var outputFrame = Data()
     private var inputFrame = Data()
     private var readBuffer = Data()
 
-    internal init() {
+    internal required init() {
     }
     /// create a FastSocket Protocol compliant message frame
     /// - parameters:
@@ -61,10 +60,10 @@ internal class Frame {
         }
         switch opcode {
         case Opcode.string.rawValue:
-            self.onTextFrame(trimmedFrame())
+            self.on.stringFrame(self.trimmedFrame())
 
         case Opcode.binary.rawValue:
-            self.onBinaryFrame(trimmedFrame())
+            self.on.dataFrame(self.trimmedFrame())
 
         default:
             throw FastSocketError.unknownOpcode
