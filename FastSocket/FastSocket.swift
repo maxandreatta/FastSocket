@@ -134,7 +134,7 @@ private extension FastSocket {
     /// closures from Frame
     /// returns the parsed messages
     private func frameClosures() {
-        self.frame.onTextFrame = { data in
+        self.frame.on.stringFrame = { data in
             guard let string = String(data: data, encoding: .utf8) else {
                 self.clean(FastSocketError.parsingFailure)
                 return
@@ -142,7 +142,7 @@ private extension FastSocket {
             self.on.string(string)
         }
 
-        self.frame.onBinaryFrame = { data in
+        self.frame.on.dataFrame = { data in
             self.on.data(data)
         }
     }

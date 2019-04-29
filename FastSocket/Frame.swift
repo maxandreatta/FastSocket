@@ -5,31 +5,23 @@
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-// +---+------------------------------+-+
-// |0 1|         ... Continue         |N|
-// +---+------------------------------+-+
-// | O |                              |F|
-// | P |         Payload Data...      |I|
-// | C |                              |N|
-// | O |         Payload Data...      |B|
-// | D |                              |Y|
-// | E |         Payload Data...      |T|
-// |   |                              |E|
-// |   |         Payload Data...      | |
-// |   |                              | |
-// +---+------------------------------+-+
-
+// 0                 1                              N                 N
+// +-----------------+------------------------------+-----------------+
+// |0 1 2 3 4 5 6 7 8|        ... Continue          |0 1 2 3 4 5 6 7 8|
+// +-----------------+------------------------------+-----------------+
+// |   O P C O D E   |         Payload Data...      |  F I N B Y T E  |
+// +-----------------+------------------------------+-----------------+
+//
 /// Frame is a helper class for the FastSocket Protocol
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
-internal class Frame {
-    internal var onBinaryFrame: CallbackData = { _ in }
-    internal var onTextFrame: CallbackData = { _ in }
+internal class Frame: FrameProtocol {
+    internal var on = FrameClosures()
     private var outputFrame = Data()
     private var inputFrame = Data()
     private var readBuffer = Data()
 
-    internal init() {
+    internal required init() {
     }
     /// create a FastSocket Protocol compliant message frame
     /// - parameters:
@@ -38,7 +30,6 @@ internal class Frame {
     internal func create(data: Data, opcode: Opcode) -> Data {
         self.outputFrame = Data()
         self.outputFrame.append(opcode.rawValue)
-        self.outputFrame.append(ControlCode.continue.rawValue)
         self.outputFrame.append(data)
         self.outputFrame.append(ControlCode.finish.rawValue)
         return self.outputFrame
@@ -51,7 +42,6 @@ internal class Frame {
             throw FastSocketError.zeroData
         }
         self.readBuffer.append(data)
-
         guard data.last == ControlCode.finish.rawValue else {
             // Do nothing, keep reading, keep walking
             return
@@ -61,10 +51,10 @@ internal class Frame {
         }
         switch opcode {
         case Opcode.string.rawValue:
-            self.onTextFrame(trimmedFrame())
+            self.on.stringFrame(self.trimmedFrame())
 
         case Opcode.binary.rawValue:
-            self.onBinaryFrame(trimmedFrame())
+            self.on.dataFrame(self.trimmedFrame())
 
         default:
             throw FastSocketError.unknownOpcode
@@ -77,7 +67,6 @@ private extension Frame {
     /// helper function to parse the frame
     private func trimmedFrame() -> Data {
         self.inputFrame = self.readBuffer.dropFirst()
-        self.inputFrame = self.inputFrame.dropFirst()
         self.inputFrame = self.inputFrame.dropLast()
         return self.inputFrame
     }
