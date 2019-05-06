@@ -12,13 +12,12 @@
 // |   O P C O D E   |         Payload Data...      |  F I N B Y T E  |
 // +-----------------+------------------------------+-----------------+
 //
+import Foundation
 /// Frame is a helper class for the FastSocket Protocol
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
-internal class Frame: FrameProtocol {
+internal final class Frame: FrameProtocol {
     internal var on = FrameClosures()
-    private var outputFrame = Data()
-    private var inputFrame = Data()
     private var readBuffer = Data()
 
     internal required init() {
@@ -26,13 +25,16 @@ internal class Frame: FrameProtocol {
     /// create a FastSocket Protocol compliant message frame
     /// - parameters:
     ///     - data: the data that should be send
-    ///     - opcode: the frames opcode, e.g. .binary or .text
-    internal func create(data: Data, opcode: Opcode) -> Data {
-        self.outputFrame = Data()
-        self.outputFrame.append(opcode.rawValue)
-        self.outputFrame.append(data)
-        self.outputFrame.append(ControlCode.finish.rawValue)
-        return self.outputFrame
+    ///     - opcode: the frames Opcode, e.g. .binary or .text
+    internal func create(data: Data, opcode: Opcode) throws -> Data {
+        var outputFrame = Data()
+        outputFrame.append(opcode.rawValue)
+        outputFrame.append(data)
+        outputFrame.append(Opcode.finish.rawValue)
+        guard outputFrame.count <= Constant.maximumContentLength else {
+            throw FastSocketError.writeBufferOverflow
+        }
+        return outputFrame
     }
     /// parse a FastSocket Protocol compliant messsage back to it's raw data
     /// - parameters:
@@ -42,7 +44,10 @@ internal class Frame: FrameProtocol {
             throw FastSocketError.zeroData
         }
         self.readBuffer.append(data)
-        guard data.last == ControlCode.finish.rawValue else {
+        if self.readBuffer.count > Constant.maximumContentLength {
+            throw (FastSocketError.readBufferOverflow)
+        }
+        guard data.last == Opcode.finish.rawValue else {
             // Do nothing, keep reading, keep walking
             return
         }
@@ -51,7 +56,10 @@ internal class Frame: FrameProtocol {
         }
         switch opcode {
         case Opcode.string.rawValue:
-            self.on.stringFrame(self.trimmedFrame())
+            guard let string = String(bytes: self.trimmedFrame(), encoding: .utf8) else {
+                throw FastSocketError.parsingFailure
+            }
+            self.on.stringFrame(string)
 
         case Opcode.binary.rawValue:
             self.on.dataFrame(self.trimmedFrame())
@@ -59,20 +67,18 @@ internal class Frame: FrameProtocol {
         default:
             throw FastSocketError.unknownOpcode
         }
-        initializeFrame()
+        self.initializeBuffer()
     }
 }
 
 private extension Frame {
     /// helper function to parse the frame
     private func trimmedFrame() -> Data {
-        self.inputFrame = self.readBuffer.dropFirst()
-        self.inputFrame = self.inputFrame.dropLast()
-        return self.inputFrame
+        let inputFrame = self.readBuffer[1...self.readBuffer.count - 2]
+        return inputFrame
     }
     /// helper function to create readable frame
-    private func initializeFrame() {
+    private func initializeBuffer() {
         self.readBuffer = Data()
-        self.inputFrame = Data()
     }
 }

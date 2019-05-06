@@ -5,7 +5,7 @@
 //  Created by Vinzenz Weist on 24.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
+import Foundation
 internal extension Timer {
     /// Creates and returns a DispatchSourceTimer
     /// - parameters:
@@ -13,7 +13,7 @@ internal extension Timer {
     ///     - withRepeat: true if you want to repeat, false for only call it once
     ///     - block: closure
     static func interval(interval: TimeInterval, withRepeat: Bool, block: @escaping () -> Void) -> DispatchSourceTimer {
-        let dispatchTimer = DispatchSource.makeTimerSource(flags: .strict, queue: DispatchQueue(label: "Timer.\(UUID().uuidString)"))
+        let dispatchTimer = DispatchSource.makeTimerSource(flags: .strict, queue: DispatchQueue(label: "\(Constant.prefixTimer)\(UUID().uuidString)"))
         dispatchTimer.setEventHandler(handler: block)
         if withRepeat {
             dispatchTimer.schedule(deadline: .now(), repeating: interval)

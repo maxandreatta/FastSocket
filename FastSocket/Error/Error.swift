@@ -5,6 +5,7 @@
 //  Created by Vinzenz Weist on 02.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
+import Foundation
 /// Error handling for the FastSocket Protocol
 public enum FastSocketError: Int, Error {
     /// none is a placeholder
@@ -23,12 +24,18 @@ public enum FastSocketError: Int, Error {
     case socketClosed = 202
     /// thrown if socket was closed not normally
     case socketUnexpectedClosed = 203
+    /// thrown if try to write data before previous data was written
+    case writeBeforeClear = 204
     /// thrown if message parsing failed
     case parsingFailure = 300
     /// thrown if message parser get's zer0 data
     case zeroData = 301
     /// thrown if something werid happen to the readbuffer
     case readBufferIssue = 302
+    /// thrown if a readbuffer overflow is encountered
+    case readBufferOverflow = 303
+    /// thrown if a writebuffer overflow is encountered
+    case writeBufferOverflow = 304
     /// thrown if opcode was unknown
     case unknownOpcode = 1000
 }
@@ -62,6 +69,9 @@ public extension FastSocketError {
         case .socketUnexpectedClosed:
             return [NSLocalizedDescriptionKey: "socket was unexpected closed"]
 
+        case .writeBeforeClear:
+            return [NSLocalizedDescriptionKey: "previous data not finally written!, cannot write on socket"]
+
         case .parsingFailure:
             return [NSLocalizedDescriptionKey: "message parsing error, no valid UTF-8"]
 
@@ -70,6 +80,12 @@ public extension FastSocketError {
 
         case .readBufferIssue:
             return [NSLocalizedDescriptionKey: "readbuffer issue, is empty or wrong data"]
+
+        case .readBufferOverflow:
+            return [NSLocalizedDescriptionKey: "readbuffer overflow!"]
+
+        case .writeBufferOverflow:
+            return [NSLocalizedDescriptionKey: "writebuffer overflow!"]
 
         case .unknownOpcode:
             return [NSLocalizedDescriptionKey: "unknown opcode, cannot parse message"]

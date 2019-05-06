@@ -5,9 +5,8 @@
 //  Created by Vinzenz Weist on 29.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
 import Foundation
-
+/// The framing protocol
 internal protocol FrameProtocol {
     var on: FrameClosures { get set }
     // create instance of Frame
@@ -15,8 +14,8 @@ internal protocol FrameProtocol {
     /// create a FastSocket Protocol compliant message frame
     /// - parameters:
     ///     - data: the data that should be send
-    ///     - opcode: the frames opcode, e.g. .binary or .text
-    func create(data: Data, opcode: Opcode) -> Data
+    ///     - opcode: the frames Opcode, e.g. .binary or .text
+    func create(data: Data, opcode: Opcode) throws -> Data
     /// parse a FastSocket Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data

@@ -14,10 +14,13 @@
 
 - [X] send and receive text and data messages
 - [X] async, non-blocking & very fast
+- [X] threading is handled by the framework itself
 - [X] track every 8192 send & received bytes
-- [X] custom error management
 - [X] allows you to chose the network interface!
-- [X] Zer0 dependencies, native swift implementation with Network.framework
+- [X] zer0 dependencies, native swift implementation with Network.framework
+- [X] custom error management
+- [X] all errors are routed through the error closure
+- [X] maximum frame size 16777216 bytes (with overhead)
 
 ## Build Status:
 
@@ -25,6 +28,11 @@
 |:----------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 |      master      | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/master.svg?style=shield&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/master)                      | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/master/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)             |
 |      develop     | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop.svg?style=shield&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop )                   | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/develop/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)            |
+
+## Note:
+
+The maximum size of a frame is 16777216 bytes (with overhead) to prevent memory overflow on the client and on the backend side.
+If you try to send larger data the connection will be terminated!
 
 ## Installation:
 
@@ -44,7 +52,7 @@ Add the following line to your `Cartfile`
 github "Vinz1911/FastSocket"
 ```
 
-### Swift Package
+### Swift Package Manager
 
     Not yet supported
 

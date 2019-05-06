@@ -14,9 +14,8 @@ Pod::Spec.new do |spec|
   #  can feel like a chore to fill in it's definitely to your advantage. The
   #  summary should be tweet-length, and the description more in depth.
   #
-
   spec.name         = "FastSocket"
-  spec.version      = "0.2.5"
+  spec.version      = "0.1.0"
   spec.summary      = "Fast Socket is a Custom TCP Communication Protocol"
 
   # This description is used to generate tags and improve search results.
@@ -87,7 +86,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "FastSocket", "FastSocket/**/*.{h,m}"
+  spec.source_files  = "FastSocket", "FastSocket/**/*.{h,m,swift}"
   # spec.public_header_files = "Classes/**/*.h"
 
 
