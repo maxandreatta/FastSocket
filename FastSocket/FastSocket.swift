@@ -58,7 +58,21 @@ public final class FastSocket: FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    public func send<T: SendProtocol>(message: T) throws {
+    public func send<T: SendProtocol>(message: T) {
+        do {
+            try self.write(message: message)
+        } catch {
+            self.onError(error)
+        }
+    }
+}
+
+private extension FastSocket {
+    /// generic write function, send data or string based messages
+    /// internal use to handle the throw in the send function
+    /// - parameters:
+    ///     - message: generic type (accepts data or string)
+    private func write<T: SendProtocol>(message: T) throws {
         guard self.isLocked else {
             return
         }
@@ -71,16 +85,13 @@ public final class FastSocket: FastSocketProtocol {
             transfer.send(data: frame)
 
         case is Data:
-                let frame = try self.frame.create(data: message as! Data, opcode: .binary)
-                transfer.send(data: frame)
+            let frame = try self.frame.create(data: message as! Data, opcode: .binary)
+            transfer.send(data: frame)
 
         default:
             break
         }
     }
-}
-
-private extension FastSocket {
     /// suspends timeout and report on error
     /// - parameters:
     ///     - error: the error `optional`

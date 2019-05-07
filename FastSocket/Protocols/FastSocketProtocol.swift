@@ -36,5 +36,5 @@ public protocol FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    func send<T: SendProtocol>(message: T) throws
+    func send<T: SendProtocol>(message: T)
 }

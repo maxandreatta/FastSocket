@@ -19,11 +19,7 @@ class FastSocketTests: XCTestCase {
         var datacount = 0
         let socket = FastSocket(host: "socket.weist.it", port: 8080)
         socket.on.ready = {
-            do {
-                try socket.send(message: buffer)
-            } catch {
-                XCTFail("Failed with Error: \(error)")
-            }
+            socket.send(message: buffer)
         }
         socket.on.data = { data in
             print("RECEIVED THIS COUNT: \(data.count)")
@@ -51,11 +47,7 @@ class FastSocketTests: XCTestCase {
         var datacount = 0
         let socket = FastSocket(host: "socket.weist.it", port: 8080)
         socket.on.ready = {
-            do {
-                try socket.send(message: buffer)
-            } catch {
-                XCTFail("Failed with Error: \(error)")
-            }
+            socket.send(message: buffer)
         }
         socket.on.string = { text in
             print("RECEIVED THIS COUNT: \(text)")
@@ -149,7 +141,7 @@ class FastSocketTests: XCTestCase {
         socket.on.error = { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
         }
-        try! socket.send(message: "")
+        socket.send(message: "")
     }
     
     func testSendDataError() {
@@ -157,7 +149,7 @@ class FastSocketTests: XCTestCase {
         socket.on.error = { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
         }
-        try! socket.send(message: Data())
+        socket.send(message: Data())
     }
     
     func testError() {
