@@ -49,12 +49,14 @@ workflows:
               only:
                 - master
                 - develop
+                - /feature\/.*/
       - build:
           filters:
             branches:
               only:
                 - master
                 - develop
+                - /feature\/.*/
           requires:
             - swiftlint
       - test:
@@ -63,5 +65,6 @@ workflows:
               only:
                 - master
                 - develop
+                - /feature\/.*/
           requires:
             - build
