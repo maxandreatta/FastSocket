@@ -14,17 +14,17 @@ Pod::Spec.new do |spec|
   #  can feel like a chore to fill in it's definitely to your advantage. The
   #  summary should be tweet-length, and the description more in depth.
   #
-  spec.name         = 'FastSocket'
-  spec.version      = '0.5.0'
-  spec.summary      = 'FastSocket is a custom TCP communication protocol'
+  spec.name         = "FastSocket"
+  spec.version      = "0.5.0"
+  spec.summary      = "FastSocket is a custom TCP communication protocol"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = 'FastSocket is a Framework to make bandwidth measurements - `The Real Way`'
-  spec.homepage     = 'https://weist.it'
+  spec.description  = "FastSocket is a Framework to make bandwidth measurements - `The Real Way`"
+  spec.homepage     = "https://weist.it"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -35,7 +35,7 @@ Pod::Spec.new do |spec|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = { :type => 'GPLv3', :file => 'LICENSE' }
+  spec.license      = { :type => "GPLv3", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -48,7 +48,7 @@ Pod::Spec.new do |spec|
   #  profile URL.
   #
 
-  spec.author             = { 'Vinzenz Weist' => 'vinz1911@gmail.com', 'Juan Romero' => 'rukano@gmail.com' }
+  spec.author             = { "Vinzenz Weist" => "vinz1911@gmail.com", "Juan Romero" => "rukano@gmail.com" }
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -56,8 +56,8 @@ Pod::Spec.new do |spec|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  spec.platform     = :ios, '12.0'
-  spec.swift_version = '5.0'
+  spec.platform     = :ios, "12.0"
+  spec.swift_version = "5.0"
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -66,7 +66,7 @@ Pod::Spec.new do |spec|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => 'https://github.com/Vinz1911/FastSocket.git', :tag => '#{spec.version}' }
+  spec.source       = { :git => "https://github.com/Vinz1911/FastSocket.git", :tag => "#{spec.version}" }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -76,5 +76,5 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = 'FastSocket', 'FastSocket/**/*.{h,m,swift}'
+  spec.source_files  = "FastSocket", "FastSocket/**/*.{h,m,swift}"
 end

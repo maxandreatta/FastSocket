@@ -22,6 +22,12 @@
 - [X] all errors are routed through the error closure
 - [X] maximum frame size 16777216 bytes (with overhead)
 
+## License:
+[![LICENSE](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=flat-square)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
+
+## Swift Version:
+[![SWIFT](https://img.shields.io/badge/Swift-5.0-orange.svg?longCache=true&style=flat-square)](https://swift.org)
+
 ## Build Status:
 
 |      Branch      |                                                                                                         Build Status                                                                                                        |                                                                            Coverage                                                                           |
@@ -29,10 +35,6 @@
 |      master      | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/master.svg?style=shield&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/master)                      | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/master/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)             |
 |      develop     | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop.svg?style=shield&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop )                   | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/develop/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)            |
 
-## Note:
-
-The maximum size of a frame is 16777216 bytes (with overhead) to prevent memory overflow on the client and on the backend side.
-If you try to send larger data the connection will be terminated!
 
 ## Installation:
 
@@ -61,7 +63,7 @@ github "Vinz1911/FastSocket"
 ```swift
 // import the Framework
 import FastSocket
-let socket = FastSocket(host: "example.com", port: 8081)
+let socket = FastSocket(host: "example.com", port: 8080)
 
 ```
 
@@ -116,11 +118,9 @@ socket.disconnect()
 
 ## Send Messages:
 ```swift
-// send a text based message to the backend
-socket.send(string: String)
-
-// send a binary based message to the backend
-socket.send(data: Data)
+// the send func is a generic func
+// it allows to send `String` and `Data`
+socket.send(message: T)
 ```
 
 ## Additional Parameters:
@@ -140,3 +140,8 @@ socket.parameters.allowFastOpen = true
 // if it's not available, it will cancel with an error
 socket.parameters.requiredInterfaceType = .cellular
 ```
+
+## Authors:
+
+[Vinzenz Weist](https://github.com/Vinz1911)
+[Juan Romero](https://github.com/rukano)
