@@ -1,0 +1,80 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Build with XCode tools"
+  lane :build_xcode do
+    UI.message("Start building")
+      xcodebuild(
+        archive: nil,
+        scheme: "FastSocket"
+      )
+    UI.success("Finished building")
+  end
+
+  desc "Run unit tests"
+  lane :test_xcode do
+    UI.message("Performing unit tests")
+      # use scan file
+      scan
+      
+      # gather coverage after run
+      slather(
+        proj: "FastSocket.xcodeproj",
+        scheme: "FastSocket",
+        source_directory: "./FastSocket",
+        output_directory: "./fastlane/test_output/slather",
+        cobertura_xml: true
+      )
+      
+      # after slathering, report to codecov
+      codecov_reporter(
+        token: "91fd39fd-4849-4057-b98a-72039d7c15da"
+      )
+    UI.success("Finished unit tests")
+  end
+
+  desc "Build with Carthage"
+  lane :build_carthage do
+    # build with carthage
+    carthage(
+      command: "build",
+      no_skip_current: true,
+      verbose: false,
+      platform: "all",
+      log_path: "carthage.log"
+    )
+  end
+
+  desc "Create archive with carthage"
+  lane :archive_carthage do
+    # archive with carthage
+    carthage(
+      output: "FastSocket.framework.zip",
+      command: "archive",
+      verbose: false,
+    )
+  end
+
+  desc "Update and commit the podspec"
+  lane :update_podspec do
+    # get version from branch
+    # update podspec, commit and push
+  end
+
+end
