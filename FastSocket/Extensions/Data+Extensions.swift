@@ -12,6 +12,24 @@ extension Data: SendProtocol {
     // conformance to send protocol
 }
 internal extension Data {
+    /// generates a sha256 hash value
+    /// from .utf8 data and returns the hash as data
+    var sha256: Data {
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        self.withUnsafeBytes {
+            _ = CC_SHA256($0.baseAddress, CC_LONG(self.count), &hash)
+        }
+        return Data(hash)
+    }
+    /// convert big endian to uint64
+    var int: UInt64 {
+        guard !self.isEmpty else {
+            return .zero
+        }
+        return UInt64(bigEndian: withUnsafeBytes { bytes in
+            bytes.load(as: UInt64.self)
+        })
+    }
     /// slice data into chunks:
     /// - parameters:
     ///     - size: size of the sliced chunks
@@ -19,23 +37,5 @@ internal extension Data {
         return stride(from: 0, to: self.count, by: size).map { count in
             Data(self[count..<Swift.min(count + size, self.count)])
         }
-    }
-    /// convert big endian to uint64
-    func int() -> UInt64 {
-        guard !self.isEmpty else {
-            return 0
-        }
-        return UInt64(bigEndian: withUnsafeBytes { bytes in
-            bytes.load(as: UInt64.self)
-        })
-    }
-    /// generates a sha256 hash value
-    /// from .utf8 data and returns the hash as data
-    func SHA256() -> Data {
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-        self.withUnsafeBytes {
-            _ = CC_SHA256($0.baseAddress, CC_LONG(self.count), &hash)
-        }
-        return Data(hash)
     }
 }

@@ -117,12 +117,15 @@ private extension FastSocket {
         self.disconnect()
     }
     /// send the handshake frame
-    private func handShake() {
+    private func handshake() {
         guard let transfer = self.transfer else {
             return
         }
-        let data = UUID().uuidString.data(using: .utf8)!
-        self.sha256 = data.SHA256()
+        guard let data = UUID().uuidString.data(using: .utf8) else {
+            self.onError(FastSocketError.handshakeInitializationFailed)
+            return
+        }
+        self.sha256 = data.sha256
         transfer.send(data: data)
     }
     /// closures from the transfer protocol
@@ -135,7 +138,7 @@ private extension FastSocket {
             guard let self = self else {
                 return
             }
-            self.handShake()
+            self.handshake()
         }
         transfer.on.data = { [weak self] data in
             guard let self = self else {
@@ -151,7 +154,7 @@ private extension FastSocket {
 
             case false:
                 guard data == self.sha256 else {
-                    self.onError(FastSocketError.handShakeFailed)
+                    self.onError(FastSocketError.handshakeVerificationFailed)
                     return
                 }
                 self.isLocked = true

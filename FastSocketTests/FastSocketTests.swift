@@ -236,7 +236,9 @@ class FastSocketTests: XCTestCase {
     func testError() {
         XCTAssertEqual(FastSocketError.errorDomain, "fastsocket.error")
         XCTAssertEqual(FastSocketError.none.errorUserInfo["NSLocalizedDescription"], "null")
-        XCTAssertEqual(FastSocketError.handShakeFailed.errorUserInfo["NSLocalizedDescription"], "handshake failure, not protocol compliant")
+        XCTAssertEqual(FastSocketError.handshakeInitializationFailed.errorUserInfo["NSLocalizedDescription"], "cannot create handshake data, please retry")
+        XCTAssertEqual(FastSocketError.handshakeVerificationFailed.errorUserInfo["NSLocalizedDescription"], "handshake verification failed, hash values are different. this can happen if theres a proxy network between...")
+        XCTAssertEqual(FastSocketError.emptyHost.errorUserInfo["NSLocalizedDescription"], "host address cannot be empty!")
         XCTAssertEqual(FastSocketError.timeoutError.errorUserInfo["NSLocalizedDescription"], "connection timeout error")
         XCTAssertEqual(FastSocketError.networkUnreachable.errorUserInfo["NSLocalizedDescription"], "network is down or not reachable")
         XCTAssertEqual(FastSocketError.sendFailed.errorUserInfo["NSLocalizedDescription"], "send failure, data was not written")

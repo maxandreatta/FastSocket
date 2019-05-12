@@ -29,8 +29,7 @@ import Foundation
 //      - 0x1: this is the string byte which is used for string based messages
 //      - 0x2: this is the data byte which is used for data based messages
 //      - 0x3: this is the fin byte, which is part of OPC but is on the first place in the protocol
-//      - 0x6: this is the accept byte and is used by the handshake
-//      - 0x7 - 0xF: this bytes are reserved
+//      - 0x6 - 0xF: this bytes are reserved
 // - FRAME LENGTH:
 //      - this uses 8 bytes to store the entire frame size as a big endian uint64 value
 // - PAYLOAD:
@@ -52,7 +51,7 @@ internal final class Frame: FrameProtocol {
     ///     - isFinal: send a close frame to the host default is false
     internal func create(data: Data, opcode: Opcode, isFinal: Bool = false) throws -> Data {
         var outputFrame = Data()
-        let payloadLengthBytes = UInt64(data.count + Constant.overheadSize).data()
+        let payloadLengthBytes = UInt64(data.count + Constant.overheadSize).data
         if isFinal {
             outputFrame.append(Opcode.finish.rawValue)
         } else {
@@ -116,7 +115,7 @@ private extension Frame {
             return .zero
         }
         let size = Data(self.readBuffer[2...9])
-        return size.int()
+        return size.int
     }
     /// private func to trimm frame to it's raw content
     /// - parameters:
