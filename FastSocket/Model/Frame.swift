@@ -83,8 +83,8 @@ internal final class Frame: FrameProtocol {
         guard self.readBuffer.count >= self.contentSize() else {
             return
         }
-        while self.readBuffer.count >= self.contentSize() && self.contentSize() != 0 {
-            let slice = Data(self.readBuffer[0...self.contentSize() - 1])
+        while self.readBuffer.count >= self.contentSize() && self.contentSize() != .zero {
+            let slice = Data(self.readBuffer[...(self.contentSize() - 1)])
             switch slice[1] {
             case Opcode.string.rawValue:
                 guard let string = String(bytes: try self.trimFrame(frame: slice), encoding: .utf8) else {
@@ -113,7 +113,7 @@ private extension Frame {
     ///     - data: data to extract content size from
     private func contentSize() -> UInt64 {
         guard self.readBuffer.count >= Constant.overheadSize else {
-            return 0
+            return .zero
         }
         let size = Data(self.readBuffer[2...9])
         return size.int()
@@ -125,7 +125,7 @@ private extension Frame {
         guard frame.count >= Constant.overheadSize else {
             throw FastSocketError.parsingFailure
         }
-        let data = Data(frame[10...])
+        let data = Data(frame[Constant.overheadSize...])
         return data
     }
 }

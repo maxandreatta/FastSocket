@@ -24,20 +24,21 @@ class FastSocketTests: XCTestCase {
             socket.send(message: buffer)
         }
         socket.on.data = { data in
-            print("RECEIVED THIS COUNT: \(data.count)")
+            self.printInfo("RECEIVED THIS COUNT: \(data.count)")
             XCTAssertEqual(data.count, Int(buffer))
             exp.fulfill()
         }
         socket.on.dataRead = { count in
             datacount += count
-            print(datacount)
+            self.printInfo("Data Count: \(datacount)")
         }
         socket.on.close = {
-            print("connection closed")
+            self.printInfo("connection closed")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
+            self.printError("Failed with Error: \(error)")
+            XCTFail()
         }
         socket.connect()
         wait(for: [exp], timeout: 10.0)
@@ -52,20 +53,21 @@ class FastSocketTests: XCTestCase {
             socket.send(message: buffer)
         }
         socket.on.string = { text in
-            print("RECEIVED THIS COUNT: \(text)")
+            self.printInfo("RECEIVED THIS COUNT: \(text)")
             XCTAssertEqual(buffer.count, Int(text))
             exp.fulfill()
         }
         socket.on.dataWritten = { count in
             datacount += count
-            print(datacount)
+            self.printInfo("Data Count: \(datacount)")
         }
         socket.on.close = {
-            print("connection closed")
+            self.printInfo("connection closed")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
+            self.printError("Failed with Error: \(error)")
+            XCTFail()
         }
         socket.connect()
         wait(for: [exp], timeout: 10.0)
@@ -83,19 +85,20 @@ class FastSocketTests: XCTestCase {
             }
         }
         socket.on.string = { text in
-            print("RECEIVED THIS COUNT: \(text)")
+            self.printInfo("RECEIVED THIS COUNT: \(text)")
             messages += 1
-            print("Responded Times: \(messages)")
+            self.printInfo("Responded Times: \(messages)")
             if messages == sendValue {
                 exp.fulfill()
             }
         }
         socket.on.close = {
-            print("connection closed")
+            self.printInfo("connection closed")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
+            self.printError("Failed with Error: \(error)")
+            XCTFail()
         }
         socket.connect()
         wait(for: [exp], timeout: 10.0)
@@ -109,12 +112,13 @@ class FastSocketTests: XCTestCase {
             socket.disconnect()
         }
         socket.on.close = {
-            print("Connection Closed!")
+            self.printInfo("Connection Closed!")
             exp.fulfill()
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
+            self.printError("Failed with Error: \(error)")
+            XCTFail()
         }
         socket.connect()
         wait(for: [exp], timeout: 15.0)
@@ -218,5 +222,20 @@ class FastSocketTests: XCTestCase {
             exp.fulfill()
         }
         wait(for: [exp], timeout: 2.0)
+    }
+}
+
+fileprivate extension FastSocketTests {
+    func printInfo(_ items: Any...) {
+        print("ℹ️ [INFO]: \(items.minimalDescription)")
+    }
+    func printError(_ items: Any...) {
+        print("❌ [ERROR]: \(items.minimalDescription)")
+    }
+}
+
+fileprivate extension Sequence {
+    var minimalDescription: String {
+        return map { "\($0)" }.joined(separator: " ")
     }
 }
