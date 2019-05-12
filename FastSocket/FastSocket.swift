@@ -69,6 +69,10 @@ private extension FastSocket {
     /// private func to reset all needed values
     /// and initialize
     private func initialize() {
+        guard !self.host.isEmpty else {
+            self.onError(FastSocketError.emptyHost)
+            return
+        }
         self.isLocked = false
         self.sha256 = Data()
         self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters)

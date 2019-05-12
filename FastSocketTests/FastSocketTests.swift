@@ -124,6 +124,36 @@ class FastSocketTests: XCTestCase {
         wait(for: [exp], timeout: 15.0)
     }
     
+    func testPerformance() {
+        let exp = expectation(description: "Wait for connection close")
+        let socket = FastSocket(host: self.host, port: self.port)
+        var startTime = Date().timeIntervalSince1970
+        socket.on.ready = {
+            self.printInfo(Date().timeIntervalSince1970 - startTime)
+            exp.fulfill()
+        }
+        socket.on.close = {
+            self.printInfo("Connection Closed!")
+        }
+        socket.on.error = { error in
+            guard let error = error else { return }
+            self.printError("Failed with Error: \(error)")
+            XCTFail()
+        }
+        startTime = Date().timeIntervalSince1970
+        socket.connect()
+        wait(for: [exp], timeout: 15.0)
+    }
+    
+    func testFastSocketError() {
+        let socket = FastSocket(host: "", port: self.port)
+        socket.on.error = { error in
+            guard let error = error else { return }
+            XCTAssertEqual(error as! FastSocketError, FastSocketError.emptyHost)
+        }
+        socket.connect()
+    }
+    
     func testFrameErrorZeroData() {
         let frame = Frame()
         let data = Data(count: 0)

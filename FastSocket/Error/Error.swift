@@ -10,6 +10,8 @@ import Foundation
 public enum FastSocketError: Int, Error {
     /// none is a placeholder
     case none = 0
+    /// thrown if empty host address
+    case emptyHost = 99
     /// thrown if handshake is failed
     case handShakeFailed = 100
     /// thrown on connection timeout
@@ -47,6 +49,9 @@ public extension FastSocketError {
         switch self {
         case .none:
             return [NSLocalizedDescriptionKey: "null"]
+
+        case .emptyHost:
+            return [NSLocalizedDescriptionKey: "host address cannot be empty!"]
 
         case .handShakeFailed:
             return [NSLocalizedDescriptionKey: "handshake failure, not protocol compliant"]
