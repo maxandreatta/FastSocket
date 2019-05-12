@@ -10,12 +10,16 @@ import Foundation
 public enum FastSocketError: Int, Error {
     /// none is a placeholder
     case none = 0
-    /// thrown if handshake is failed
-    case handShakeFailed = 100
+    /// thrown if empty host address
+    case emptyHost = 90
+    /// thrown if handshake preparations failed
+    case handshakeInitializationFailed = 100
+    /// thrown if handshake comparisation failed (e.g. different hash values)
+    case handshakeVerificationFailed = 101
     /// thrown on connection timeout
-    case timeoutError = 101
+    case timeoutError = 102
     /// thrown if the could not connect to a network or loses connection
-    case networkUnreachable = 102
+    case networkUnreachable = 103
     /// thrown if sending failed
     case sendFailed = 200
     /// thrown if sending before connection is ready
@@ -48,8 +52,14 @@ public extension FastSocketError {
         case .none:
             return [NSLocalizedDescriptionKey: "null"]
 
-        case .handShakeFailed:
-            return [NSLocalizedDescriptionKey: "handshake failure, not protocol compliant"]
+        case .emptyHost:
+            return [NSLocalizedDescriptionKey: "host address cannot be empty!"]
+
+        case .handshakeInitializationFailed:
+            return [NSLocalizedDescriptionKey: "cannot create handshake data, please retry"]
+
+        case .handshakeVerificationFailed:
+            return [NSLocalizedDescriptionKey: "handshake verification failed, hash values are different. this can happen if theres a proxy network between..."]
 
         case .timeoutError:
             return [NSLocalizedDescriptionKey: "connection timeout error"]

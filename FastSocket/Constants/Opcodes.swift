@@ -17,7 +17,5 @@ internal enum Opcode: UInt8 {
     case data = 0x2
     /// finish byte is used on every end of a message
     case finish = 0x3
-    /// accept byte is used by the handshake
-    case accept = 0x6
-    /// 0x07 - 0xF reserved
+    /// 0x06 - 0xF reserved
 }

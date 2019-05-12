@@ -22,15 +22,14 @@ import Foundation
 // This describes the framing protocol.
 // - FIN: 0x3
 //      - The first byte is used to inform the the other side, that the
-//      - connection is finished and can be closed, this is used to prevent
-//      - that a connection will be closed but there are unread bytes on the connection
+//        connection is finished and can be closed, this is used to prevent
+//        that a connection will be closed but there are unread bytes on the connection
 // - OPC:
 //      - 0x0: this is the continue byte (currently a placeholder)
 //      - 0x1: this is the string byte which is used for string based messages
 //      - 0x2: this is the data byte which is used for data based messages
 //      - 0x3: this is the fin byte, which is part of OPC but is on the first place in the protocol
-//      - 0x6: this is the accept byte and is used by the handshake
-//      - 0x7 - 0xF: this bytes are reserved
+//      - 0x6 - 0xF: this bytes are reserved
 // - FRAME LENGTH:
 //      - this uses 8 bytes to store the entire frame size as a big endian uint64 value
 // - PAYLOAD:
@@ -52,7 +51,7 @@ internal final class Frame: FrameProtocol {
     ///     - isFinal: send a close frame to the host default is false
     internal func create(data: Data, opcode: Opcode, isFinal: Bool = false) throws -> Data {
         var outputFrame = Data()
-        let payloadLengthBytes = UInt64(data.count + Constant.overheadSize).data()
+        let payloadLengthBytes = UInt64(data.count + Constant.overheadSize).data
         if isFinal {
             outputFrame.append(Opcode.finish.rawValue)
         } else {
@@ -83,8 +82,8 @@ internal final class Frame: FrameProtocol {
         guard self.readBuffer.count >= self.contentSize() else {
             return
         }
-        while self.readBuffer.count >= self.contentSize() && self.contentSize() != 0 {
-            let slice = Data(self.readBuffer[0...self.contentSize() - 1])
+        while self.readBuffer.count >= self.contentSize() && self.contentSize() != .zero {
+            let slice = Data(self.readBuffer[...(self.contentSize() - 1)])
             switch slice[1] {
             case Opcode.string.rawValue:
                 guard let string = String(bytes: try self.trimFrame(frame: slice), encoding: .utf8) else {
@@ -113,10 +112,10 @@ private extension Frame {
     ///     - data: data to extract content size from
     private func contentSize() -> UInt64 {
         guard self.readBuffer.count >= Constant.overheadSize else {
-            return 0
+            return .zero
         }
         let size = Data(self.readBuffer[2...9])
-        return size.int()
+        return size.intValue()
     }
     /// private func to trimm frame to it's raw content
     /// - parameters:
@@ -125,7 +124,7 @@ private extension Frame {
         guard frame.count >= Constant.overheadSize else {
             throw FastSocketError.parsingFailure
         }
-        let data = Data(frame[10...])
+        let data = Data(frame[Constant.overheadSize...])
         return data
     }
 }

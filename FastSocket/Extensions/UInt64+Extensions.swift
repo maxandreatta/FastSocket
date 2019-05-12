@@ -10,7 +10,7 @@ import Foundation
 internal extension UInt64 {
     /// convert an integer value with BigEndianUint64
     /// to an Data array
-    func data() -> Data {
+    var data: Data {
         return withUnsafeBytes(of: UInt64(bigEndian: self)) { bytes in
             Data(bytes)
         }

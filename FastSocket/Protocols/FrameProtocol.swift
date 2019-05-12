@@ -30,8 +30,7 @@ import Foundation
 //      - 0x1: this is the string byte which is used for string based messages
 //      - 0x2: this is the data byte which is used for data based messages
 //      - 0x3: this is the fin byte, which is part of OPC but is on the first place in the protocol
-//      - 0x6: this is the accept byte and is used by the handshake
-//      - 0x7 - 0xF: this bytes are reserved
+//      - 0x6 - 0xF: this bytes are reserved
 // - FRAME LENGTH:
 //      - this uses 8 bytes to store the entire frame size as a big endian uint64 value
 // - PAYLOAD:
