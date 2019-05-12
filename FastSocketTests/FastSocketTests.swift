@@ -145,6 +145,19 @@ class FastSocketTests: XCTestCase {
         wait(for: [exp], timeout: 15.0)
     }
     
+    func testTimeout() {
+        let exp = expectation(description: "Wait for connection close")
+        let socket = FastSocket(host: "telekom.de", port: self.port)
+        socket.on.error = { error in
+            guard let error = error else { return }
+            XCTAssertEqual(error as! FastSocketError, FastSocketError.timeoutError)
+            exp.fulfill()
+        }
+        socket.connect()
+        wait(for: [exp], timeout: 15.0)
+    }
+
+    
     func testFastSocketError() {
         let socket = FastSocket(host: "", port: self.port)
         socket.on.error = { error in
