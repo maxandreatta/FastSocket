@@ -21,13 +21,13 @@ internal extension Data {
         }
         return Data(hash)
     }
-    /// convert big endian to uint64
-    var uint64: UInt64 {
+    /// generic func to extract integers from data as big endian
+    func intValue<T: FixedWidthInteger>() -> T {
         guard !self.isEmpty else {
             return .zero
         }
-        return UInt64(bigEndian: withUnsafeBytes { bytes in
-            bytes.load(as: UInt64.self)
+        return T(bigEndian: withUnsafeBytes { bytes in
+            bytes.load(as: T.self)
         })
     }
     /// slice data into chunks:
