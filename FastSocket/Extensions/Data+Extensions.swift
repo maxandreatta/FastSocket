@@ -5,7 +5,9 @@
 //  Created by Romero, Juan, SEVEN PRINCIPLES on 04.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
+import CommonCrypto
 import Foundation
+
 extension Data: SendProtocol {
     // conformance to send protocol
 }
@@ -26,5 +28,14 @@ internal extension Data {
         return UInt64(bigEndian: withUnsafeBytes { bytes in
             bytes.load(as: UInt64.self)
         })
+    }
+    /// generates a sha256 hash value
+    /// from .utf8 data and returns the hash as data
+    func SHA256() -> Data {
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        self.withUnsafeBytes {
+            _ = CC_SHA256($0.baseAddress, CC_LONG(self.count), &hash)
+        }
+        return Data(hash)
     }
 }

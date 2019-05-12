@@ -23,6 +23,7 @@ public final class FastSocket: FastSocketProtocol {
     private var frame = Frame()
     private var transfer: TransferProtocol?
     private var timer: DispatchSourceTimer?
+    private var sha256 = Data()
     private var isLocked = false
     /// create a instance of FastSocket
     /// - parameters:
@@ -36,10 +37,7 @@ public final class FastSocket: FastSocketProtocol {
     /// try to establish a connection to a
     /// FastSocket compliant server
     public func connect() {
-        self.isLocked = false
-        self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters)
-        self.transferClosures()
-        self.frameClosures()
+        self.initialize()
         guard let transfer = self.transfer else {
             return
         }
@@ -68,6 +66,15 @@ public final class FastSocket: FastSocketProtocol {
 }
 
 private extension FastSocket {
+    /// private func to reset all needed values
+    /// and initialize
+    private func initialize() {
+        self.isLocked = false
+        self.sha256 = Data()
+        self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters)
+        self.transferClosures()
+        self.frameClosures()
+    }
     /// generic write function, send data or string based messages
     /// internal use to handle the throw in the send function
     /// - parameters:
@@ -110,8 +117,9 @@ private extension FastSocket {
         guard let transfer = self.transfer else {
             return
         }
-        let data = Constant.socketID.data(using: .utf8)
-        transfer.send(data: data!)
+        let data = UUID().uuidString.data(using: .utf8)!
+        self.sha256 = data.SHA256()
+        transfer.send(data: data)
     }
     /// closures from the transfer protocol
     /// handles incoming data and handshake
@@ -138,7 +146,7 @@ private extension FastSocket {
                 }
 
             case false:
-                guard data.first == Opcode.accept.rawValue else {
+                guard data == self.sha256 else {
                     self.onError(FastSocketError.handShakeFailed)
                     return
                 }

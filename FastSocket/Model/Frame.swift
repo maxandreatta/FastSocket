@@ -22,8 +22,8 @@ import Foundation
 // This describes the framing protocol.
 // - FIN: 0x3
 //      - The first byte is used to inform the the other side, that the
-//      - connection is finished and can be closed, this is used to prevent
-//      - that a connection will be closed but there are unread bytes on the connection
+//        connection is finished and can be closed, this is used to prevent
+//        that a connection will be closed but there are unread bytes on the connection
 // - OPC:
 //      - 0x0: this is the continue byte (currently a placeholder)
 //      - 0x1: this is the string byte which is used for string based messages
