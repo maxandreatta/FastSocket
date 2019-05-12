@@ -115,7 +115,7 @@ private extension Frame {
             return .zero
         }
         let size = Data(self.readBuffer[2...9])
-        return size.int
+        return size.uint64
     }
     /// private func to trimm frame to it's raw content
     /// - parameters:

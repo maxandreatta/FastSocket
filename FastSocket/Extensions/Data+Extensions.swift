@@ -22,7 +22,7 @@ internal extension Data {
         return Data(hash)
     }
     /// convert big endian to uint64
-    var int: UInt64 {
+    var uint64: UInt64 {
         guard !self.isEmpty else {
             return .zero
         }
