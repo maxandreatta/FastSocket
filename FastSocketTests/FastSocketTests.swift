@@ -177,17 +177,15 @@ class FastSocketTests: XCTestCase {
     
     func testFrameErrorUnknown() {
         let frame = Frame()
-        var data = Data(count: 20)
-        data[1] = 0x3
-        data[9] = 20
-        XCTAssertThrowsError(try frame.parse(data: data)) { error in
+        let brokenFrame = try! frame.create(data: Data(), opcode: .continue)
+        XCTAssertThrowsError(try frame.parse(data: brokenFrame)) { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.unknownOpcode)
         }
     }
     
     func testFrameErrorOverflow() {
         let frame = Frame()
-        let data = Data(count: 17000000)
+        let data = Data(count: Constant.maximumContentLength)
         XCTAssertThrowsError(try frame.create(data: data, opcode: .data)) { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.writeBufferOverflow)
         }

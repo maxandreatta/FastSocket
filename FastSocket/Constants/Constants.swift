@@ -10,7 +10,7 @@ import Foundation
 internal enum Constant {
     /// for tcp socket reading, minimum stream length
     static let minimumIncompleteLength: Int = 1
-    /// maximum tcp frame size
+    /// maximum tcp readbuffer size
     static let maximumLength: Int = 8192
     /// queue prefix for network
     static let prefixNetwork = "network.dispatch."
@@ -18,7 +18,7 @@ internal enum Constant {
     static let prefixTimer = "timer.dispatch"
     /// timeout time
     static let timeout: TimeInterval = 5.0
-    /// maximum content size
+    /// maximum per message size
     static let maximumContentLength: Int = 16_777_216
     /// framing overhead
     static let overheadSize: Int = 10

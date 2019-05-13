@@ -15,9 +15,9 @@ internal extension Data {
     /// generates a sha256 hash value
     /// from .utf8 data and returns the hash as data
     var sha256: Data {
-        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-        self.withUnsafeBytes {
-            _ = CC_SHA256($0.baseAddress, CC_LONG(self.count), &hash)
+        var hash = [UInt8](repeating: .zero, count: Int(CC_SHA256_DIGEST_LENGTH))
+        self.withUnsafeBytes { bytes in
+            _ = CC_SHA256(bytes.baseAddress, CC_LONG(self.count), &hash)
         }
         return Data(hash)
     }
@@ -34,7 +34,7 @@ internal extension Data {
     /// - parameters:
     ///     - size: size of the sliced chunks
     func chunk(by size: Int) -> [Data] {
-        return stride(from: 0, to: self.count, by: size).map { count in
+        return stride(from: .zero, to: self.count, by: size).map { count in
             Data(self[count..<Swift.min(count + size, self.count)])
         }
     }
