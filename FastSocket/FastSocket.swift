@@ -17,21 +17,27 @@ import Network
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public final class FastSocket: FastSocketProtocol {
     public var on = FastSocketClosures()
-    public var parameters: NWParameters = .tcp
+    public var transferParameters = TransferParameters()
     private var host: String
     private var port: UInt16
     private var frame = Frame()
     private var transfer: TransferProtocol?
     private var timer: DispatchSourceTimer?
     private var sha256 = Data()
+    private var type: TransferType
     private var isLocked = false
+    private var allowUntrusted = false
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    public required init(host: String, port: UInt16) {
+    ///     - type: the transfer type (.tcp or .tls)
+    ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
+    public required init(host: String, port: UInt16, type: TransferType = .tcp, allowUntrusted: Bool = false) {
         self.host = host
         self.port = port
+        self.type = type
+        self.allowUntrusted = allowUntrusted
     }
     /// connect to the server
     /// try to establish a connection to a
@@ -75,7 +81,7 @@ private extension FastSocket {
         }
         self.isLocked = false
         self.sha256 = Data()
-        self.transfer = NetworkTransfer(host: self.host, port: self.port, parameters: self.parameters)
+        self.transfer = NetworkTransfer(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted, transferParameters: self.transferParameters)
         self.transferClosures()
         self.frameClosures()
     }

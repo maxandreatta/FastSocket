@@ -20,12 +20,14 @@ public protocol FastSocketProtocol {
     /// public access to the Network.framework parameter options
     /// that gives you the ability (for example) to define on which
     /// interface the traffic should be send
-    var parameters: NWParameters { get set }
+    var transferParameters: TransferParameters { get set }
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    init(host: String, port: UInt16)
+    ///     - type: the transfer type (.tcp or .tls)
+    ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
+    init(host: String, port: UInt16, type: TransferType, allowUntrusted: Bool)
     /// connect to the server
     /// try to establish a connection to a
     /// FastSocket compliant server

@@ -14,12 +14,14 @@ class FastSocketTests: XCTestCase {
     var timer: DispatchSourceTimer?
     var host: String = "socket.weist.it"
     var port: UInt16 = 8080
+    var type: TransferType = .tcp
+    var allowUntrusted: Bool = false
     
     func testStringSendAndRespond() {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "50000"
         var datacount = 0
-        let socket = FastSocket(host: self.host, port: self.port)
+        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -48,7 +50,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 50000)
         var datacount = 0
-        let socket = FastSocket(host: self.host, port: self.port)
+        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -78,7 +80,7 @@ class FastSocketTests: XCTestCase {
         let buffer = Data(count: 100)
         var messages = 0
         let sendValue = 100
-        let socket = FastSocket(host: self.host, port: self.port)
+        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
         socket.on.ready = {
             for _ in 1...sendValue {
                 socket.send(message: buffer)
@@ -107,7 +109,7 @@ class FastSocketTests: XCTestCase {
     #endif
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: self.host, port: self.port)
+        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
         socket.on.ready = {
             socket.disconnect()
         }
@@ -126,7 +128,7 @@ class FastSocketTests: XCTestCase {
     
     func testPerformance() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: self.host, port: self.port)
+        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
         var startTime = Date().timeIntervalSince1970
         socket.on.ready = {
             self.printInfo(Date().timeIntervalSince1970 - startTime)
@@ -156,7 +158,6 @@ class FastSocketTests: XCTestCase {
         socket.connect()
         wait(for: [exp], timeout: 15.0)
     }
-
     
     func testFastSocketError() {
         let socket = FastSocket(host: "", port: self.port)
