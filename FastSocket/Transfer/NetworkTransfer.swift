@@ -13,7 +13,7 @@ import Network
 /// the `Engine` of the FastSocket Protocol.
 /// It allows to enter directly the TCP Options
 internal class NetworkTransfer: TransferProtocol {
-    internal var on = TransferClosures()
+    internal var on = Closures()
     private var connection: NWConnection?
     private var monitor = NWPathMonitor()
     private var transferParameters: TransferParameters
@@ -191,7 +191,7 @@ private extension NetworkTransfer {
                     return
                 }
                 if let data = data {
-                    self.on.data(data)
+                    self.on.message(data)
                     self.on.bytes(.input(data.count))
                 }
                 switch isComplete {

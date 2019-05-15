@@ -8,14 +8,14 @@
 import Foundation
 /// Constants used by the protocol
 internal enum Constant {
-    /// for tcp socket reading, minimum stream length
-    static let minimumIncompleteLength: Int = 1
-    /// maximum tcp readbuffer size
-    static let maximumLength: Int = 8192
     /// queue prefix for network
     static let prefixNetwork = "network.dispatch."
     /// queue prefix for timer
     static let prefixTimer = "timer.dispatch"
+    /// for tcp socket reading, minimum stream length
+    static let minimumIncompleteLength: Int = 1
+    /// maximum tcp readbuffer size
+    static let maximumLength: Int = 8192
     /// timeout time
     static let timeout: TimeInterval = 5.0
     /// maximum per message size

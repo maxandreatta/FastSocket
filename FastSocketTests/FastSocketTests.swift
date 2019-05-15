@@ -186,39 +186,22 @@ class FastSocketTests: XCTestCase {
         }
     }
     
-    func testFrameErrorUnknown() {
-        let frame = Frame()
-        let brokenFrame = try! frame.create(data: Data(), opcode: .continue)
-        XCTAssertThrowsError(try frame.parse(data: brokenFrame)) { error in
-            XCTAssertEqual(error as! FastSocketError, FastSocketError.unknownOpcode)
-        }
-    }
-    
     func testFrameErrorOverflow() {
         let frame = Frame()
         let data = Data(count: Constant.maximumContentLength)
-        XCTAssertThrowsError(try frame.create(data: data, opcode: .data)) { error in
+        XCTAssertThrowsError(try frame.create(message: data)) { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.writeBufferOverflow)
         }
     }
     
     func testClosureCall() {
-        let transferClosures = TransferClosures()
-        let fastSocketClosures = FastSocketClosures()
-        
-        transferClosures.ready()
-        transferClosures.close()
-        transferClosures.data(Data())
-        transferClosures.bytes(.input(.zero))
-        transferClosures.bytes(.output(.zero))
-        transferClosures.error(FastSocketError.none)
-        
-        fastSocketClosures.ready()
-        fastSocketClosures.close()
-        fastSocketClosures.message("")
-        fastSocketClosures.bytes(.input(.zero))
-        fastSocketClosures.bytes(.output(.zero))
-        fastSocketClosures.error(FastSocketError.none)
+        let closures = Closures()
+        closures.ready()
+        closures.close()
+        closures.message("")
+        closures.bytes(.input(.zero))
+        closures.bytes(.output(.zero))
+        closures.error(FastSocketError.none)
     }
     
     func testSendStringError() {

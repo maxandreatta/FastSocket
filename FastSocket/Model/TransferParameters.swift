@@ -7,7 +7,8 @@
 //
 import Foundation
 import Network
-
+/// This is used to set some low level tcp parameters
+/// for network interface and other stuff like fast open
 public struct TransferParameters {
     /// Cause an NWListener to only advertise services on the local link,
     /// and only accept connections from the local link.

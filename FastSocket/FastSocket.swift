@@ -15,7 +15,7 @@ import Network
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public final class FastSocket: FastSocketProtocol {
-    public var on = FastSocketClosures()
+    public var on = Closures()
     public var transferParameters = TransferParameters()
     private var host: String
     private var port: UInt16
@@ -62,8 +62,15 @@ public final class FastSocket: FastSocketProtocol {
     /// - parameters:
     ///     - message: generic type (accepts data or string)
     public func send<T: MessageTypeProtocol>(message: T) {
+        guard self.isLocked else {
+            return
+        }
+        guard let transfer = self.transfer else {
+            return
+        }
         do {
-            try self.write(message: message)
+            let data = try frame.create(message: message)
+            transfer.send(data: data)
         } catch {
             self.onError(error)
         }
@@ -83,33 +90,6 @@ private extension FastSocket {
         self.transfer = NetworkTransfer(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted, transferParameters: self.transferParameters)
         self.transferClosures()
         self.frameClosures()
-    }
-    /// generic write function, send data or string based messages
-    /// internal use to handle the throw in the send function
-    /// - parameters:
-    ///     - message: generic type (accepts data or string)
-    private func write<T: MessageTypeProtocol>(message: T) throws {
-        guard self.isLocked else {
-            return
-        }
-        guard let transfer = self.transfer else {
-            return
-        }
-        switch message {
-        case let message as String:
-            guard let message = message.data(using: .utf8) else {
-                throw FastSocketError.parsingFailure
-            }
-            let frame = try self.frame.create(data: message, opcode: .string)
-            transfer.send(data: frame)
-
-        case let message as Data:
-            let frame = try self.frame.create(data: message, opcode: .data)
-            transfer.send(data: frame)
-
-        default:
-            break
-        }
     }
     /// suspends timeout and report on error
     /// - parameters:
@@ -148,8 +128,11 @@ private extension FastSocket {
             }
             self.handshake()
         }
-        transfer.on.data = { [weak self] data in
+        transfer.on.message = { [weak self] data in
             guard let self = self else {
+                return
+            }
+            guard case let data as Data = data else {
                 return
             }
             switch self.isLocked {

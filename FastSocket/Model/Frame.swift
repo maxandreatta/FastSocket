@@ -44,22 +44,37 @@ internal final class Frame: FrameProtocol {
 
     internal required init() {
     }
-    /// create a FastSocket Protocol compliant message frame
+    /// generic func to create a fastsocket protocol compliant
+    /// message frame
     /// - parameters:
-    ///     - data: the data that should be send
-    ///     - opcode: the frames Opcode, e.g. .string or .data
+    ///     - message: generic parameter, accepts string and data
     ///     - isFinal: send a close frame to the host default is false
-    internal func create(data: Data, opcode: Opcode, isFinal: Bool = false) throws -> Data {
+    internal func create<T: MessageTypeProtocol>(message: T, isFinal: Bool = false) throws -> Data {
         var outputFrame = Data()
-        let payloadLengthBytes = UInt64(data.count + Constant.overheadSize).data
-        if isFinal {
+        switch isFinal {
+        case true:
             outputFrame.append(Opcode.finish.rawValue)
-        } else {
+
+        case false:
             outputFrame.append(Opcode.continue.rawValue)
         }
-        outputFrame.append(opcode.rawValue)
-        outputFrame.append(payloadLengthBytes)
-        outputFrame.append(data)
+        switch message {
+        case let message as String:
+            guard let message = message.data(using: .utf8) else {
+                throw FastSocketError.parsingFailure
+            }
+            outputFrame.append(Opcode.string.rawValue)
+            outputFrame.append(UInt64(message.count + Constant.overheadSize).data)
+            outputFrame.append(message)
+
+        case let message as Data:
+            outputFrame.append(Opcode.data.rawValue)
+            outputFrame.append(UInt64(message.count + Constant.overheadSize).data)
+            outputFrame.append(message)
+
+        default:
+            throw FastSocketError.unknownOpcode
+        }
         guard outputFrame.count <= Constant.maximumContentLength else {
             throw FastSocketError.writeBufferOverflow
         }

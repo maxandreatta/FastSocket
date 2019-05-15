@@ -193,8 +193,8 @@
 		AC93AF5B2279E3EB0038B86D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				AC55ED9E2253B21800D4063A /* TransferProtocol.swift */,
 				AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */,
+				AC55ED9E2253B21800D4063A /* TransferProtocol.swift */,
 				AC86306622771B78002C553C /* FrameProtocol.swift */,
 				ACFAE9EC227C5972009B0D96 /* MessageTypeProtocol.swift */,
 				23795EF12256976A00622CB4 /* Typealiases.swift */,
