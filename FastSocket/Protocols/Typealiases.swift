@@ -12,7 +12,7 @@ public typealias Callback = () -> Void
 public typealias CallbackData = (Data) -> Void
 /// typealias for a closure which return an optional error
 public typealias CallbackError = (Error?) -> Void
-/// typealias for a closure which returns an integer
-public typealias CallbackInt = (Int) -> Void
-/// typealias for a closure which returns a string
-public typealias CallbackString = (String) -> Void
+/// typealias for the message closure
+public typealias CallbackMessage = (MessageTypeProtocol) -> Void
+/// typealias for a closure which returns the written and readed bytes count
+public typealias CallbackBytes = (ByteCountResult<Int>) -> Void

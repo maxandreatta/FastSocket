@@ -104,7 +104,7 @@ internal class NetworkTransfer: TransferProtocol {
                         self.on.error(error)
                         return
                     }
-                    self.on.dataWritten(data.count)
+                    self.on.bytes(.output(data.count))
                     if i == queued.endIndex - 1 {
                         self.isLocked = false
                     }
@@ -192,7 +192,7 @@ private extension NetworkTransfer {
                 }
                 if let data = data {
                     self.on.data(data)
-                    self.on.dataRead(data.count)
+                    self.on.bytes(.input(data.count))
                 }
                 switch isComplete {
                 case true:

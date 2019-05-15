@@ -5,7 +5,6 @@
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-// swiftlint:disable force_cast
 import Foundation
 import Network
 /// FastSocket is a proprietary communication protocol directly
@@ -62,7 +61,7 @@ public final class FastSocket: FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    public func send<T: SendProtocol>(message: T) {
+    public func send<T: MessageTypeProtocol>(message: T) {
         do {
             try self.write(message: message)
         } catch {
@@ -89,7 +88,7 @@ private extension FastSocket {
     /// internal use to handle the throw in the send function
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    private func write<T: SendProtocol>(message: T) throws {
+    private func write<T: MessageTypeProtocol>(message: T) throws {
         guard self.isLocked else {
             return
         }
@@ -97,12 +96,15 @@ private extension FastSocket {
             return
         }
         switch message {
-        case is String:
-            let frame = try self.frame.create(data: (message as! String).data(using: .utf8)!, opcode: .string)
+        case let message as String:
+            guard let message = message.data(using: .utf8) else {
+                throw FastSocketError.parsingFailure
+            }
+            let frame = try self.frame.create(data: message, opcode: .string)
             transfer.send(data: frame)
 
-        case is Data:
-            let frame = try self.frame.create(data: message as! Data, opcode: .data)
+        case let message as Data:
+            let frame = try self.frame.create(data: message, opcode: .data)
             transfer.send(data: frame)
 
         default:
@@ -168,16 +170,14 @@ private extension FastSocket {
                 self.on.ready()
             }
         }
-        transfer.on.close = self.on.close
         transfer.on.error = self.onError
-        transfer.on.dataRead = self.on.dataRead
-        transfer.on.dataWritten = self.on.dataWritten
+        transfer.on.close = self.on.close
+        transfer.on.bytes = self.on.bytes
     }
     /// closures from Frame
     /// returns the parsed messages
     private func frameClosures() {
-        self.frame.on.stringFrame = self.on.string
-        self.frame.on.dataFrame = self.on.data
+        self.frame.onMessage = self.on.message
     }
     /// start timeout on connecting
     private func startTimeout() {

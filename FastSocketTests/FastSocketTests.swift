@@ -25,14 +25,18 @@ class FastSocketTests: XCTestCase {
         socket.on.ready = {
             socket.send(message: buffer)
         }
-        socket.on.data = { data in
-            self.printInfo("RECEIVED THIS COUNT: \(data.count)")
-            XCTAssertEqual(data.count, Int(buffer))
-            exp.fulfill()
+        socket.on.message = { message in
+            if case let message as Data = message {
+                self.printInfo("RECEIVED THIS COUNT: \(message.count)")
+                XCTAssertEqual(message.count, Int(buffer))
+                exp.fulfill()
+            }
         }
-        socket.on.dataRead = { count in
-            datacount += count
-            self.printInfo("Data Count: \(datacount)")
+        socket.on.bytes = { bytes in
+            if case .input(let count) = bytes {
+                datacount += count
+                self.printInfo("Data Count: \(datacount)")
+            }
         }
         socket.on.close = {
             self.printInfo("connection closed")
@@ -54,14 +58,18 @@ class FastSocketTests: XCTestCase {
         socket.on.ready = {
             socket.send(message: buffer)
         }
-        socket.on.string = { text in
-            self.printInfo("RECEIVED THIS COUNT: \(text)")
-            XCTAssertEqual(buffer.count, Int(text))
-            exp.fulfill()
+        socket.on.message = { message in
+            if case let message as String = message {
+                self.printInfo("RECEIVED THIS COUNT: \(message)")
+                XCTAssertEqual(buffer.count, Int(message))
+                exp.fulfill()
+            }
         }
-        socket.on.dataWritten = { count in
-            datacount += count
-            self.printInfo("Data Count: \(datacount)")
+        socket.on.bytes = { bytes in
+            if case .output(let count) = bytes {
+                datacount += count
+                self.printInfo("Data Count: \(datacount)")
+            }
         }
         socket.on.close = {
             self.printInfo("connection closed")
@@ -86,12 +94,14 @@ class FastSocketTests: XCTestCase {
                 socket.send(message: buffer)
             }
         }
-        socket.on.string = { text in
-            self.printInfo("RECEIVED THIS COUNT: \(text)")
-            messages += 1
-            self.printInfo("Responded Times: \(messages)")
-            if messages == sendValue {
-                exp.fulfill()
+        socket.on.message = { message in
+            if case let message as String = message {
+                self.printInfo("RECEIVED THIS COUNT: \(message)")
+                messages += 1
+                self.printInfo("Responded Times: \(messages)")
+                if messages == sendValue {
+                    exp.fulfill()
+                }
             }
         }
         socket.on.close = {
@@ -193,26 +203,21 @@ class FastSocketTests: XCTestCase {
     }
     
     func testClosureCall() {
-        let frameClosures = FrameClosures()
         let transferClosures = TransferClosures()
         let fastSocketClosures = FastSocketClosures()
-        
-        frameClosures.dataFrame(Data())
-        frameClosures.stringFrame("")
         
         transferClosures.ready()
         transferClosures.close()
         transferClosures.data(Data())
-        transferClosures.dataRead(Int())
-        transferClosures.dataWritten(Int())
+        transferClosures.bytes(.input(.zero))
+        transferClosures.bytes(.output(.zero))
         transferClosures.error(FastSocketError.none)
         
         fastSocketClosures.ready()
         fastSocketClosures.close()
-        fastSocketClosures.data(Data())
-        fastSocketClosures.string(String())
-        fastSocketClosures.dataRead(Int())
-        fastSocketClosures.dataWritten(Int())
+        fastSocketClosures.message("")
+        fastSocketClosures.bytes(.input(.zero))
+        fastSocketClosures.bytes(.output(.zero))
         fastSocketClosures.error(FastSocketError.none)
     }
     

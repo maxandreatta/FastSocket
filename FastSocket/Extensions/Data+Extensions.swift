@@ -8,7 +8,7 @@
 import CommonCrypto
 import Foundation
 
-extension Data: SendProtocol {
+extension Data: MessageTypeProtocol {
     // conformance to send protocol
 }
 internal extension Data {

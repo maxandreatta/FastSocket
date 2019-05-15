@@ -39,7 +39,7 @@ import Foundation
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal final class Frame: FrameProtocol {
-    internal var on = FrameClosures()
+    internal var onMessage: CallbackMessage = { message in }
     private var readBuffer = Data()
 
     internal required init() {
@@ -89,10 +89,10 @@ internal final class Frame: FrameProtocol {
                 guard let string = String(bytes: try self.trimFrame(frame: slice), encoding: .utf8) else {
                     throw FastSocketError.parsingFailure
                 }
-                self.on.stringFrame(string)
+                self.onMessage(string)
 
             case Opcode.data.rawValue:
-                self.on.dataFrame(try self.trimFrame(frame: slice))
+                self.onMessage(try self.trimFrame(frame: slice))
 
             default:
                 throw FastSocketError.unknownOpcode
