@@ -16,9 +16,11 @@ internal protocol TransferProtocol {
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    ///     - parameters: Network.framework Parameters `optional`
+    ///     - type: the transfer type (.tcp or .tls)
+    ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
+    ///     - transferParameters: TransportParameters `optional`
     ///     - queue: Dispatch Qeue `optional`
-    init(host: String, port: UInt16, parameters: NWParameters, queue: DispatchQueue)
+    init(host: String, port: UInt16, type: TransferType, allowUntrusted: Bool, transferParameters: TransferParameters, queue: DispatchQueue)
     /// connect to a host
     /// prevent reconnecting after a connection
     /// was successfully established
