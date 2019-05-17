@@ -22,4 +22,6 @@ internal enum Constant {
     static let maximumContentLength: Int = 16_777_216
     /// framing overhead
     static let overheadSize: Int = 10
+    /// maximum itteration size
+    static let itterations: Int = 256
 }

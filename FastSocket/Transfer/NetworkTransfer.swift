@@ -89,7 +89,7 @@ internal class NetworkTransfer: TransferProtocol {
                 return
             }
             self.isLocked = true
-            let queued = data.chunk(by: Constant.maximumLength)
+            let queued = data.chunk(by: Constant.itterations)
             guard !queued.isEmpty else {
                 return
             }

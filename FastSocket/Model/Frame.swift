@@ -129,7 +129,7 @@ private extension Frame {
         guard self.readBuffer.count >= Constant.overheadSize else {
             return .zero
         }
-        let size = Data(self.readBuffer[2...9])
+        let size = Data(self.readBuffer[2...Constant.overheadSize - 1])
         return size.intValue()
     }
     /// private func to trimm frame to it's raw content
