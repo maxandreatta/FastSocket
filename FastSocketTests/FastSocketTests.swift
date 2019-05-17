@@ -313,7 +313,7 @@ fileprivate enum PrintType {
     /// for error messages
     case error
 }
-/// generic debugPrint any value as info, warning or error with emojis
+/// generic print any value as info, warning or error with emojis
 /// - parameters:
 ///     - type: there are the following types
 ///         - ℹ️ [INFO]:
