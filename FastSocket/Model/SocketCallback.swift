@@ -16,7 +16,7 @@ public struct SocketCallback {
     /// called if a data or string based message was received
     public var message: CallbackMessage = { message in }
     /// called if bytes are written or readed from the socket
-    internal var bytes: CallbackBytes = { bytes in }
+    public var bytes: CallbackBytes = { bytes in }
     /// called if an error is provided
     public var error: CallbackError = { error in }
 }
