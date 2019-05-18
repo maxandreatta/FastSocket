@@ -32,7 +32,7 @@ class FastSocketTests: XCTestCase {
         }
         socket.on.message = { message in
             if case let message as Data = message {
-                print(.info, "RECEIVED THIS COUNT: \(message.count)")
+                debugPrint("RECEIVED THIS COUNT: \(message.count)")
                 XCTAssertEqual(message.count, Int(buffer))
                 exp.fulfill()
             }
@@ -40,15 +40,15 @@ class FastSocketTests: XCTestCase {
         socket.on.bytes = { bytes in
             if case .input(let count) = bytes {
                 datacount += count
-                print(.info, "Data Count: \(datacount)")
+                debugPrint("Data Count: \(datacount)")
             }
         }
         socket.on.close = {
-            print(.warning, "connection closed")
+            debugPrint("connection closed")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            print(.error, "Failed with Error: \(error)")
+            debugPrint("Failed with Error: \(error)")
             XCTFail()
         }
         socket.connect()
@@ -66,7 +66,7 @@ class FastSocketTests: XCTestCase {
         }
         socket.on.message = { message in
             if case let message as String = message {
-                print(.info, "hello")
+                debugPrint("hello")
                 XCTAssertEqual(buffer.count, Int(message))
                 exp.fulfill()
             }
@@ -74,15 +74,15 @@ class FastSocketTests: XCTestCase {
         socket.on.bytes = { bytes in
             if case .output(let count) = bytes {
                 datacount += count
-                print(.info, "Data Count: \(datacount)")
+                debugPrint("Data Count: \(datacount)")
             }
         }
         socket.on.close = {
-            print(.warning, "connection closed")
+            debugPrint("connection closed")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            print(.error, "Failed with Error: \(error)")
+            debugPrint("Failed with Error: \(error)")
             XCTFail()
         }
         socket.connect()
@@ -104,20 +104,20 @@ class FastSocketTests: XCTestCase {
         }
         socket.on.message = { message in
             if case let message as String = message {
-                print(.info, "RECEIVED THIS COUNT: \(message)")
+                debugPrint("RECEIVED THIS COUNT: \(message)")
                 messages += 1
-                print(.info, "Responded Times: \(messages)")
+                debugPrint("Responded Times: \(messages)")
                 if messages == sendValue {
                     exp.fulfill()
                 }
             }
         }
         socket.on.close = {
-            print(.warning, "connection closed")
+            debugPrint("connection closed")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            print(.error, "Failed with Error: \(error)")
+            debugPrint("Failed with Error: \(error)")
             XCTFail()
         }
         socket.connect()
@@ -138,20 +138,20 @@ class FastSocketTests: XCTestCase {
         }
         socket.on.message = { message in
             if case let message as Data = message {
-                print(.info, "RECEIVED THIS COUNT: \(message.count)")
+                debugPrint("RECEIVED THIS COUNT: \(message.count)")
                 messages += 1
-                print(.info, "Responded Times: \(messages)")
+                debugPrint("Responded Times: \(messages)")
                 if messages == sendValue {
                     exp.fulfill()
                 }
             }
         }
         socket.on.close = {
-            print(.warning, "connection closed")
+            debugPrint("connection closed")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            print(.error, "Failed with Error: \(error)")
+            debugPrint("Failed with Error: \(error)")
             XCTFail()
         }
         socket.connect()
@@ -166,12 +166,12 @@ class FastSocketTests: XCTestCase {
             socket.disconnect()
         }
         socket.on.close = {
-            print(.warning, "Connection Closed!")
+            debugPrint("Connection Closed!")
             exp.fulfill()
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            print(.error, "Failed with Error: \(error)")
+            debugPrint("Failed with Error: \(error)")
             XCTFail()
         }
         socket.connect()
@@ -184,16 +184,16 @@ class FastSocketTests: XCTestCase {
         let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
         var startTime = Date().timeIntervalSince1970
         socket.on.ready = {
-            print(.info, Date().timeIntervalSince1970 - startTime)
+            debugPrint(Date().timeIntervalSince1970 - startTime)
             exp.fulfill()
         }
         socket.on.close = {
-            print("CLOSED")
-            print(.warning, "Connection Closed!")
+            debugPrint("CLOSED")
+            debugPrint("Connection Closed!")
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            print(.error, "Failed with Error: \(error)")
+            debugPrint("Failed with Error: \(error)")
             XCTFail()
         }
         startTime = Date().timeIntervalSince1970
@@ -240,7 +240,7 @@ class FastSocketTests: XCTestCase {
     }
     /// a test to look if the closures work
     func testClosureCall() {
-        let closures = Closures()
+        let closures = SocketCallback()
         closures.ready()
         closures.close()
         closures.message("")
@@ -302,37 +302,5 @@ class FastSocketTests: XCTestCase {
             exp.fulfill()
         }
         wait(for: [exp], timeout: 2.0)
-    }
-}
-/// the print type
-fileprivate enum PrintType {
-    /// for info messages
-    case info
-    /// for warning message
-    case warning
-    /// for error messages
-    case error
-}
-/// generic print any value as info, warning or error with emojis
-/// - parameters:
-///     - type: there are the following types
-///         - ℹ️ [INFO]:
-///         - ⚠️ [WARNING]:
-///         - ❌ [ERROR]:
-///     - info: generic parameter, can print any value
-fileprivate func print<T>(_ type: PrintType, _ info: T...) {
-    switch type {
-    case .info:
-        Swift.print("ℹ️ [INFO]: \(info.minimalDescription)")
-    case .warning:
-        Swift.print("⚠️ [WARNING]: \(info.minimalDescription)")
-    case .error:
-        Swift.print("❌ [ERROR]: \(info.minimalDescription)")
-    }
-}
-/// private extension, mapps sequences as string
-fileprivate extension Sequence {
-    var minimalDescription: String {
-        return map { "\($0)" }.joined(separator: " ")
     }
 }

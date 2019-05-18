@@ -22,10 +22,10 @@ internal extension Data {
         return Data(hash)
     }
     /// slice data into chunks, dynamically based
-    /// on maximum itterations for sending, minimum size
+    /// on maximum iterations for sending, minimum size
     /// is 8192 per sliceBytes
-    func chunk(by itterations: Int) -> [Data] {
-        var size = self.count / itterations
+    func chunk(by iterations: Int) -> [Data] {
+        var size = self.count / iterations
         if size <= 8192 {
             size = 8192
         }

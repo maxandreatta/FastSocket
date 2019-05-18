@@ -60,17 +60,10 @@ internal final class Frame: FrameProtocol {
         }
         switch message {
         case let message as String:
-            guard let message = message.data(using: .utf8) else {
-                throw FastSocketError.parsingFailure
-            }
-            outputFrame.append(Opcode.string.rawValue)
-            outputFrame.append(UInt64(message.count + Constant.overheadSize).data)
-            outputFrame.append(message)
+            try self.buildStringMessage(frame: &outputFrame, message: message)
 
         case let message as Data:
-            outputFrame.append(Opcode.data.rawValue)
-            outputFrame.append(UInt64(message.count + Constant.overheadSize).data)
-            outputFrame.append(message)
+            self.buildDataMessage(frame: &outputFrame, message: message)
 
         default:
             throw FastSocketError.unknownOpcode
@@ -122,6 +115,29 @@ internal final class Frame: FrameProtocol {
 }
 
 private extension Frame {
+    /// build a string based message, appends the necessary data
+    /// to the original reference
+    /// - parameters:
+    ///     - frame: the original data frame, this is a reference to the value
+    ///     - message: the original text message
+    private func buildStringMessage(frame: inout Data, message: String) throws {
+        guard let message = message.data(using: .utf8) else {
+            throw FastSocketError.parsingFailure
+        }
+        frame.append(Opcode.string.rawValue)
+        frame.append(UInt64(message.count + Constant.overheadSize).data)
+        frame.append(message)
+    }
+    /// build a data based message, appends the necessary data
+    /// to the original reference
+    /// - parameters:
+    ///     - frame: the original data frame, this is a reference to the value
+    ///     - message: the original data message
+    private func buildDataMessage(frame: inout Data, message: Data) {
+        frame.append(Opcode.data.rawValue)
+        frame.append(UInt64(message.count + Constant.overheadSize).data)
+        frame.append(message)
+    }
     /// private function to get parse the overhead size of a frame
     /// - parameters:
     ///     - data: data to extract content size from

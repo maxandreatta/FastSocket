@@ -13,7 +13,7 @@ import Network
 /// the `Engine` of the FastSocket Protocol.
 /// It allows to enter directly the TCP Options
 internal class NetworkTransfer: TransferProtocol {
-    internal var on = Closures()
+    internal var on = SocketCallback()
     private var connection: NWConnection?
     private var monitor = NWPathMonitor()
     private var transferParameters: TransferParameters
@@ -89,12 +89,12 @@ internal class NetworkTransfer: TransferProtocol {
                 return
             }
             self.isLocked = true
-            let queued = data.chunk(by: Constant.itterations)
+            let queued = data.chunk(by: Constant.iterations)
             guard !queued.isEmpty else {
                 return
             }
-            var itterator = queued.enumerated().makeIterator()
-            while let (i, data) = itterator.next() {
+            var iterator = queued.enumerated().makeIterator()
+            while let (i, data) = iterator.next() {
                 connection.send(content: Data(data), completion: .contentProcessed({ error in
                     if let error = error {
                         guard error != NWError.posix(.ECANCELED) else {

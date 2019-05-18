@@ -11,7 +11,7 @@ import Network
 /// this will be used to implement a fallback with foundation in the future
 internal protocol TransferProtocol {
     /// the events
-    var on: Closures { get set }
+    var on: SocketCallback { get set }
     /// create a instance of NetworkTransfer
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"

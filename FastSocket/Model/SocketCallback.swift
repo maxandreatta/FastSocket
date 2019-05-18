@@ -1,5 +1,5 @@
 //
-//  Closures.swift
+//  SocketCallback.swift
 //  FastSocket
 //
 //  Created by Vinzenz Weist on 02.04.19.
@@ -8,7 +8,7 @@
 import Foundation
 /// FastSocketClosures are used by the Protocol to provide
 /// necessary features
-public struct Closures {
+public struct SocketCallback {
     /// called if the connection is ready
     public var ready: Callback = { }
     /// called if the connection was closed

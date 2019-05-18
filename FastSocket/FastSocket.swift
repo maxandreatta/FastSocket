@@ -15,7 +15,7 @@ import Network
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public final class FastSocket: FastSocketProtocol {
-    public var on = Closures()
+    public var on = SocketCallback()
     public var transferParameters = TransferParameters()
     private var host: String
     private var port: UInt16
@@ -62,10 +62,7 @@ public final class FastSocket: FastSocketProtocol {
     /// - parameters:
     ///     - message: generic type (accepts data or string)
     public func send<T: MessageTypeProtocol>(message: T) {
-        guard self.isLocked else {
-            return
-        }
-        guard let transfer = self.transfer else {
+        guard self.isLocked, let transfer = self.transfer else {
             return
         }
         do {
