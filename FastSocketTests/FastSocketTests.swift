@@ -212,6 +212,19 @@ class FastSocketTests: XCTestCase {
         socket.connect()
         wait(for: [exp], timeout: 15.0)
     }
+    /// a test to look if the tls config is loaded
+    func testTLSError() {
+        let exp = expectation(description: "Wait for connection close")
+        let socket = FastSocket(host: self.host, port: self.port, type: .tls, allowUntrusted: true)
+        socket.on.error = { error in
+            guard let error = error else { return }
+            debugPrint(error)
+            XCTAssertEqual(error as! NWError, NWError.tls(-9816))
+            exp.fulfill()
+        }
+        socket.connect()
+        wait(for: [exp], timeout: 15.0)
+    }
     /// a test to look if the framework recognize empty host addresses
     func testFastSocketError() {
         let socket = FastSocket(host: "", port: self.port)
