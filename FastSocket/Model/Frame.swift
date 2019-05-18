@@ -39,27 +39,35 @@ import Foundation
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal final class Frame: FrameProtocol {
-    internal var on = FrameClosures()
+    internal var onMessage: CallbackMessage = { message in }
     private var readBuffer = Data()
 
     internal required init() {
     }
-    /// create a FastSocket Protocol compliant message frame
+    /// generic func to create a fastsocket protocol compliant
+    /// message frame
     /// - parameters:
-    ///     - data: the data that should be send
-    ///     - opcode: the frames Opcode, e.g. .string or .data
+    ///     - message: generic parameter, accepts string and data
     ///     - isFinal: send a close frame to the host default is false
-    internal func create(data: Data, opcode: Opcode, isFinal: Bool = false) throws -> Data {
+    internal func create<T: MessageTypeProtocol>(message: T, isFinal: Bool = false) throws -> Data {
         var outputFrame = Data()
-        let payloadLengthBytes = UInt64(data.count + Constant.overheadSize).data
-        if isFinal {
+        switch isFinal {
+        case true:
             outputFrame.append(Opcode.finish.rawValue)
-        } else {
+
+        case false:
             outputFrame.append(Opcode.continue.rawValue)
         }
-        outputFrame.append(opcode.rawValue)
-        outputFrame.append(payloadLengthBytes)
-        outputFrame.append(data)
+        switch message {
+        case let message as String:
+            try self.buildStringMessage(frame: &outputFrame, message: message)
+
+        case let message as Data:
+            self.buildDataMessage(frame: &outputFrame, message: message)
+
+        default:
+            throw FastSocketError.unknownOpcode
+        }
         guard outputFrame.count <= Constant.maximumContentLength else {
             throw FastSocketError.writeBufferOverflow
         }
@@ -89,10 +97,10 @@ internal final class Frame: FrameProtocol {
                 guard let string = String(bytes: try self.trimFrame(frame: slice), encoding: .utf8) else {
                     throw FastSocketError.parsingFailure
                 }
-                self.on.stringFrame(string)
+                self.onMessage(string)
 
             case Opcode.data.rawValue:
-                self.on.dataFrame(try self.trimFrame(frame: slice))
+                self.onMessage(try self.trimFrame(frame: slice))
 
             default:
                 throw FastSocketError.unknownOpcode
@@ -107,6 +115,29 @@ internal final class Frame: FrameProtocol {
 }
 
 private extension Frame {
+    /// build a string based message, appends the necessary data
+    /// to the original reference
+    /// - parameters:
+    ///     - frame: the original data frame, this is a reference to the value
+    ///     - message: the original text message
+    private func buildStringMessage(frame: inout Data, message: String) throws {
+        guard let message = message.data(using: .utf8) else {
+            throw FastSocketError.parsingFailure
+        }
+        frame.append(Opcode.string.rawValue)
+        frame.append(UInt64(message.count + Constant.overheadSize).data)
+        frame.append(message)
+    }
+    /// build a data based message, appends the necessary data
+    /// to the original reference
+    /// - parameters:
+    ///     - frame: the original data frame, this is a reference to the value
+    ///     - message: the original data message
+    private func buildDataMessage(frame: inout Data, message: Data) {
+        frame.append(Opcode.data.rawValue)
+        frame.append(UInt64(message.count + Constant.overheadSize).data)
+        frame.append(message)
+    }
     /// private function to get parse the overhead size of a frame
     /// - parameters:
     ///     - data: data to extract content size from
@@ -114,7 +145,7 @@ private extension Frame {
         guard self.readBuffer.count >= Constant.overheadSize else {
             return .zero
         }
-        let size = Data(self.readBuffer[2...9])
+        let size = Data(self.readBuffer[2...Constant.overheadSize - 1])
         return size.intValue()
     }
     /// private func to trimm frame to it's raw content

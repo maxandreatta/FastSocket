@@ -16,7 +16,7 @@ import Network
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public protocol FastSocketProtocol {
     /// public access to the event based closures
-    var on: FastSocketClosures { get set }
+    var on: SocketCallback { get set }
     /// public access to the Network.framework parameter options
     /// that gives you the ability (for example) to define on which
     /// interface the traffic should be send
@@ -38,5 +38,5 @@ public protocol FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    func send<T: SendProtocol>(message: T)
+    func send<T: MessageTypeProtocol>(message: T)
 }

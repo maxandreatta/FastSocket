@@ -8,7 +8,7 @@
 import CommonCrypto
 import Foundation
 
-extension Data: SendProtocol {
+extension Data: MessageTypeProtocol {
     // conformance to send protocol
 }
 internal extension Data {
@@ -21,6 +21,18 @@ internal extension Data {
         }
         return Data(hash)
     }
+    /// slice data into chunks, dynamically based
+    /// on maximum iterations for sending, minimum size
+    /// is 8192 per sliceBytes
+    func chunk(by iterations: Int) -> [Data] {
+        var size = self.count / iterations
+        if size <= 8192 {
+            size = 8192
+        }
+        return stride(from: .zero, to: self.count, by: size).map { count in
+            Data(self[count..<Swift.min(count + size, self.count)])
+        }
+    }
     /// generic func to extract integers from data as big endian
     func intValue<T: FixedWidthInteger>() -> T {
         guard !self.isEmpty else {
@@ -29,13 +41,5 @@ internal extension Data {
         return T(bigEndian: withUnsafeBytes { bytes in
             bytes.load(as: T.self)
         })
-    }
-    /// slice data into chunks:
-    /// - parameters:
-    ///     - size: size of the sliced chunks
-    func chunk(by size: Int) -> [Data] {
-        return stride(from: .zero, to: self.count, by: size).map { count in
-            Data(self[count..<Swift.min(count + size, self.count)])
-        }
     }
 }

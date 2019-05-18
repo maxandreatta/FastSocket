@@ -16,12 +16,13 @@
 		AC24FFD1228214CE0025AEDF /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = AC24FFD0228214CE0025AEDF /* CHANGELOG.md */; };
 		AC2ACF82228A0DEF00976362 /* TransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2ACF81228A0DEF00976362 /* TransferType.swift */; };
 		AC2ACF84228A175A00976362 /* TransferParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2ACF83228A175A00976362 /* TransferParameters.swift */; };
+		AC2ACF88228C170D00976362 /* ByteCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2ACF87228C170D00976362 /* ByteCountResult.swift */; };
 		AC2B8231228476C80084A614 /* UInt64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2B8230228476C80084A614 /* UInt64+Extensions.swift */; };
 		AC55ED8A2253B1ED00D4063A /* FastSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC55ED802253B1ED00D4063A /* FastSocket.framework */; };
 		AC55ED8F2253B1ED00D4063A /* FastSocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED8E2253B1ED00D4063A /* FastSocketTests.swift */; };
 		AC55ED912253B1ED00D4063A /* FastSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AC55ED832253B1ED00D4063A /* FastSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC55EDA32253B21800D4063A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9A2253B21800D4063A /* Error.swift */; };
-		AC55EDA42253B21800D4063A /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9B2253B21800D4063A /* Closures.swift */; };
+		AC55EDA42253B21800D4063A /* SocketCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9B2253B21800D4063A /* SocketCallback.swift */; };
 		AC55EDA52253B21800D4063A /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9C2253B21800D4063A /* Frame.swift */; };
 		AC55EDA62253B21800D4063A /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9E2253B21800D4063A /* TransferProtocol.swift */; };
 		AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9F2253B21800D4063A /* FastSocket.swift */; };
@@ -31,7 +32,7 @@
 		AC635E06226549AA00CFFBAD /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */; };
 		AC86306722771B78002C553C /* FrameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86306622771B78002C553C /* FrameProtocol.swift */; };
 		AC93AF9C2279EC150038B86D /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = AC93AF9B2279EC150038B86D /* Fastfile */; };
-		ACFAE9ED227C5972009B0D96 /* SendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE9EC227C5972009B0D96 /* SendProtocol.swift */; };
+		ACFAE9ED227C5972009B0D96 /* MessageTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE9EC227C5972009B0D96 /* MessageTypeProtocol.swift */; };
 		ACFAE9EF227C5B50009B0D96 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE9EE227C5B50009B0D96 /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		AC24FFD0228214CE0025AEDF /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		AC2ACF81228A0DEF00976362 /* TransferType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferType.swift; sourceTree = "<group>"; };
 		AC2ACF83228A175A00976362 /* TransferParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferParameters.swift; sourceTree = "<group>"; };
+		AC2ACF87228C170D00976362 /* ByteCountResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteCountResult.swift; sourceTree = "<group>"; };
 		AC2B8230228476C80084A614 /* UInt64+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt64+Extensions.swift"; sourceTree = "<group>"; };
 		AC55ED802253B1ED00D4063A /* FastSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FastSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC55ED832253B1ED00D4063A /* FastSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastSocket.h; sourceTree = "<group>"; };
@@ -63,7 +65,7 @@
 		AC55ED8E2253B1ED00D4063A /* FastSocketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketTests.swift; sourceTree = "<group>"; };
 		AC55ED902253B1ED00D4063A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC55ED9A2253B21800D4063A /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		AC55ED9B2253B21800D4063A /* Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
+		AC55ED9B2253B21800D4063A /* SocketCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketCallback.swift; sourceTree = "<group>"; };
 		AC55ED9C2253B21800D4063A /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		AC55ED9E2253B21800D4063A /* TransferProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
 		AC55ED9F2253B21800D4063A /* FastSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocket.swift; sourceTree = "<group>"; };
@@ -73,7 +75,7 @@
 		AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
 		AC86306622771B78002C553C /* FrameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
 		AC93AF9B2279EC150038B86D /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; };
-		ACFAE9EC227C5972009B0D96 /* SendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendProtocol.swift; sourceTree = "<group>"; };
+		ACFAE9EC227C5972009B0D96 /* MessageTypeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTypeProtocol.swift; sourceTree = "<group>"; };
 		ACFAE9EE227C5B50009B0D96 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,7 +184,8 @@
 			children = (
 				AC55ED9C2253B21800D4063A /* Frame.swift */,
 				AC2ACF83228A175A00976362 /* TransferParameters.swift */,
-				AC55ED9B2253B21800D4063A /* Closures.swift */,
+				AC2ACF87228C170D00976362 /* ByteCountResult.swift */,
+				AC55ED9B2253B21800D4063A /* SocketCallback.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,10 +193,10 @@
 		AC93AF5B2279E3EB0038B86D /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				AC55ED9E2253B21800D4063A /* TransferProtocol.swift */,
 				AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */,
+				AC55ED9E2253B21800D4063A /* TransferProtocol.swift */,
 				AC86306622771B78002C553C /* FrameProtocol.swift */,
-				ACFAE9EC227C5972009B0D96 /* SendProtocol.swift */,
+				ACFAE9EC227C5972009B0D96 /* MessageTypeProtocol.swift */,
 				23795EF12256976A00622CB4 /* Typealiases.swift */,
 			);
 			path = Protocols;
@@ -363,15 +366,16 @@
 				AC55EDA92253B21800D4063A /* Opcodes.swift in Sources */,
 				AC86306722771B78002C553C /* FrameProtocol.swift in Sources */,
 				AC2B8231228476C80084A614 /* UInt64+Extensions.swift in Sources */,
+				AC2ACF88228C170D00976362 /* ByteCountResult.swift in Sources */,
 				AC55EDA52253B21800D4063A /* Frame.swift in Sources */,
 				AC0EF7BA227078DC00024EA5 /* Timer+Extension.swift in Sources */,
-				AC55EDA42253B21800D4063A /* Closures.swift in Sources */,
+				AC55EDA42253B21800D4063A /* SocketCallback.swift in Sources */,
 				AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */,
 				AC55EDA32253B21800D4063A /* Error.swift in Sources */,
 				ACFAE9EF227C5B50009B0D96 /* String+Extensions.swift in Sources */,
 				AC2ACF82228A0DEF00976362 /* TransferType.swift in Sources */,
 				23795EF622569A2B00622CB4 /* Constants.swift in Sources */,
-				ACFAE9ED227C5972009B0D96 /* SendProtocol.swift in Sources */,
+				ACFAE9ED227C5972009B0D96 /* MessageTypeProtocol.swift in Sources */,
 				AC2ACF84228A175A00976362 /* TransferParameters.swift in Sources */,
 				23795EF922569A5800622CB4 /* Data+Extensions.swift in Sources */,
 				AC635E06226549AA00CFFBAD /* FastSocketProtocol.swift in Sources */,

@@ -6,6 +6,6 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
-extension String: SendProtocol {
+extension String: MessageTypeProtocol {
     // conformance to send protocol
 }

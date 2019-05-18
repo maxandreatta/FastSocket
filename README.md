@@ -22,7 +22,8 @@
 - [X] all errors are routed through the error closure
 - [X] maximum frame size 16777216 bytes (with overhead)
 - [X] content length base framing instead of fin byte termination
-- [X] send/receive multiple messages at once -> **works but currently blocked in the framework**
+- [X] send/receive multiple messages at once (currently only in debug mode)
+- [X] **TLS support with the ability to allow untrusted certificates**
 
 ## **Note:**
 **All versions with 0.5.0 or less will not work with the current backend because we redesigned the protocol and the framing to give the ability to send and receive multiple messages at once. But for now the feature is blocked in the framework**
@@ -68,7 +69,11 @@ github "Vinz1911/FastSocket"
 ```swift
 // import the Framework
 import FastSocket
+// normal init with TCP (unsecure) transfer type
 let socket = FastSocket(host: "example.com", port: 8080)
+// enhanced init with the ability to set TLS (secure) as transfer type
+// it's also possible to accept connections with untrusted certs
+let socket = FastSocket(host: "example.com", port: 443, type: .tls, allowUntrusted: true)
 
 ```
 
@@ -79,21 +84,13 @@ socket.on.ready = {
     // this is called after the connection
     // was successfully established and is ready
 }
-socket.on.data = { data in
+socket.on.message = { message in
     // this is called everytime
-    // a data message was received
+    // a message was received
 }
-socket.on.string = { string in
-    // this is called everytime
-    // a text message was received
-}
-socket.on.dataRead = { count in
+socket.on.bytes = { count in
     // this is called every 8192 bytes
     // are readed from the socket
-}
-socket.on.dataWritten = { count in
-    // this is called every 8192 bytes
-    // are written on the socket
 }
 socket.on.close = {
     // this is called after
@@ -105,11 +102,46 @@ socket.on.error = { error in
 }
 ```
 
+## Cast Messages:
+```swift
+socket.on.message = { message in
+    // it's only possible to cast messages
+    // as Data or as String
+    if case let message as Data = message {
+        // cast message as data
+        print("Data count: \(message.count)")
+    }
+    if case let message as String = message {
+        // cast message as string
+        print("Message: \(message)")
+    }
+}
+
+```
+
+## Read Bytes Count:
+```swift
+socket.on.bytes = { bytes in
+    // input bytes are the ones, which are
+    // readed from the socket, this function
+    // returns the byte count
+    if case .input(let count) = bytes {
+        print("Bytes count: \(count)")
+    }
+    // output bytes are the ones, which are
+    // written on the socket, this function
+    // returns the byte count
+    if case .output(let count) = bytes {
+        print("Bytes count: \(count)")
+    }
+}
+```
+
 ## Connect:
 
 ```swift
 // try to connect to the host
-// timeout after 3.0 seconds
+// timeout after 5.0 seconds
 socket.connect()
 ```
 

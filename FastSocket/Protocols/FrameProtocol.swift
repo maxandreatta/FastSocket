@@ -38,15 +38,15 @@ import Foundation
 
 /// The framing protocol
 internal protocol FrameProtocol {
-    var on: FrameClosures { get set }
+    var onMessage: CallbackMessage { get set }
     // create instance of Frame
     init()
-    /// create a FastSocket Protocol compliant message frame
+    /// generic func to create a fastsocket protocol compliant
+    /// message frame
     /// - parameters:
-    ///     - data: the data that should be send
-    ///     - opcode: the frames Opcode, e.g. .data or .string
+    ///     - message: generic parameter, accepts string and data
     ///     - isFinal: send a close frame to the host default is false
-    func create(data: Data, opcode: Opcode, isFinal: Bool) throws -> Data
+    func create<T: MessageTypeProtocol>(message: T, isFinal: Bool) throws -> Data
     /// parse a FastSocket Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data
