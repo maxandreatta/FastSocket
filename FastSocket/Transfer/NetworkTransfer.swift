@@ -5,7 +5,7 @@
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-// swiftlint:disable closure_body_length
+// swiftlint:disable closure_body_length multiline_arguments
 import Foundation
 import Network
 /// NetworkTransfer is a raw TCP transfer
@@ -13,21 +13,32 @@ import Network
 /// the `Engine` of the FastSocket Protocol.
 /// It allows to enter directly the TCP Options
 internal class NetworkTransfer: TransferProtocol {
-    internal var on = TransferClosures()
-    private var connection: NWConnection
+    internal var on = SocketCallback()
+    private var connection: NWConnection?
     private var monitor = NWPathMonitor()
+    private var transferParameters: TransferParameters
+    private var connectionState: NWConnection.State?
+    private var host: String
+    private var port: UInt16
     private var queue: DispatchQueue
+    private var type: TransferType
     private var isRunning: Bool = false
     private var isLocked: Bool = false
-    private var connectionState: NWConnection.State = .cancelled
+    private var allowUntrusted: Bool = false
     /// create a instance of NetworkTransfer
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    ///     - parameters: Network.framework Parameters `optional`
+    ///     - type: the transfer type (.tcp or .tls)
+    ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
+    ///     - transferParameters: TransferParameters `optional`
     ///     - queue: Dispatch Qeue `optional`
-    required init(host: String, port: UInt16, parameters: NWParameters = NWParameters(tls: nil), queue: DispatchQueue = DispatchQueue(label: "\(Constant.prefixNetwork)\(UUID().uuidString)", qos: .userInitiated)) {
-        self.connection = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: port)!, using: parameters)
+    required init(host: String, port: UInt16, type: TransferType = .tcp, allowUntrusted: Bool = false, transferParameters: TransferParameters = TransferParameters(), queue: DispatchQueue = DispatchQueue(label: "\(Constant.prefixNetwork)\(UUID().uuidString)", qos: .userInitiated)) {
+        self.host = host
+        self.port = port
+        self.type = type
+        self.allowUntrusted = allowUntrusted
+        self.transferParameters = transferParameters
         self.queue = queue
     }
     /// connect to a host
@@ -37,11 +48,15 @@ internal class NetworkTransfer: TransferProtocol {
         guard !self.isRunning else {
             return
         }
+        self.connection = NWConnection(host: NWEndpoint.Host(self.host), port: NWEndpoint.Port(rawValue: self.port)!, using: self.parameters)
         self.isRunning = true
         self.connectionStateHandler()
         self.networkPathMonitor()
         self.readLoop()
-        self.connection.start(queue: self.queue)
+        guard let connection = self.connection else {
+            return
+        }
+        connection.start(queue: self.queue)
     }
     /// disconnect from host and
     /// cleanup the connection
@@ -53,26 +68,34 @@ internal class NetworkTransfer: TransferProtocol {
     /// - parameters:
     ///     - data: the data which should be written on the socket
     internal func send(data: Data) {
-        self.connection.batch { [weak self] in
+        guard let connection = self.connection else {
+            return
+        }
+        connection.batch { [weak self] in
             guard let self = self else {
                 return
             }
+            // this code prevent from multiple send of data at once
+            // this feature is now possible, but in release versions it will be blocked for now
+            // later we will allow this after loooooooooot of testing
+            #if !DEBUG
             guard !self.isLocked else {
                 self.on.error(FastSocketError.writeBeforeClear)
                 return
             }
+            #endif
             guard self.connectionState == .ready else {
                 self.on.error(FastSocketError.sendToEarly)
                 return
             }
             self.isLocked = true
-            let queued = data.chunked(by: Constant.maximumLength)
+            let queued = data.chunk(by: Constant.iterations)
             guard !queued.isEmpty else {
                 return
             }
-            var itterator = queued.enumerated().makeIterator()
-            while let (i, data) = itterator.next() {
-                self.connection.send(content: Data(data), completion: .contentProcessed({ error in
+            var iterator = queued.enumerated().makeIterator()
+            while let (i, data) = iterator.next() {
+                connection.send(content: Data(data), completion: .contentProcessed({ error in
                     if let error = error {
                         guard error != NWError.posix(.ECANCELED) else {
                             // cancel error can be ignored
@@ -81,7 +104,7 @@ internal class NetworkTransfer: TransferProtocol {
                         self.on.error(error)
                         return
                     }
-                    self.on.dataWritten(data.count)
+                    self.on.bytes(.output(data.count))
                     if i == queued.endIndex - 1 {
                         self.isLocked = false
                     }
@@ -94,7 +117,10 @@ internal class NetworkTransfer: TransferProtocol {
 private extension NetworkTransfer {
     /// check connection state
     private func connectionStateHandler() {
-        self.connection.stateUpdateHandler = { [weak self] state in
+        guard let connection = self.connection else {
+            return
+        }
+        connection.stateUpdateHandler = { [weak self] state in
             guard let self = self else {
                 return
             }
@@ -120,7 +146,10 @@ private extension NetworkTransfer {
     /// cleanup a connection
     private func clean() {
         self.isRunning = false
-        self.connection.cancel()
+        guard let connection = self.connection else {
+            return
+        }
+        connection.cancel()
     }
     /// a network path monitor
     /// used to detect if network is unrechable
@@ -139,14 +168,17 @@ private extension NetworkTransfer {
     }
     /// readloop for the tcp socket incoming data
     private func readLoop() {
-        self.connection.batch { [weak self] in
+        guard let connection = self.connection else {
+            return
+        }
+        connection.batch { [weak self] in
             guard let self = self else {
                 return
             }
             guard self.isRunning else {
                 return
             }
-            self.connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength) { [weak self] data, context, isComplete, error in
+            connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength) { [weak self] data, _, isComplete, error in
                 guard let self = self else {
                     return
                 }
@@ -159,18 +191,67 @@ private extension NetworkTransfer {
                     return
                 }
                 if let data = data {
-                    self.on.data(data)
-                    self.on.dataRead(data.count)
+                    self.on.message(data)
+                    self.on.bytes(.input(data.count))
                 }
-                if isComplete && data == nil, context == nil, error == nil {
+                switch isComplete {
+                case true:
                     self.clean()
                     self.on.close()
-                    return
-                }
-                if !isComplete {
+
+                case false:
                     self.readLoop()
                 }
             }
         }
+    }
+}
+
+private extension NetworkTransfer {
+    /// computed property to create the right transfer type
+    /// and mapps the allowed parameters to the NWParameters
+    /// - returns: NWParameters object
+    var parameters: NWParameters {
+        var param = NWParameters()
+        switch self.type {
+        case .tcp:
+            param = NWParameters(tls: nil)
+
+        case .tls:
+            param = NWParameters(tls: self.options)
+        }
+        param.acceptLocalOnly = self.transferParameters.acceptLocalOnly
+        param.allowFastOpen = self.transferParameters.allowFastOpen
+        param.preferNoProxies = self.transferParameters.preferNoProxies
+        param.prohibitedInterfaceTypes = self.transferParameters.prohibitedInterfaceTypes
+        param.prohibitExpensivePaths = self.transferParameters.prohibitExpensivePaths
+        param.requiredInterfaceType = self.transferParameters.requiredInterfaceType
+        param.multipathServiceType = self.transferParameters.multipathServiceType
+        param.serviceClass = self.transferParameters.serviceClass
+        return param
+    }
+    /// computed property to overwrite standard
+    /// tls options to give the ability to allow untrusted certs
+    /// - returns: NWProtocolTLS.Options object
+    var options: NWProtocolTLS.Options {
+        let options = NWProtocolTLS.Options()
+        sec_protocol_options_set_verify_block(options.securityProtocolOptions, { _, sec_trust, sec_protocol_verify_complete in
+            let trust = sec_trust_copy_ref(sec_trust).takeRetainedValue()
+            var error: CFError?
+            switch SecTrustEvaluateWithError(trust, &error) {
+            case true:
+                sec_protocol_verify_complete(true)
+
+            case false:
+                switch self.allowUntrusted {
+                case true:
+                    sec_protocol_verify_complete(true)
+
+                case false:
+                    sec_protocol_verify_complete(false)
+                }
+            }
+        }, self.queue)
+        return options
     }
 }

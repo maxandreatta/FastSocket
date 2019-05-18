@@ -21,6 +21,12 @@
 - [X] custom error management
 - [X] all errors are routed through the error closure
 - [X] maximum frame size 16777216 bytes (with overhead)
+- [X] content length base framing instead of fin byte termination
+- [X] send/receive multiple messages at once (currently only in debug mode)
+- [X] TLS support with the ability to allow untrusted certificates
+
+## **Note:**
+**All versions with 0.5.0 or less will not work with the current backend because we redesigned the protocol and the framing to give the ability to send and receive multiple messages at once. But for now the feature is blocked in the framework**
 
 ## License:
 [![LICENSE](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=flat-square)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
@@ -30,11 +36,10 @@
 
 ## Build Status:
 
-|      Branch      |                                                                                                         Build Status                                                                                                        |                                                                            Coverage                                                                           |
-|:----------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|      master      | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/master.svg?style=shield&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/master)                      | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/master/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)             |
-|      develop     | [![CircleCI](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop.svg?style=shield&circle-token=d3bc94f649f0ee8087e17007476032517b1eac6a)](https://circleci.com/gh/Vinz1911/FastSocket/tree/develop )                   | [![codecov](https://codecov.io/gh/Vinz1911/FastSocket/branch/develop/graph/badge.svg?token=1sEt52DskP)](https://codecov.io/gh/Vinz1911/FastSocket)            |
-
+|  Branch |                                                         Build Status                                                        |                                                                            Coverage                                                                            |                                                                            Maintainability                                                                           |
+|:-------:|:---------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|  master |  [![Build Status](https://travis-ci.org/Vinz1911/FastSocket.svg?branch=master)](https://travis-ci.org/Vinz1911/FastSocket)  | [![Test Coverage](https://api.codeclimate.com/v1/badges/c62326734b98deeefbee/test_coverage)](https://codeclimate.com/github/Vinz1911/FastSocket/test_coverage) | [![Maintainability](https://api.codeclimate.com/v1/badges/c62326734b98deeefbee/maintainability)](https://codeclimate.com/github/Vinz1911/FastSocket/maintainability) |
+| develop | [![Build Status](https://travis-ci.org/Vinz1911/FastSocket.svg?branch=develop )](https://travis-ci.org/Vinz1911/FastSocket) |                                                                                                                                                                |                                                                                                                                                                      |
 
 ## Installation:
 
@@ -63,7 +68,11 @@ github "Vinz1911/FastSocket"
 ```swift
 // import the Framework
 import FastSocket
+// normal init with TCP (unsecure) transfer type
 let socket = FastSocket(host: "example.com", port: 8080)
+// enhanced init with the ability to set TLS (secure) as transfer type
+// it's also possible to accept connections with untrusted certs
+let socket = FastSocket(host: "example.com", port: 443, type: .tls, allowUntrusted: true)
 
 ```
 
@@ -74,21 +83,13 @@ socket.on.ready = {
     // this is called after the connection
     // was successfully established and is ready
 }
-socket.on.data = { data in
+socket.on.message = { message in
     // this is called everytime
-    // a data message was received
+    // a message was received
 }
-socket.on.string = { string in
-    // this is called everytime
-    // a text message was received
-}
-socket.on.dataRead = { count in
+socket.on.bytes = { count in
     // this is called every 8192 bytes
     // are readed from the socket
-}
-socket.on.dataWritten = { count in
-    // this is called every 8192 bytes
-    // are written on the socket
 }
 socket.on.close = {
     // this is called after
@@ -100,11 +101,46 @@ socket.on.error = { error in
 }
 ```
 
+## Cast Messages:
+```swift
+socket.on.message = { message in
+    // it's only possible to cast messages
+    // as Data or as String
+    if case let message as Data = message {
+        // cast message as data
+        print("Data count: \(message.count)")
+    }
+    if case let message as String = message {
+        // cast message as string
+        print("Message: \(message)")
+    }
+}
+
+```
+
+## Read Bytes Count:
+```swift
+socket.on.bytes = { bytes in
+    // input bytes are the ones, which are
+    // readed from the socket, this function
+    // returns the byte count
+    if case .input(let count) = bytes {
+        print("Bytes count: \(count)")
+    }
+    // output bytes are the ones, which are
+    // written on the socket, this function
+    // returns the byte count
+    if case .output(let count) = bytes {
+        print("Bytes count: \(count)")
+    }
+}
+```
+
 ## Connect:
 
 ```swift
 // try to connect to the host
-// timeout after 3.0 seconds
+// timeout after 5.0 seconds
 socket.connect()
 ```
 

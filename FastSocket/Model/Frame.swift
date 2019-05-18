@@ -4,33 +4,70 @@
 //
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
-//
-// 0                 1                              N                 N
-// +-----------------+------------------------------+-----------------+
-// |0 1 2 3 4 5 6 7 8|        ... Continue          |0 1 2 3 4 5 6 7 8|
-// +-----------------+------------------------------+-----------------+
-// |   O P C O D E   |         Payload Data...      |  F I N B Y T E  |
-// +-----------------+------------------------------+-----------------+
-//
 import Foundation
+
+// 0                   1       N
+// +-------------------+-------+
+// |0|1|2 3 4 5 6 7 8 9|0 1 2 3|
+// +-+-+---------------+-------+
+// |F|O| FRAME LENGTH  |PAYLOAD|
+// |I|P|     (8)       |  (N)  |
+// |N|C|               |       |
+// +-+-+---------------+-------+
+// : Payload Data continued ...:
+// + - - - - - - - - - - - - - +
+// | Payload Data continued ...|
+// +---------------------------+
+//
+// This describes the framing protocol.
+// - FIN: 0x3
+//      - The first byte is used to inform the the other side, that the
+//        connection is finished and can be closed, this is used to prevent
+//        that a connection will be closed but there are unread bytes on the connection
+// - OPC:
+//      - 0x0: this is the continue byte (currently a placeholder)
+//      - 0x1: this is the string byte which is used for string based messages
+//      - 0x2: this is the data byte which is used for data based messages
+//      - 0x3: this is the fin byte, which is part of OPC but is on the first place in the protocol
+//      - 0x6 - 0xF: this bytes are reserved
+// - FRAME LENGTH:
+//      - this uses 8 bytes to store the entire frame size as a big endian uint64 value
+// - PAYLOAD:
+//      - continued payload data
+
 /// Frame is a helper class for the FastSocket Protocol
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal final class Frame: FrameProtocol {
-    internal var on = FrameClosures()
+    internal var onMessage: CallbackMessage = { message in }
     private var readBuffer = Data()
 
     internal required init() {
     }
-    /// create a FastSocket Protocol compliant message frame
+    /// generic func to create a fastsocket protocol compliant
+    /// message frame
     /// - parameters:
-    ///     - data: the data that should be send
-    ///     - opcode: the frames Opcode, e.g. .binary or .text
-    internal func create(data: Data, opcode: Opcode) throws -> Data {
+    ///     - message: generic parameter, accepts string and data
+    ///     - isFinal: send a close frame to the host default is false
+    internal func create<T: MessageTypeProtocol>(message: T, isFinal: Bool = false) throws -> Data {
         var outputFrame = Data()
-        outputFrame.append(opcode.rawValue)
-        outputFrame.append(data)
-        outputFrame.append(Opcode.finish.rawValue)
+        switch isFinal {
+        case true:
+            outputFrame.append(Opcode.finish.rawValue)
+
+        case false:
+            outputFrame.append(Opcode.continue.rawValue)
+        }
+        switch message {
+        case let message as String:
+            try self.buildStringMessage(frame: &outputFrame, message: message)
+
+        case let message as Data:
+            self.buildDataMessage(frame: &outputFrame, message: message)
+
+        default:
+            throw FastSocketError.unknownOpcode
+        }
         guard outputFrame.count <= Constant.maximumContentLength else {
             throw FastSocketError.writeBufferOverflow
         }
@@ -44,41 +81,81 @@ internal final class Frame: FrameProtocol {
             throw FastSocketError.zeroData
         }
         self.readBuffer.append(data)
-        if self.readBuffer.count > Constant.maximumContentLength {
-            throw (FastSocketError.readBufferOverflow)
+        guard self.readBuffer.count <= Constant.maximumContentLength else {
+            throw FastSocketError.readBufferOverflow
         }
-        guard data.last == Opcode.finish.rawValue else {
-            // Do nothing, keep reading, keep walking
+        guard self.readBuffer.count >= Constant.overheadSize else {
             return
         }
-        guard let opcode = self.readBuffer.first else {
-            throw FastSocketError.readBufferIssue
+        guard self.readBuffer.count >= self.contentSize() else {
+            return
         }
-        switch opcode {
-        case Opcode.string.rawValue:
-            guard let string = String(bytes: self.trimmedFrame(), encoding: .utf8) else {
-                throw FastSocketError.parsingFailure
+        while self.readBuffer.count >= self.contentSize() && self.contentSize() != .zero {
+            let slice = Data(self.readBuffer[...(self.contentSize() - 1)])
+            switch slice[1] {
+            case Opcode.string.rawValue:
+                guard let string = String(bytes: try self.trimFrame(frame: slice), encoding: .utf8) else {
+                    throw FastSocketError.parsingFailure
+                }
+                self.onMessage(string)
+
+            case Opcode.data.rawValue:
+                self.onMessage(try self.trimFrame(frame: slice))
+
+            default:
+                throw FastSocketError.unknownOpcode
             }
-            self.on.stringFrame(string)
-
-        case Opcode.binary.rawValue:
-            self.on.dataFrame(self.trimmedFrame())
-
-        default:
-            throw FastSocketError.unknownOpcode
+            if self.readBuffer.count > self.contentSize() {
+                self.readBuffer = Data(self.readBuffer[self.contentSize()...])
+            } else {
+                self.readBuffer = Data()
+            }
         }
-        self.initializeBuffer()
     }
 }
 
 private extension Frame {
-    /// helper function to parse the frame
-    private func trimmedFrame() -> Data {
-        let inputFrame = self.readBuffer[1...self.readBuffer.count - 2]
-        return inputFrame
+    /// build a string based message, appends the necessary data
+    /// to the original reference
+    /// - parameters:
+    ///     - frame: the original data frame, this is a reference to the value
+    ///     - message: the original text message
+    private func buildStringMessage(frame: inout Data, message: String) throws {
+        guard let message = message.data(using: .utf8) else {
+            throw FastSocketError.parsingFailure
+        }
+        frame.append(Opcode.string.rawValue)
+        frame.append(UInt64(message.count + Constant.overheadSize).data)
+        frame.append(message)
     }
-    /// helper function to create readable frame
-    private func initializeBuffer() {
-        self.readBuffer = Data()
+    /// build a data based message, appends the necessary data
+    /// to the original reference
+    /// - parameters:
+    ///     - frame: the original data frame, this is a reference to the value
+    ///     - message: the original data message
+    private func buildDataMessage(frame: inout Data, message: Data) {
+        frame.append(Opcode.data.rawValue)
+        frame.append(UInt64(message.count + Constant.overheadSize).data)
+        frame.append(message)
+    }
+    /// private function to get parse the overhead size of a frame
+    /// - parameters:
+    ///     - data: data to extract content size from
+    private func contentSize() -> UInt64 {
+        guard self.readBuffer.count >= Constant.overheadSize else {
+            return .zero
+        }
+        let size = Data(self.readBuffer[2...Constant.overheadSize - 1])
+        return size.intValue()
+    }
+    /// private func to trimm frame to it's raw content
+    /// - parameters:
+    ///     - frame: the data to trimm
+    private func trimFrame(frame: Data) throws -> Data {
+        guard frame.count >= Constant.overheadSize else {
+            throw FastSocketError.parsingFailure
+        }
+        let data = Data(frame[Constant.overheadSize...])
+        return data
     }
 }
