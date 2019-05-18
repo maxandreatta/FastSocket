@@ -15,7 +15,7 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
   spec.name         = "FastSocket"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "FastSocket is a custom TCP communication protocol"
 
   # This description is used to generate tags and improve search results.
