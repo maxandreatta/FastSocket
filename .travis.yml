@@ -1,0 +1,35 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=d212e877cf83b527bc6966a88b0a2dbdd37dd25e66af926eaa3887811d9dff9a
+
+# The OSX Image on which the build should be testet
+osx_image: xcode10.2
+
+# the programming language
+language: swift
+
+# select branches
+# branches:
+#  only:
+#    - master
+#    - development
+
+before_install:
+  - gem install slather
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+# install fastlane stuff
+install:
+  - bundle update fastlane
+  - bundle install
+
+# run fastlane
+script:
+  - fastlane build_xcode
+  - fastlane test_xcode
+
+after_script:
+  - slather
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
