@@ -188,7 +188,6 @@ class FastSocketTests: XCTestCase {
             exp.fulfill()
         }
         socket.on.close = {
-            debugPrint("CLOSED")
             debugPrint("Connection Closed!")
         }
         socket.on.error = { error in
