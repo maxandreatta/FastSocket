@@ -60,10 +60,10 @@ internal final class Frame: FrameProtocol {
         }
         switch message {
         case let message as String:
-            try self.buildStringMessage(frame: &outputFrame, message: message)
+            try buildStringMessage(frame: &outputFrame, message: message)
 
         case let message as Data:
-            self.buildDataMessage(frame: &outputFrame, message: message)
+            buildDataMessage(frame: &outputFrame, message: message)
 
         default:
             throw FastSocketError.unknownOpcode
@@ -80,35 +80,35 @@ internal final class Frame: FrameProtocol {
         guard !data.isEmpty else {
             throw FastSocketError.zeroData
         }
-        self.readBuffer.append(data)
-        guard self.readBuffer.count <= Constant.maximumContentLength else {
+        readBuffer.append(data)
+        guard readBuffer.count <= Constant.maximumContentLength else {
             throw FastSocketError.readBufferOverflow
         }
-        guard self.readBuffer.count >= Constant.overheadSize else {
+        guard readBuffer.count >= Constant.overheadSize else {
             return
         }
-        guard self.readBuffer.count >= self.contentSize() else {
+        guard readBuffer.count >= contentSize() else {
             return
         }
-        while self.readBuffer.count >= self.contentSize() && self.contentSize() != .zero {
-            let slice = Data(self.readBuffer[...(self.contentSize() - 1)])
+        while readBuffer.count >= contentSize() && contentSize() != .zero {
+            let slice = Data(readBuffer[...(contentSize() - 1)])
             switch slice[1] {
             case Opcode.string.rawValue:
-                guard let string = String(bytes: try self.trimFrame(frame: slice), encoding: .utf8) else {
+                guard let string = String(bytes: try trimFrame(frame: slice), encoding: .utf8) else {
                     throw FastSocketError.parsingFailure
                 }
-                self.onMessage(string)
+                onMessage(string)
 
             case Opcode.data.rawValue:
-                self.onMessage(try self.trimFrame(frame: slice))
+                onMessage(try trimFrame(frame: slice))
 
             default:
                 throw FastSocketError.unknownOpcode
             }
-            if self.readBuffer.count > self.contentSize() {
-                self.readBuffer = Data(self.readBuffer[self.contentSize()...])
+            if readBuffer.count > contentSize() {
+                readBuffer = Data(readBuffer[contentSize()...])
             } else {
-                self.readBuffer = Data()
+                readBuffer = Data()
             }
         }
     }
@@ -142,10 +142,10 @@ private extension Frame {
     /// - parameters:
     ///     - data: data to extract content size from
     private func contentSize() -> UInt64 {
-        guard self.readBuffer.count >= Constant.overheadSize else {
+        guard readBuffer.count >= Constant.overheadSize else {
             return .zero
         }
-        let size = Data(self.readBuffer[2...Constant.overheadSize - 1])
+        let size = Data(readBuffer[2...Constant.overheadSize - 1])
         return size.intValue()
     }
     /// private func to trimm frame to it's raw content
