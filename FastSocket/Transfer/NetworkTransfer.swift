@@ -16,7 +16,7 @@ internal class NetworkTransfer: TransferProtocol {
     internal var on = SocketCallback()
     private var connection: NWConnection?
     private var monitor = NWPathMonitor()
-    private var transferParameters: TransferParameters
+    private var parameters: TransferParameters
     private var connectionState: NWConnection.State?
     private var host: String
     private var port: UInt16
@@ -25,6 +25,52 @@ internal class NetworkTransfer: TransferProtocol {
     private var isRunning: Bool = false
     private var isLocked: Bool = false
     private var allowUntrusted: Bool = false
+    /// computed property to overwrite standard
+    /// tls options to give the ability to allow untrusted certs
+    /// - returns: NWProtocolTLS.Options object
+    var options: NWProtocolTLS.Options {
+        let options = NWProtocolTLS.Options()
+        sec_protocol_options_set_verify_block(options.securityProtocolOptions, { _, secTrust, secProtocolVerifyComplete in
+            let trust = sec_trust_copy_ref(secTrust).takeRetainedValue()
+            var error: CFError?
+            switch SecTrustEvaluateWithError(trust, &error) {
+            case true:
+                secProtocolVerifyComplete(true)
+
+            case false:
+                switch self.allowUntrusted {
+                case true:
+                    secProtocolVerifyComplete(true)
+
+                case false:
+                    secProtocolVerifyComplete(false)
+                }
+            }
+        }, queue)
+        return options
+    }
+    /// computed property to create the right transfer type
+    /// and mapps the allowed parameters to the NWParameters
+    /// - returns: NWParameters object
+    var nwparameters: NWParameters {
+        var param = NWParameters()
+        switch type {
+        case .tcp:
+            param = NWParameters(tls: nil)
+
+        case .tls:
+            param = NWParameters(tls: options)
+        }
+        param.acceptLocalOnly = parameters.acceptLocalOnly
+        param.allowFastOpen = parameters.allowFastOpen
+        param.preferNoProxies = parameters.preferNoProxies
+        param.prohibitedInterfaceTypes = parameters.prohibitedInterfaceTypes
+        param.prohibitExpensivePaths = parameters.prohibitExpensivePaths
+        param.requiredInterfaceType = parameters.requiredInterfaceType
+        param.multipathServiceType = parameters.multipathServiceType
+        param.serviceClass = parameters.serviceClass
+        return param
+    }
     /// create a instance of NetworkTransfer
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
@@ -33,12 +79,12 @@ internal class NetworkTransfer: TransferProtocol {
     ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
     ///     - transferParameters: TransferParameters `optional`
     ///     - queue: Dispatch Qeue `optional`
-    required init(host: String, port: UInt16, type: TransferType = .tcp, allowUntrusted: Bool = false, transferParameters: TransferParameters = TransferParameters(), queue: DispatchQueue = DispatchQueue(label: "\(Constant.prefixNetwork)\(UUID().uuidString)", qos: .userInitiated)) {
+    required init(host: String, port: UInt16, type: TransferType = .tcp, allowUntrusted: Bool = false, parameters: TransferParameters = TransferParameters(), queue: DispatchQueue = DispatchQueue(label: "\(Constant.prefixNetwork)\(UUID().uuidString)", qos: .userInitiated)) {
         self.host = host
         self.port = port
         self.type = type
         self.allowUntrusted = allowUntrusted
-        self.transferParameters = transferParameters
+        self.parameters = parameters
         self.queue = queue
     }
     /// connect to a host
@@ -48,7 +94,7 @@ internal class NetworkTransfer: TransferProtocol {
         guard !isRunning else {
             return
         }
-        connection = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: port)!, using: parameters)
+        connection = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: port)!, using: nwparameters)
         isRunning = true
         connectionStateHandler()
         networkPathMonitor()
@@ -94,7 +140,7 @@ internal class NetworkTransfer: TransferProtocol {
                 return
             }
             var iterator = queued.enumerated().makeIterator()
-            while let (i, data) = iterator.next() {
+            while let (index, data) = iterator.next() {
                 connection.send(content: Data(data), completion: .contentProcessed({ error in
                     if let error = error {
                         guard error != NWError.posix(.ECANCELED) else {
@@ -105,7 +151,7 @@ internal class NetworkTransfer: TransferProtocol {
                         return
                     }
                     self.on.bytes(.output(data.count))
-                    if i == queued.endIndex - 1 {
+                    if index == queued.endIndex - 1 {
                         self.isLocked = false
                     }
                 }))
@@ -115,6 +161,14 @@ internal class NetworkTransfer: TransferProtocol {
 }
 
 private extension NetworkTransfer {
+    /// cleanup a connection
+    private func clean() {
+        isRunning = false
+        guard let connection = connection else {
+            return
+        }
+        connection.cancel()
+    }
     /// check connection state
     private func connectionStateHandler() {
         guard let connection = connection else {
@@ -142,14 +196,6 @@ private extension NetworkTransfer {
                 break
             }
         }
-    }
-    /// cleanup a connection
-    private func clean() {
-        isRunning = false
-        guard let connection = connection else {
-            return
-        }
-        connection.cancel()
     }
     /// a network path monitor
     /// used to detect if network is unrechable
@@ -204,54 +250,5 @@ private extension NetworkTransfer {
                 }
             }
         }
-    }
-}
-
-private extension NetworkTransfer {
-    /// computed property to create the right transfer type
-    /// and mapps the allowed parameters to the NWParameters
-    /// - returns: NWParameters object
-    var parameters: NWParameters {
-        var param = NWParameters()
-        switch type {
-        case .tcp:
-            param = NWParameters(tls: nil)
-
-        case .tls:
-            param = NWParameters(tls: options)
-        }
-        param.acceptLocalOnly = transferParameters.acceptLocalOnly
-        param.allowFastOpen = transferParameters.allowFastOpen
-        param.preferNoProxies = transferParameters.preferNoProxies
-        param.prohibitedInterfaceTypes = transferParameters.prohibitedInterfaceTypes
-        param.prohibitExpensivePaths = transferParameters.prohibitExpensivePaths
-        param.requiredInterfaceType = transferParameters.requiredInterfaceType
-        param.multipathServiceType = transferParameters.multipathServiceType
-        param.serviceClass = transferParameters.serviceClass
-        return param
-    }
-    /// computed property to overwrite standard
-    /// tls options to give the ability to allow untrusted certs
-    /// - returns: NWProtocolTLS.Options object
-    var options: NWProtocolTLS.Options {
-        let options = NWProtocolTLS.Options()
-        sec_protocol_options_set_verify_block(options.securityProtocolOptions, { _, sec_trust, sec_protocol_verify_complete in
-            let trust = sec_trust_copy_ref(sec_trust).takeRetainedValue()
-            var error: CFError?
-            switch SecTrustEvaluateWithError(trust, &error) {
-            case true:
-                sec_protocol_verify_complete(true)
-
-            case false:
-                switch self.allowUntrusted {
-                case true:
-                    sec_protocol_verify_complete(true)
-
-                case false:
-                    sec_protocol_verify_complete(false)
-                }
-            }
-        }, queue)
-        return options
     }
 }

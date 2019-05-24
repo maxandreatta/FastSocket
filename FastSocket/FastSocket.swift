@@ -16,7 +16,7 @@ import Network
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public final class FastSocket: FastSocketProtocol {
     public var on = SocketCallback()
-    public var transferParameters = TransferParameters()
+    public var parameters = TransferParameters()
     private var host: String
     private var port: UInt16
     private var frame = Frame()
@@ -84,7 +84,7 @@ private extension FastSocket {
         }
         isLocked = false
         sha256 = Data()
-        transfer = NetworkTransfer(host: host, port: port, type: type, allowUntrusted: allowUntrusted, transferParameters: transferParameters)
+        transfer = NetworkTransfer(host: host, port: port, type: type, allowUntrusted: allowUntrusted, parameters: parameters)
         transferClosures()
         frameClosures()
     }
@@ -113,52 +113,6 @@ private extension FastSocket {
         sha256 = data.sha256
         transfer.send(data: data)
     }
-    /// closures from the transfer protocol
-    /// handles incoming data and handshake
-    private func transferClosures() {
-        guard var transfer = transfer else {
-            return
-        }
-        transfer.on.ready = { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.handshake()
-        }
-        transfer.on.message = { [weak self] data in
-            guard let self = self else {
-                return
-            }
-            guard case let data as Data = data else {
-                return
-            }
-            switch self.isLocked {
-            case true:
-                do {
-                    try self.frame.parse(data: data)
-                } catch {
-                    self.onError(error)
-                }
-
-            case false:
-                guard data == self.sha256 else {
-                    self.onError(FastSocketError.handshakeVerificationFailed)
-                    return
-                }
-                self.isLocked = true
-                self.stopTimeout()
-                self.on.ready()
-            }
-        }
-        transfer.on.error = onError
-        transfer.on.close = on.close
-        transfer.on.bytes = on.bytes
-    }
-    /// closures from Frame
-    /// returns the parsed messages
-    private func frameClosures() {
-        frame.onMessage = on.message
-    }
     /// start timeout on connecting
     private func startTimeout() {
         timer = Timer.interval(interval: Constant.timeout, withRepeat: false) {
@@ -171,5 +125,69 @@ private extension FastSocket {
             return
         }
         timer.cancel()
+    }
+}
+
+private extension FastSocket {
+    /// closures from the transfer protocol
+    /// handles incoming data and handshake
+    private func transferClosures() {
+        guard var transfer = transfer else {
+            return
+        }
+        transfer.on.ready = { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.handleReadyState()
+        }
+        transfer.on.message = { [weak self] data in
+            guard let self = self else {
+                return
+            }
+            self.handleMessageState(data: data)
+        }
+        transfer.on.error = onError
+        transfer.on.close = on.close
+        transfer.on.bytes = on.bytes
+    }
+    /// closures from Frame
+    /// returns the parsed messages
+    private func frameClosures() {
+        frame.onMessage = on.message
+    }
+}
+
+private extension FastSocket {
+    /// this function is called from
+    /// the transfer, to handle all necessary
+    /// things `on ready`
+    private func handleReadyState() {
+        self.handshake()
+    }
+    /// this function is called from
+    /// the transfer, to handle all necessary
+    /// things `on message`
+    private func handleMessageState(data: MessageTypeProtocol) {
+        guard case let data as Data = data else {
+            return
+        }
+        switch self.isLocked {
+        case true:
+            do {
+                try self.frame.parse(data: data)
+            } catch {
+                self.onError(error)
+            }
+
+        case false:
+            guard data == self.sha256 else {
+                self.onError(FastSocketError.handshakeVerificationFailed)
+                return
+            }
+            self.isLocked = true
+            self.stopTimeout()
+            self.on.ready()
+        }
     }
 }

@@ -34,6 +34,7 @@
 		AC635E06226549AA00CFFBAD /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */; };
 		AC86306722771B78002C553C /* FrameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86306622771B78002C553C /* FrameProtocol.swift */; };
 		AC93AF9C2279EC150038B86D /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = AC93AF9B2279EC150038B86D /* Fastfile */; };
+		AC9BF19B22985BB2008D0036 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC9BF19A22985BB2008D0036 /* .swiftlint.yml */; };
 		ACFAE9ED227C5972009B0D96 /* MessageTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE9EC227C5972009B0D96 /* MessageTypeProtocol.swift */; };
 		ACFAE9EF227C5B50009B0D96 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE9EE227C5B50009B0D96 /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,7 @@
 		AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
 		AC86306622771B78002C553C /* FrameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
 		AC93AF9B2279EC150038B86D /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; };
+		AC9BF19A22985BB2008D0036 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		ACFAE9EC227C5972009B0D96 /* MessageTypeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTypeProtocol.swift; sourceTree = "<group>"; };
 		ACFAE9EE227C5B50009B0D96 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -223,6 +225,7 @@
 				AC1536F5227341FF00F3A2E2 /* README.md */,
 				AC24FFD0228214CE0025AEDF /* CHANGELOG.md */,
 				AC6073B422906B890087E054 /* .slather.yml */,
+				AC9BF19A22985BB2008D0036 /* .swiftlint.yml */,
 				AC6073B222905F5A0087E054 /* .travis.yml */,
 			);
 			name = "Podspec+Readme";
@@ -323,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9BF19B22985BB2008D0036 /* .swiftlint.yml in Resources */,
 				AC6073B322905F5A0087E054 /* .travis.yml in Resources */,
 				AC93AF9C2279EC150038B86D /* Fastfile in Resources */,
 				AC24FFD1228214CE0025AEDF /* CHANGELOG.md in Resources */,
