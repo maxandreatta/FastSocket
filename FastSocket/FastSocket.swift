@@ -85,8 +85,8 @@ private extension FastSocket {
         isLocked = false
         sha256 = Data()
         transfer = NetworkTransfer(host: host, port: port, type: type, allowUntrusted: allowUntrusted, parameters: parameters)
-        transferClosures()
-        frameClosures()
+        transferCallbacks()
+        frameCallbacks()
     }
     /// suspends timeout and report on error
     /// - parameters:
@@ -131,7 +131,7 @@ private extension FastSocket {
 private extension FastSocket {
     /// closures from the transfer protocol
     /// handles incoming data and handshake
-    private func transferClosures() {
+    private func transferCallbacks() {
         guard var transfer = transfer else {
             return
         }
@@ -153,7 +153,7 @@ private extension FastSocket {
     }
     /// closures from Frame
     /// returns the parsed messages
-    private func frameClosures() {
+    private func frameCallbacks() {
         frame.onMessage = on.message
     }
 }
