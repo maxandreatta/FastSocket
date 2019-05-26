@@ -15,7 +15,7 @@ internal enum Constant {
     /// for tcp socket reading, minimum stream length
     static let minimumIncompleteLength: Int = 1
     /// maximum tcp readbuffer size
-    static let maximumLength: Int = 8192
+    static let maximumLength: Int = 65_536
     /// timeout time
     static let timeout: TimeInterval = 5.0
     /// maximum per message size
