@@ -20,7 +20,7 @@ public protocol FastSocketProtocol {
     /// public access to the Network.framework parameter options
     /// that gives you the ability (for example) to define on which
     /// interface the traffic should be send
-    var transferParameters: TransferParameters { get set }
+    var parameters: TransferParameters { get set }
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"

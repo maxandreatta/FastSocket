@@ -26,7 +26,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "50000"
         var datacount = 0
-        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -60,13 +60,12 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 50000)
         var datacount = 0
-        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
         socket.on.ready = {
             socket.send(message: buffer)
         }
         socket.on.message = { message in
             if case let message as String = message {
-                debugPrint("hello")
                 XCTAssertEqual(buffer.count, Int(message))
                 exp.fulfill()
             }
@@ -96,7 +95,7 @@ class FastSocketTests: XCTestCase {
         let buffer = Data(count: 100)
         var messages = 0
         let sendValue = 100
-        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
         socket.on.ready = {
             for _ in 1...sendValue {
                 socket.send(message: buffer)
@@ -130,7 +129,7 @@ class FastSocketTests: XCTestCase {
         let buffer = "100"
         var messages = 0
         let sendValue = 100
-        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
         socket.on.ready = {
             for _ in 1...sendValue {
                 socket.send(message: buffer)
@@ -161,7 +160,7 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the client can close a connection
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
         socket.on.ready = {
             socket.disconnect()
         }
@@ -181,7 +180,7 @@ class FastSocketTests: XCTestCase {
     /// and the connection is ready to be used
     func testPerformance() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: self.host, port: self.port, type: self.type, allowUntrusted: self.allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
         var startTime = Date().timeIntervalSince1970
         socket.on.ready = {
             debugPrint(Date().timeIntervalSince1970 - startTime)
@@ -203,7 +202,7 @@ class FastSocketTests: XCTestCase {
     /// if the host doesnt respond
     func testTimeout() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: "telekom.de", port: self.port)
+        let socket = FastSocket(host: "telekom.de", port: port)
         socket.on.error = { error in
             guard let error = error else { return }
             XCTAssertEqual(error as! FastSocketError, FastSocketError.timeoutError)
@@ -212,9 +211,22 @@ class FastSocketTests: XCTestCase {
         socket.connect()
         wait(for: [exp], timeout: 15.0)
     }
+    /// a test to look if the tls config is loaded
+    func testTLSError() {
+        let exp = expectation(description: "Wait for connection close")
+        let socket = FastSocket(host: host, port: port, type: .tls, allowUntrusted: true)
+        socket.on.error = { error in
+            guard let error = error else { return }
+            debugPrint(error)
+            XCTAssertEqual(error as! NWError, NWError.tls(-9816))
+            exp.fulfill()
+        }
+        socket.connect()
+        wait(for: [exp], timeout: 15.0)
+    }
     /// a test to look if the framework recognize empty host addresses
     func testFastSocketError() {
-        let socket = FastSocket(host: "", port: self.port)
+        let socket = FastSocket(host: "", port: port)
         socket.on.error = { error in
             guard let error = error else { return }
             XCTAssertEqual(error as! FastSocketError, FastSocketError.emptyHost)
@@ -250,7 +262,7 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the framework recognize early send error
     /// that will be thrown if you try to send a string before a connection is established
     func testSendStringError() {
-        let socket = FastSocket(host: self.host, port: self.port)
+        let socket = FastSocket(host: host, port: port)
         socket.on.error = { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
         }
@@ -259,7 +271,7 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the framework recognize early send error
     /// that will be thrown if you try to send data before a connection is established
     func testSendDataError() {
-        let socket = FastSocket(host: self.host, port: self.port)
+        let socket = FastSocket(host: host, port: port)
         socket.on.error = { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
         }

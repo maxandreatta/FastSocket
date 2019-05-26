@@ -29,17 +29,16 @@
 **All versions with 0.5.0 or less will not work with the current backend because we redesigned the protocol and the framing to give the ability to send and receive multiple messages at once. But for now the feature is blocked in the framework**
 
 ## License:
-[![LICENSE](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=flat-square)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=for-the-badge)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
 
 ## Swift Version:
-[![SWIFT](https://img.shields.io/badge/Swift-5.0-orange.svg?longCache=true&style=flat-square)](https://swift.org)
+[![Swift 5](https://img.shields.io/badge/Swift-5.0-orange.svg?logo=swift&style=for-the-badge)](https://swift.org)
 
 ## Build Status:
-
-|  Branch |                                                         Build Status                                                        |                                                                            Coverage                                                                            |                                                                            Maintainability                                                                           |
-|:-------:|:---------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|  master |  [![Build Status](https://travis-ci.org/Vinz1911/FastSocket.svg?branch=master)](https://travis-ci.org/Vinz1911/FastSocket)  | [![Test Coverage](https://api.codeclimate.com/v1/badges/c62326734b98deeefbee/test_coverage)](https://codeclimate.com/github/Vinz1911/FastSocket/test_coverage) | [![Maintainability](https://api.codeclimate.com/v1/badges/c62326734b98deeefbee/maintainability)](https://codeclimate.com/github/Vinz1911/FastSocket/maintainability) |
-| develop | [![Build Status](https://travis-ci.org/Vinz1911/FastSocket.svg?branch=develop )](https://travis-ci.org/Vinz1911/FastSocket) |                                                                                                                                                                |                                                                                                                                                                      |
+|  Branch |                                                                                     Build Status                                                                                    |                                                                                                    Coverage                                                                                                   |                                                                                              Maintainability                                                                                              |
+|:-------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|  master |   [![Travis Master](https://img.shields.io/travis/Vinz1911/FastSocket/master.svg?label=master&logo=travis&style=for-the-badge)](https://travis-ci.org/Vinz1911/FastSocket/builds)   | [![Code Climate Coverage](https://img.shields.io/codeclimate/coverage/Vinz1911/FastSocket.svg?color=brightgreen&logo=code%20climate&style=for-the-badge)](https://codeclimate.com/github/Vinz1911/FastSocket) | [![Code Climate Maintainability](https://img.shields.io/codeclimate/maintainability/Vinz1911/FastSocket.svg?logo=Code%20Climate&style=for-the-badge)](https://codeclimate.com/github/Vinz1911/FastSocket) |
+| develop |  [![Travis Develop](https://img.shields.io/travis/Vinz1911/FastSocket/develop.svg?label=develop&logo=travis&style=for-the-badge)](https://travis-ci.org/Vinz1911/FastSocket/builds) |                                                                                                                                                                                                               |                                                                                                                                                                                                           |
 
 ## Installation:
 
@@ -58,10 +57,6 @@ Add the following line to your `Cartfile`
 ```ruby
 github "Vinz1911/FastSocket"
 ```
-
-### Swift Package Manager
-
-    Not yet supported
 
 ## Import:
 
