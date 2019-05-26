@@ -58,10 +58,6 @@ Add the following line to your `Cartfile`
 github "Vinz1911/FastSocket"
 ```
 
-### Swift Package Manager
-
-    Not yet supported
-
 ## Import:
 
 ```swift
