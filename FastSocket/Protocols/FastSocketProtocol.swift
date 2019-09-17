@@ -16,7 +16,7 @@ import Network
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public protocol FastSocketProtocol {
     /// public access to the event based closures
-    var on: SocketCallback { get set }
+    var on: FastSocketCallback { get set }
     /// public access to the Network.framework parameter options
     /// that gives you the ability (for example) to define on which
     /// interface the traffic should be send

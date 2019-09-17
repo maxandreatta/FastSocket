@@ -247,7 +247,7 @@ class FastSocketTests: XCTestCase {
     }
     /// a test to look if the closures work
     func testClosureCall() {
-        let closures = SocketCallback()
+        let closures = FastSocketCallback()
         closures.ready()
         closures.close()
         closures.message("")

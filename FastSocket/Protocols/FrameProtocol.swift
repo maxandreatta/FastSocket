@@ -34,7 +34,7 @@ import Foundation
 
 /// The framing protocol
 internal protocol FrameProtocol {
-    var onMessage: FastSocketCallbackMessage { get set }
+    var onMessage: (MessageProtocol) -> Void { get set }
     // create instance of Frame
     init()
     /// generic func to create a fastsocket protocol compliant

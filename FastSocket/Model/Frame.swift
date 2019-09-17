@@ -35,7 +35,7 @@ import Foundation
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal final class Frame: FrameProtocol {
-    internal var onMessage: FastSocketCallbackMessage = { message in }
+    internal var onMessage: (MessageProtocol) -> Void = { message in }
     private var readBuffer = Data()
     /// private property to get parse the overhead size of a frame
     private var contentSize: UInt64 {

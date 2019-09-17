@@ -15,7 +15,7 @@ import Network
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public final class FastSocket: FastSocketProtocol {
-    public var on = SocketCallback()
+    public var on = FastSocketCallback()
     public var parameters = TransferParameters()
     private var host: String
     private var port: UInt16
