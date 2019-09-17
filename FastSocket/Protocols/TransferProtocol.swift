@@ -11,16 +11,15 @@ import Network
 /// this will be used to implement a fallback with foundation in the future
 internal protocol TransferProtocol {
     /// the events
-    var on: SocketCallback { get set }
+    var on: FastSocketCallback { get set }
     /// create a instance of NetworkTransfer
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
     ///     - type: the transfer type (.tcp or .tls)
-    ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
     ///     - transferParameters: TransportParameters `optional`
     ///     - queue: Dispatch Qeue `optional`
-    init(host: String, port: UInt16, type: TransferType, allowUntrusted: Bool, parameters: TransferParameters, queue: DispatchQueue)
+    init(host: String, port: UInt16, type: TransferType, parameters: TransferParameters, queue: DispatchQueue)
     /// connect to a host
     /// prevent reconnecting after a connection
     /// was successfully established

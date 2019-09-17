@@ -8,11 +8,11 @@
 
 import Foundation
 /// generic result type for transmitted bytes
-public enum ByteCountResult<Bytes> {
+public enum ByteCountResult {
     /// input bytes are the bytes
     /// which are *readed from the socket*
-    case input(Bytes)
+    case input(Int)
     /// output bytes are the bytes
     /// which are *written on the socket*
-    case output(Bytes)
+    case output(Int)
 }

@@ -2,7 +2,7 @@ disabled_rules:
   - unused_closure_parameter
   - identifier_name
 excluded:
-  - Pods
   - FastSocketTests
+  - Pods
 
 line_length: 300

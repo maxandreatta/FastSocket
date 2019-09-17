@@ -23,7 +23,7 @@ Pod::Spec.new do |spec|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "FastSocket is a Framework to make bandwidth measurements - `The Real Way`"
+  spec.description  = "FastSocket is a small and very Fast Framework to transfer Data - `The Real Way`"
   spec.homepage     = "https://weist.it"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
