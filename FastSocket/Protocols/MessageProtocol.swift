@@ -8,7 +8,7 @@
 
 import Foundation
 /// protocol for message compliance
-public protocol MessageTypeProtocol {
+public protocol MessageProtocol {
     // this protocol should be conformed
     // to the data types, which are allowed to
     // send and be received
