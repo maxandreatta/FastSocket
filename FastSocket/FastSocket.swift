@@ -22,21 +22,18 @@ public final class FastSocket: FastSocketProtocol {
     private var frame = Frame()
     private var transfer: TransferProtocol?
     private var timer: DispatchSourceTimer?
-    private var sha256 = Data()
+    private var digest = Data()
     private var type: TransferType
     private var isLocked = false
-    private var allowUntrusted = false
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
     ///     - type: the transfer type (.tcp or .tls)
-    ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
-    public required init(host: String, port: UInt16, type: TransferType = .tcp, allowUntrusted: Bool = false) {
+    public required init(host: String, port: UInt16, type: TransferType = .tcp) {
         self.host = host
         self.port = port
         self.type = type
-        self.allowUntrusted = allowUntrusted
     }
     /// connect to the server
     /// try to establish a connection to a
@@ -61,7 +58,7 @@ public final class FastSocket: FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    public func send<T: MessageTypeProtocol>(message: T) {
+    public func send<T: MessageProtocol>(message: T) {
         guard isLocked, let transfer = transfer else {
             return
         }
@@ -83,8 +80,8 @@ private extension FastSocket {
             return
         }
         isLocked = false
-        sha256 = Data()
-        transfer = NetworkTransfer(host: host, port: port, type: type, allowUntrusted: allowUntrusted, parameters: parameters)
+        digest = Data()
+        transfer = NetworkTransfer(host: host, port: port, type: type, parameters: parameters)
         transferCallbacks()
         frameCallbacks()
     }
@@ -110,7 +107,7 @@ private extension FastSocket {
             onError(FastSocketError.handshakeInitializationFailed)
             return
         }
-        sha256 = data.sha256
+        digest = data.sha256
         transfer.send(data: data)
     }
     /// start timeout on connecting
@@ -168,7 +165,7 @@ private extension FastSocket {
     /// this function is called from
     /// the transfer, to handle all necessary
     /// things `on message`
-    private func handleMessageState(data: MessageTypeProtocol) {
+    private func handleMessageState(data: MessageProtocol) {
         guard case let data as Data = data else {
             return
         }
@@ -181,7 +178,7 @@ private extension FastSocket {
             }
 
         case false:
-            guard data == self.sha256 else {
+            guard data == self.digest else {
                 self.onError(FastSocketError.handshakeVerificationFailed)
                 return
             }

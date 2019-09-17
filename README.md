@@ -23,10 +23,8 @@
 - [X] maximum frame size 16777216 bytes (with overhead)
 - [X] content length base framing instead of fin byte termination
 - [X] send/receive multiple messages at once (currently only in debug mode)
-- [X] TLS support with the ability to allow untrusted certificates
+- [X] TLS support
 
-## **Note:**
-**All versions with 0.5.0 or less will not work with the current backend because we redesigned the protocol and the framing to give the ability to send and receive multiple messages at once. But for now the feature is blocked in the framework**
 
 ## License:
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=for-the-badge)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
@@ -41,7 +39,6 @@
 | develop |  [![Travis Develop](https://img.shields.io/travis/Vinz1911/FastSocket/develop.svg?label=develop&logo=travis&style=for-the-badge)](https://travis-ci.org/Vinz1911/FastSocket/builds) |                                                                                                                                                                                                               |                                                                                                                                                                                                           |
 
 ## Installation:
-
 ### CocoaPods
 
 Add the following line to your `Podfile`:
@@ -59,20 +56,16 @@ github "Vinz1911/FastSocket"
 ```
 
 ## Import:
-
 ```swift
 // import the Framework
 import FastSocket
 // normal init with TCP (unsecure) transfer type
 let socket = FastSocket(host: "example.com", port: 8080)
 // enhanced init with the ability to set TLS (secure) as transfer type
-// it's also possible to accept connections with untrusted certs
-let socket = FastSocket(host: "example.com", port: 443, type: .tls, allowUntrusted: true)
-
+let socket = FastSocket(host: "example.com", port: 443, type: .tls)
 ```
 
 ## Closures:
-
 ```swift
 socket.on.ready = {
     // this is called after the connection
@@ -110,7 +103,6 @@ socket.on.message = { message in
         print("Message: \(message)")
     }
 }
-
 ```
 
 ## Read Bytes Count:
@@ -132,7 +124,6 @@ socket.on.bytes = { bytes in
 ```
 
 ## Connect:
-
 ```swift
 // try to connect to the host
 // timeout after 5.0 seconds
@@ -140,7 +131,6 @@ socket.connect()
 ```
 
 ## Disconnect:
-
 ```swift
 // closes the connection
 socket.disconnect()
@@ -155,7 +145,6 @@ socket.send(message: T)
 ```
 
 ## Additional Parameters:
-
 ```swift
 // FastSocket was build in top of Apple's Network.framework
 // that allows us to use lot of TCP features like fast open or
@@ -173,6 +162,5 @@ socket.parameters.requiredInterfaceType = .cellular
 ```
 
 ## Authors:
-
 [Vinzenz Weist](https://github.com/Vinz1911)
 [Juan Romero](https://github.com/rukano)

@@ -7,12 +7,12 @@
 //
 import Foundation
 /// typealias for a normal closure
-public typealias Callback = () -> Void
+public typealias FastSocketCallback = () -> Void
 /// typealias for a closure which returns some data
-public typealias CallbackData = (Data) -> Void
+public typealias FastSocketCallbackData = (Data) -> Void
 /// typealias for a closure which return an optional error
-public typealias CallbackError = (Error?) -> Void
+public typealias FastSocketCallbackError = (Error?) -> Void
 /// typealias for the message closure
-public typealias CallbackMessage = (MessageTypeProtocol) -> Void
+public typealias FastSocketCallbackMessage = (MessageProtocol) -> Void
 /// typealias for a closure which returns the written and readed bytes count
-public typealias CallbackBytes = (ByteCountResult<Int>) -> Void
+public typealias FastSocketCallbackBytes = (ByteCountResult) -> Void

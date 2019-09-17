@@ -3,7 +3,7 @@ env:
     - CC_TEST_REPORTER_ID=d212e877cf83b527bc6966a88b0a2dbdd37dd25e66af926eaa3887811d9dff9a
 
 # The OSX Image on which the build should be testet
-osx_image: xcode10.2
+osx_image: xcode11
 
 # the programming language
 language: swift

@@ -10,13 +10,13 @@ import Foundation
 /// necessary features
 public struct SocketCallback {
     /// called if the connection is ready
-    public var ready: Callback = { }
+    public var ready: FastSocketCallback = { }
     /// called if the connection was closed
-    public var close: Callback = { }
+    public var close: FastSocketCallback = { }
     /// called if a data or string based message was received
-    public var message: CallbackMessage = { message in }
+    public var message: FastSocketCallbackMessage = { message in }
     /// called if bytes are written or readed from the socket
-    public var bytes: CallbackBytes = { bytes in }
+    public var bytes: FastSocketCallbackBytes = { bytes in }
     /// called if an error is provided
-    public var error: CallbackError = { error in }
+    public var error: FastSocketCallbackError = { error in }
 }
