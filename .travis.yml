@@ -22,8 +22,8 @@ before_install:
 
 # install fastlane stuff
 install:
-  - bundle update fastlane
   - bundle install
+  - bundle update fastlane
 
 # run fastlane
 script:
