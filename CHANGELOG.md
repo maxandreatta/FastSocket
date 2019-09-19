@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - swift 5.1 support
 - fastlane build .xcframework
 
-## [2.0.0] - XXXX-XX-XX
+## [Released]
+## [2.0.0] - 2019-09-19
 ### Added
 - clean up code
 - redesign of framing protocol
@@ -23,7 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - no ios 12- support
 - support for untrusted tls certs removed
 
-## [Released]
 ## [1.1.0] - 2019-05-26
 ### Added
 - clean up code
