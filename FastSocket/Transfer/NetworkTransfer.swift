@@ -12,7 +12,7 @@ import Network
 /// it uses the Network.framework. This is
 /// the `Engine` of the FastSocket Protocol.
 /// It allows to enter directly the TCP Options
-internal class NetworkTransfer: TransferProtocol {
+internal final class NetworkTransfer: TransferProtocol {
     internal var on = FastSocketCallback()
     private var connection: NWConnection?
     private var monitor = NWPathMonitor()

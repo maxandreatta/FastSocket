@@ -83,7 +83,6 @@ private extension FastSocket {
         digest = Data()
         transfer = NetworkTransfer(host: host, port: port, type: type, parameters: parameters)
         transferCallbacks()
-        frameCallbacks()
     }
     /// suspends timeout and report on error
     /// - parameters:
@@ -129,7 +128,7 @@ private extension FastSocket {
     /// closures from the transfer protocol
     /// handles incoming data and handshake
     private func transferCallbacks() {
-        guard var transfer = transfer else {
+        guard let transfer = transfer else {
             return
         }
         transfer.on.ready = { [weak self] in
@@ -147,11 +146,6 @@ private extension FastSocket {
         transfer.on.error = onError
         transfer.on.close = on.close
         transfer.on.bytes = on.bytes
-    }
-    /// closures from Frame
-    /// returns the parsed messages
-    private func frameCallbacks() {
-        frame.onMessage = on.message
     }
 }
 
@@ -172,11 +166,12 @@ private extension FastSocket {
         switch self.isLocked {
         case true:
             do {
-                try self.frame.parse(data: data)
+                try self.frame.parse(data: data) { message in
+                    on.message(message)
+                }
             } catch {
                 self.onError(error)
             }
-
         case false:
             guard data == self.digest else {
                 self.onError(FastSocketError.handshakeVerificationFailed)

@@ -233,7 +233,7 @@ class FastSocketTests: XCTestCase {
     func testFrameErrorZeroData() {
         let frame = Frame()
         let data = Data(count: 0)
-        XCTAssertThrowsError(try frame.parse(data: data)) { error in
+        XCTAssertThrowsError(try frame.parse(data: data){ _ in }) { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.zeroData)
         }
     }
@@ -316,7 +316,7 @@ extension FastSocketTests {
     /// test multiple connections transfer
 //    func testMultipleConnectionsTransfer() {
 //        let exp = expectation(description: "Wait for speed test to finish")
-//        let buffer = "5000000"
+//        let buffer = Data(count: 1000000)
 //        let count = 8
 //        var datacount = 0
 //        var socket: [FastSocket] = []
@@ -328,12 +328,12 @@ extension FastSocketTests {
 //                socket[i].send(message: buffer)
 //            }
 //            socket[i].on.message = { message in
-//                if case let message as Data = message {
+//                if case let message as String = message {
 //                    socket[i].send(message: buffer)
 //                }
 //            }
 //            socket[i].on.bytes = { bytes in
-//                if case .input(let count) = bytes {
+//                if case .output(let count) = bytes {
 //                    datacount += count
 //                    debugPrint("Data Count: \(datacount)")
 //                }

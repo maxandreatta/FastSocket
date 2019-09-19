@@ -1,5 +1,5 @@
 //
-//  SocketCallback.swift
+//  FastSocketCallback.swift
 //  FastSocket
 //
 //  Created by Vinzenz Weist on 02.04.19.

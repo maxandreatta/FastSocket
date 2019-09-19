@@ -33,8 +33,7 @@ import Foundation
 //      - continued payload data
 
 /// The framing protocol
-internal protocol FrameProtocol {
-    var onMessage: (MessageProtocol) -> Void { get set }
+internal protocol FrameProtocol: class {
     // create instance of Frame
     init()
     /// generic func to create a fastsocket protocol compliant
@@ -45,5 +44,5 @@ internal protocol FrameProtocol {
     /// parse a FastSocket Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data
-    func parse(data: Data) throws
+    func parse(data: Data, _ completion: (MessageProtocol) -> Void) throws
 }

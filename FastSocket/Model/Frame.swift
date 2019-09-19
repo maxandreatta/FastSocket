@@ -35,7 +35,6 @@ import Foundation
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal final class Frame: FrameProtocol {
-    internal var onMessage: (MessageProtocol) -> Void = { message in }
     private var readBuffer = Data()
     /// private property to get parse the overhead size of a frame
     private var contentSize: UInt64 {
@@ -76,7 +75,7 @@ internal final class Frame: FrameProtocol {
     /// parse a FastSocket Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data
-    internal func parse(data: Data) throws {
+    internal func parse(data: Data, _ completion: (MessageProtocol) -> Void) throws {
         guard !data.isEmpty else {
             throw FastSocketError.zeroData
         }
@@ -92,12 +91,12 @@ internal final class Frame: FrameProtocol {
                 guard let bytes = slice.trim, let message = String(bytes: bytes, encoding: .utf8) else {
                     throw FastSocketError.parsingFailure
                 }
-                onMessage(message)
+                completion(message)
             case Opcode.data.rawValue:
                 guard let message = slice.trim else {
                     throw FastSocketError.parsingFailure
                 }
-                onMessage(message)
+                completion(message)
             default:
                 throw FastSocketError.unknownOpcode
             }

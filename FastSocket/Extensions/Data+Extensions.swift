@@ -11,6 +11,7 @@ import Foundation
 extension Data: MessageProtocol {
     // conformance to send protocol
 }
+// internal extensions
 internal extension Data {
     /// helper for frame
     /// trims a frame to it's raw content

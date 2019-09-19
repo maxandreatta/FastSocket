@@ -5,8 +5,8 @@
 //  Created by Vinzenz Weist on 09.05.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
 import Foundation
+// internal extensions
 internal extension UInt64 {
     /// convert an integer value with BigEndianUint64
     /// to an Data array
