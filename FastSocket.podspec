@@ -15,7 +15,7 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
   spec.name         = "FastSocket"
-  spec.version      = "1.1.0"
+  spec.version      = "2.0.0"
   spec.summary      = "FastSocket is a custom TCP communication protocol"
 
   # This description is used to generate tags and improve search results.
@@ -23,7 +23,7 @@ Pod::Spec.new do |spec|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "FastSocket is a Framework to make bandwidth measurements - `The Real Way`"
+  spec.description  = "FastSocket is a small and very Fast Framework to transfer Data - `The Real Way`"
   spec.homepage     = "https://weist.it"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 

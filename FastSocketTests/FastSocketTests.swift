@@ -17,8 +17,6 @@ class FastSocketTests: XCTestCase {
     var port: UInt16 = 8080
     /// the transfer type
     var type: TransferType = .tcp
-    /// allow untrusted tls certs
-    var allowUntrusted: Bool = false
 
     /// a test for sending strings and responding data from the backend
     /// this is the definition of a download speedtest
@@ -26,7 +24,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "50000"
         var datacount = 0
-        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -60,7 +58,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 50000)
         var datacount = 0
-        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -87,7 +85,6 @@ class FastSocketTests: XCTestCase {
         socket.connect()
         wait(for: [exp], timeout: 10.0)
     }
-    #if DEBUG
     /// a test for multiple sending data to the backend and receive
     /// multiple strings from the backend
     func testMultipleSendDataAndReceiveString() {
@@ -95,7 +92,7 @@ class FastSocketTests: XCTestCase {
         let buffer = Data(count: 100)
         var messages = 0
         let sendValue = 100
-        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             for _ in 1...sendValue {
                 socket.send(message: buffer)
@@ -129,7 +126,7 @@ class FastSocketTests: XCTestCase {
         let buffer = "100"
         var messages = 0
         let sendValue = 100
-        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             for _ in 1...sendValue {
                 socket.send(message: buffer)
@@ -154,13 +151,12 @@ class FastSocketTests: XCTestCase {
             XCTFail()
         }
         socket.connect()
-        wait(for: [exp], timeout: 10.0)
+        wait(for: [exp], timeout: 1000.0)
     }
-    #endif
     /// a test to look if the client can close a connection
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             socket.disconnect()
         }
@@ -180,7 +176,7 @@ class FastSocketTests: XCTestCase {
     /// and the connection is ready to be used
     func testPerformance() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: host, port: port, type: type, allowUntrusted: allowUntrusted)
+        let socket = FastSocket(host: host, port: port, type: type)
         var startTime = Date().timeIntervalSince1970
         socket.on.ready = {
             debugPrint(Date().timeIntervalSince1970 - startTime)
@@ -214,11 +210,11 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the tls config is loaded
     func testTLSError() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: host, port: port, type: .tls, allowUntrusted: true)
+        let socket = FastSocket(host: host, port: port, type: .tls)
         socket.on.error = { error in
             guard let error = error else { return }
             debugPrint(error)
-            XCTAssertEqual(error as! NWError, NWError.tls(-9816))
+            XCTAssertEqual(error as! NWError, NWError.posix(.ENETDOWN))
             exp.fulfill()
         }
         socket.connect()
@@ -237,7 +233,7 @@ class FastSocketTests: XCTestCase {
     func testFrameErrorZeroData() {
         let frame = Frame()
         let data = Data(count: 0)
-        XCTAssertThrowsError(try frame.parse(data: data)) { error in
+        XCTAssertThrowsError(try frame.parse(data: data){ _ in }) { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.zeroData)
         }
     }
@@ -251,7 +247,7 @@ class FastSocketTests: XCTestCase {
     }
     /// a test to look if the closures work
     func testClosureCall() {
-        let closures = SocketCallback()
+        let closures = FastSocketCallback()
         closures.ready()
         closures.close()
         closures.message("")
@@ -314,4 +310,44 @@ class FastSocketTests: XCTestCase {
         }
         wait(for: [exp], timeout: 2.0)
     }
+}
+
+extension FastSocketTests {
+    /// test multiple connections transfer
+//    func testMultipleConnectionsTransfer() {
+//        let exp = expectation(description: "Wait for speed test to finish")
+//        let buffer = Data(count: 1000000)
+//        let count = 8
+//        var datacount = 0
+//        var socket: [FastSocket] = []
+//        for i in 0...count - 1 {
+//            socket.append(FastSocket(host: host, port: port, type: type))
+//            socket[i].parameters.allowFastOpen = true
+//            socket[i].parameters.serviceClass = .interactiveVoice
+//            socket[i].on.ready = {
+//                socket[i].send(message: buffer)
+//            }
+//            socket[i].on.message = { message in
+//                if case let message as String = message {
+//                    socket[i].send(message: buffer)
+//                }
+//            }
+//            socket[i].on.bytes = { bytes in
+//                if case .output(let count) = bytes {
+//                    datacount += count
+//                    debugPrint("Data Count: \(datacount)")
+//                }
+//            }
+//            socket[i].on.close = {
+//                debugPrint("connection closed")
+//            }
+//            socket[i].on.error = { error in
+//                guard let error = error else { return }
+//                debugPrint("Failed with Error: \(error)")
+//                XCTFail()
+//            }
+//            socket[i].connect()
+//        }
+//        wait(for: [exp], timeout: 1000.0)
+//    }
 }

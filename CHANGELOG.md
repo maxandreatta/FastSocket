@@ -4,7 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+## [2.1.0] - XXXX-XX-XX
+### Added
+- swift 5.1 support
+- fastlane build .xcframework
+
 ## [Released]
+## [2.0.0] - 2019-09-19
+### Added
+- clean up code
+- redesign of framing protocol
+- cryptokit
+- multi send and receive feature
+- iOS 13+
+
+### Removed
+- common crypto
+- no ios 12- support
+- support for untrusted tls certs removed
+
 ## [1.1.0] - 2019-05-26
 ### Added
 - clean up code

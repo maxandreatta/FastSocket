@@ -14,9 +14,9 @@ import Network
 /// The motivation behind this protocol was, to use it as `Speedtest Protocol`, a
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
-public protocol FastSocketProtocol {
+public protocol FastSocketProtocol: class {
     /// public access to the event based closures
-    var on: SocketCallback { get set }
+    var on: FastSocketCallback { get set }
     /// public access to the Network.framework parameter options
     /// that gives you the ability (for example) to define on which
     /// interface the traffic should be send
@@ -26,8 +26,7 @@ public protocol FastSocketProtocol {
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
     ///     - type: the transfer type (.tcp or .tls)
-    ///     - allowUntrusted: if .tls connection are set, then allow untrusted certs
-    init(host: String, port: UInt16, type: TransferType, allowUntrusted: Bool)
+    init(host: String, port: UInt16, type: TransferType)
     /// connect to the server
     /// try to establish a connection to a
     /// FastSocket compliant server
@@ -38,5 +37,5 @@ public protocol FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    func send<T: MessageTypeProtocol>(message: T)
+    func send<T: MessageProtocol>(message: T)
 }

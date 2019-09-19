@@ -17,11 +17,13 @@ internal enum Constant {
     /// maximum tcp readbuffer size
     static let maximumLength: Int = 65_536
     /// timeout time
-    static let timeout: TimeInterval = 5.0
+    static let timeout: TimeInterval = 3.0
     /// maximum per message size
     static let maximumContentLength: Int = 16_777_216
     /// framing overhead
-    static let overheadSize: Int = 10
+    static let overheadSize: Int = 9
     /// maximum iteration size
     static let iterations: Int = 256
+    /// minimum chunk size
+    static let minimumChunkSize: Int = 8192
 }
