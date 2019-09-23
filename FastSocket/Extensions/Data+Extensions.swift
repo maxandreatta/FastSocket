@@ -22,8 +22,7 @@ internal extension Data {
     /// generates a sha256 hash value
     /// from .utf8 data and returns the hash as data
     var sha256: Data {
-        let digest = SHA256.hash(data: self)
-        return Data(digest)
+       Data(SHA256.hash(data: self))
     }
     /// slice data into chunks, dynamically based
     /// on maximum iterations for sending, minimum size
