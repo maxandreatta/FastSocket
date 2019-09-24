@@ -22,7 +22,9 @@ platform :ios do
     UI.message("start building")
       xcodebuild(
         archive: nil,
-        scheme: "FastSocket"
+        scheme: "FastSocket",
+        destination: "generic/platform=iOS",
+        sdk: "iphoneos"
       )
     UI.success("finished building")
   end
