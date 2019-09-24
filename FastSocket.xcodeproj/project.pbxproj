@@ -27,7 +27,6 @@
 		AC55EDA72253B21800D4063A /* FastSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9F2253B21800D4063A /* FastSockets.swift */; };
 		AC55EDA82253B21800D4063A /* NetworkTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA02253B21800D4063A /* NetworkTransfer.swift */; };
 		AC55EDA92253B21800D4063A /* Opcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA22253B21800D4063A /* Opcodes.swift */; };
-		AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AC55EDAB2253B37C00D4063A /* FastSocket.podspec */; };
 		AC6073B322905F5A0087E054 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6073B222905F5A0087E054 /* .travis.yml */; };
 		AC6073B522906B890087E054 /* .slather.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6073B422906B890087E054 /* .slather.yml */; };
 		AC635E06226549AA00CFFBAD /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */; };
@@ -72,7 +71,6 @@
 		AC55ED9F2253B21800D4063A /* FastSockets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSockets.swift; sourceTree = "<group>"; };
 		AC55EDA02253B21800D4063A /* NetworkTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransfer.swift; sourceTree = "<group>"; };
 		AC55EDA22253B21800D4063A /* Opcodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opcodes.swift; sourceTree = "<group>"; };
-		AC55EDAB2253B37C00D4063A /* FastSocket.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = FastSocket.podspec; sourceTree = "<group>"; };
 		AC6073B222905F5A0087E054 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		AC6073B422906B890087E054 /* .slather.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .slather.yml; sourceTree = "<group>"; };
 		AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
@@ -105,7 +103,7 @@
 		AC55ED762253B1ED00D4063A = {
 			isa = PBXGroup;
 			children = (
-				AC93AF9A2279E4C20038B86D /* Podspec+Readme */,
+				AC93AF9A2279E4C20038B86D /* Maintainer */,
 				AC55ED822253B1ED00D4063A /* FastSocket */,
 				AC55ED8D2253B1ED00D4063A /* FastSocketTests */,
 				AC55ED812253B1ED00D4063A /* Products */,
@@ -213,19 +211,18 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		AC93AF9A2279E4C20038B86D /* Podspec+Readme */ = {
+		AC93AF9A2279E4C20038B86D /* Maintainer */ = {
 			isa = PBXGroup;
 			children = (
 				AC24FFCE22820C6F0025AEDF /* LICENSE */,
 				AC93AF9B2279EC150038B86D /* Fastfile */,
-				AC55EDAB2253B37C00D4063A /* FastSocket.podspec */,
 				AC1536F5227341FF00F3A2E2 /* README.md */,
 				AC24FFD0228214CE0025AEDF /* CHANGELOG.md */,
 				AC6073B422906B890087E054 /* .slather.yml */,
 				AC9BF19A22985BB2008D0036 /* .swiftlint.yml */,
 				AC6073B222905F5A0087E054 /* .travis.yml */,
 			);
-			name = "Podspec+Readme";
+			name = Maintainer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,7 +327,6 @@
 				AC1536F6227341FF00F3A2E2 /* README.md in Resources */,
 				AC24FFCF22820C6F0025AEDF /* LICENSE in Resources */,
 				AC6073B522906B890087E054 /* .slather.yml in Resources */,
-				AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,7 +554,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = it.weist.fastsocket;
+				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = NO;
@@ -590,7 +586,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = it.weist.fastsocket;
+				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = NO;

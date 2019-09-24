@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - swift 5.1 support
 - fastlane build .xcframework
 
+### Removed
+- removed carthage support
+- removed cocoapods support
+
 ## [Released]
 ## [2.0.0] - 2019-09-19
 ### Added
