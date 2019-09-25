@@ -24,7 +24,7 @@
 - [X] content length base framing instead of fin byte termination
 - [X] send/receive multiple messages at once (currently only in debug mode)
 - [X] TLS support
-- [X] FastSocket.xcframework support
+- [X] XCFramework support
 
 ## License:
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=for-the-badge)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
@@ -41,7 +41,8 @@
 ## Installation:
 ### XCFramework
 
-Copy the FastSocket.xcframework to your `Frameworks and Libraries` section and that's it. Very easy or :)
+Download the latest Framework Version from the [Release](https://github.com/Vinz1911/FastSocket/releases) section. 
+Copy the FastSocket.xcframework to your `Frameworks and Libraries` section.
 
 ## Import:
 ```swift
