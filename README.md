@@ -24,13 +24,13 @@
 - [X] content length base framing instead of fin byte termination
 - [X] send/receive multiple messages at once (currently only in debug mode)
 - [X] TLS support
-
+- [X] XCFramework support
 
 ## License:
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=for-the-badge)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
 
 ## Swift Version:
-[![Swift 5](https://img.shields.io/badge/Swift-5.0-orange.svg?logo=swift&style=for-the-badge)](https://swift.org)
+[![Swift 5.1](https://img.shields.io/badge/Swift-5.1-orange.svg?logo=swift&style=for-the-badge)](https://swift.org)
 
 ## Build Status:
 |  Branch |                                                                                     Build Status                                                                                    |                                                                                                    Coverage                                                                                                   |                                                                                              Maintainability                                                                                              |
@@ -39,21 +39,10 @@
 | develop |  [![Travis Develop](https://img.shields.io/travis/Vinz1911/FastSocket/develop.svg?label=develop&logo=travis&style=for-the-badge)](https://travis-ci.org/Vinz1911/FastSocket/builds) |                                                                                                                                                                                                               |                                                                                                                                                                                                           |
 
 ## Installation:
-### CocoaPods
+### XCFramework
 
-Add the following line to your `Podfile`:
-
-```ruby
-pod 'FastSocket', :git => 'https://github.com/Vinz1911/FastSocket.git'
-```
-
-### Carthage
-
-Add the following line to your `Cartfile`
-
-```ruby
-github "Vinz1911/FastSocket"
-```
+Download the latest Framework Version from the [Release](https://github.com/Vinz1911/FastSocket/releases) section. 
+Copy the FastSocket.xcframework to your `Frameworks and Libraries` section.
 
 ## Import:
 ```swift

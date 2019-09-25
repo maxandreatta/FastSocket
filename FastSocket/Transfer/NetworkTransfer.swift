@@ -63,17 +63,13 @@ internal final class NetworkTransfer: TransferProtocol {
     /// prevent reconnecting after a connection
     /// was successfully established
     internal func connect() {
-        guard !isRunning else {
-            return
-        }
+        guard !isRunning else { return }
         connection = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: port)!, using: nwparameters)
         isRunning = true
         connectionStateHandler()
         networkPathMonitor()
         readLoop()
-        guard let connection = connection else {
-            return
-        }
+        guard let connection = connection else { return }
         connection.start(queue: queue)
     }
     /// disconnect from host and
@@ -86,34 +82,28 @@ internal final class NetworkTransfer: TransferProtocol {
     /// - parameters:
     ///     - data: the data which should be written on the socket
     internal func send(data: Data) {
-        guard let connection = connection else {
-            return
-        }
-        connection.batch { [weak self] in
-            guard let self = self else {
-                return
-            }
-            guard connectionState == .ready else {
-                on.error(FastSocketError.sendToEarly)
-                return
-            }
-            let queued = data.chunk(by: Constant.iterations)
-            guard !queued.isEmpty else {
-                return
-            }
-            var iterator = queued.makeIterator()
-            while let data = iterator.next() {
-                connection.send(content: data, completion: .contentProcessed({ error in
-                    if let error = error {
-                        guard error != NWError.posix(.ECANCELED) else {
-                            // cancel error can be ignored
+        guard let connection = connection else { return }
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            connection.batch { [weak self] in
+                guard let self = self else { return }
+                guard self.connectionState == .ready else {
+                    self.on.error(FastSocketError.sendToEarly)
+                    return
+                }
+                let queued = data.chunk
+                guard !queued.isEmpty else { return }
+                var iterator = queued.makeIterator()
+                while let data = iterator.next() {
+                    connection.send(content: data, completion: .contentProcessed({ error in
+                        if let error = error {
+                            guard error != NWError.posix(.ECANCELED) else { return }
+                            self.on.error(error)
                             return
                         }
-                        self.on.error(error)
-                        return
-                    }
-                    self.on.bytes(.output(data.count))
-                }))
+                        self.on.bytes(.output(data.count))
+                    }))
+                }
             }
         }
     }
@@ -123,34 +113,24 @@ private extension NetworkTransfer {
     /// cleanup a connection
     private func clean() {
         isRunning = false
-        guard let connection = connection else {
-            return
-        }
+        guard let connection = connection else { return }
         connection.cancel()
     }
     /// check connection state
     private func connectionStateHandler() {
-        guard let connection = connection else {
-            return
-        }
+        guard let connection = connection else { return }
         connection.stateUpdateHandler = { [weak self] state in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.connectionState = state
             switch state {
             case .ready:
                 self.on.ready()
-
             case .waiting(let error):
                 self.on.error(error)
-
             case .failed(let error):
                 self.on.error(error)
-
             case .cancelled:
                 self.on.close()
-
             default:
                 break
             }
@@ -160,12 +140,8 @@ private extension NetworkTransfer {
     /// used to detect if network is unrechable
     private func networkPathMonitor() {
         monitor.pathUpdateHandler = { [weak self] path in
-            guard let self = self else {
-                return
-            }
-            guard path.status == .unsatisfied else {
-                return
-            }
+            guard let self = self else { return }
+            guard path.status == .unsatisfied else { return }
             self.clean()
             self.on.error(FastSocketError.networkUnreachable)
         }
@@ -173,25 +149,14 @@ private extension NetworkTransfer {
     }
     /// readloop for the tcp socket incoming data
     private func readLoop() {
-        guard let connection = connection else {
-            return
-        }
+        guard let connection = connection else { return }
         connection.batch { [weak self] in
-            guard let self = self else {
-                return
-            }
-            guard isRunning else {
-                return
-            }
+            guard let self = self else { return }
+            guard isRunning else { return }
             connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength) { [weak self] data, _, isComplete, error in
-                guard let self = self else {
-                    return
-                }
+                guard let self = self else { return }
                 if let error = error {
-                    guard error != NWError.posix(.ECANCELED) else {
-                        // cancel error can be ignored
-                        return
-                    }
+                    guard error != NWError.posix(.ECANCELED) else { return }
                     self.on.error(error)
                     return
                 }
@@ -203,7 +168,6 @@ private extension NetworkTransfer {
                 case true:
                     self.clean()
                     self.on.close()
-
                 case false:
                     self.readLoop()
                 }

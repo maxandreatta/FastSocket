@@ -12,7 +12,6 @@
 		AC0EF7BA227078DC00024EA5 /* Timer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0EF7B9227078DC00024EA5 /* Timer+Extension.swift */; };
 		AC1536F6227341FF00F3A2E2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AC1536F5227341FF00F3A2E2 /* README.md */; };
 		AC24FFCF22820C6F0025AEDF /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = AC24FFCE22820C6F0025AEDF /* LICENSE */; };
-		AC24FFD1228214CE0025AEDF /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = AC24FFD0228214CE0025AEDF /* CHANGELOG.md */; };
 		AC2ACF82228A0DEF00976362 /* TransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2ACF81228A0DEF00976362 /* TransferType.swift */; };
 		AC2ACF84228A175A00976362 /* TransferParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2ACF83228A175A00976362 /* TransferParameters.swift */; };
 		AC2ACF88228C170D00976362 /* ByteCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2ACF87228C170D00976362 /* ByteCountResult.swift */; };
@@ -24,16 +23,16 @@
 		AC55EDA42253B21800D4063A /* FastSocketCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9B2253B21800D4063A /* FastSocketCallback.swift */; };
 		AC55EDA52253B21800D4063A /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9C2253B21800D4063A /* Frame.swift */; };
 		AC55EDA62253B21800D4063A /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9E2253B21800D4063A /* TransferProtocol.swift */; };
-		AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9F2253B21800D4063A /* FastSocket.swift */; };
+		AC55EDA72253B21800D4063A /* FastSockets.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55ED9F2253B21800D4063A /* FastSockets.swift */; };
 		AC55EDA82253B21800D4063A /* NetworkTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA02253B21800D4063A /* NetworkTransfer.swift */; };
 		AC55EDA92253B21800D4063A /* Opcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55EDA22253B21800D4063A /* Opcodes.swift */; };
-		AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */ = {isa = PBXBuildFile; fileRef = AC55EDAB2253B37C00D4063A /* FastSocket.podspec */; };
 		AC6073B322905F5A0087E054 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6073B222905F5A0087E054 /* .travis.yml */; };
 		AC6073B522906B890087E054 /* .slather.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6073B422906B890087E054 /* .slather.yml */; };
 		AC635E06226549AA00CFFBAD /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */; };
 		AC86306722771B78002C553C /* FrameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC86306622771B78002C553C /* FrameProtocol.swift */; };
 		AC93AF9C2279EC150038B86D /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = AC93AF9B2279EC150038B86D /* Fastfile */; };
 		AC9BF19B22985BB2008D0036 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC9BF19A22985BB2008D0036 /* .swiftlint.yml */; };
+		ACAF20AE233BC6F1005DA16F /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = ACAF20AD233BC6F1005DA16F /* CHANGELOG.md */; };
 		ACFAE9ED227C5972009B0D96 /* MessageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE9EC227C5972009B0D96 /* MessageProtocol.swift */; };
 		ACFAE9EF227C5B50009B0D96 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFAE9EE227C5B50009B0D96 /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -54,7 +53,6 @@
 		AC0EF7B9227078DC00024EA5 /* Timer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Extension.swift"; sourceTree = "<group>"; };
 		AC1536F5227341FF00F3A2E2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AC24FFCE22820C6F0025AEDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		AC24FFD0228214CE0025AEDF /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		AC2ACF81228A0DEF00976362 /* TransferType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferType.swift; sourceTree = "<group>"; };
 		AC2ACF83228A175A00976362 /* TransferParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferParameters.swift; sourceTree = "<group>"; };
 		AC2ACF87228C170D00976362 /* ByteCountResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteCountResult.swift; sourceTree = "<group>"; };
@@ -69,16 +67,16 @@
 		AC55ED9B2253B21800D4063A /* FastSocketCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketCallback.swift; sourceTree = "<group>"; };
 		AC55ED9C2253B21800D4063A /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		AC55ED9E2253B21800D4063A /* TransferProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
-		AC55ED9F2253B21800D4063A /* FastSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocket.swift; sourceTree = "<group>"; };
+		AC55ED9F2253B21800D4063A /* FastSockets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSockets.swift; sourceTree = "<group>"; };
 		AC55EDA02253B21800D4063A /* NetworkTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransfer.swift; sourceTree = "<group>"; };
 		AC55EDA22253B21800D4063A /* Opcodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opcodes.swift; sourceTree = "<group>"; };
-		AC55EDAB2253B37C00D4063A /* FastSocket.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = FastSocket.podspec; sourceTree = "<group>"; };
-		AC6073B222905F5A0087E054 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		AC6073B222905F5A0087E054 /* .travis.yml */ = {isa = PBXFileReference; explicitFileType = text.yaml; fileEncoding = 4; path = .travis.yml; sourceTree = "<group>"; };
 		AC6073B422906B890087E054 /* .slather.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .slather.yml; sourceTree = "<group>"; };
 		AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
 		AC86306622771B78002C553C /* FrameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
 		AC93AF9B2279EC150038B86D /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; };
 		AC9BF19A22985BB2008D0036 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		ACAF20AD233BC6F1005DA16F /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = fastlane/CHANGELOG.md; sourceTree = "<group>"; };
 		ACFAE9EC227C5972009B0D96 /* MessageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProtocol.swift; sourceTree = "<group>"; };
 		ACFAE9EE227C5B50009B0D96 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,7 +103,7 @@
 		AC55ED762253B1ED00D4063A = {
 			isa = PBXGroup;
 			children = (
-				AC93AF9A2279E4C20038B86D /* Podspec+Readme */,
+				AC93AF9A2279E4C20038B86D /* Readme+CI */,
 				AC55ED822253B1ED00D4063A /* FastSocket */,
 				AC55ED8D2253B1ED00D4063A /* FastSocketTests */,
 				AC55ED812253B1ED00D4063A /* Products */,
@@ -124,7 +122,7 @@
 		AC55ED822253B1ED00D4063A /* FastSocket */ = {
 			isa = PBXGroup;
 			children = (
-				AC55ED9F2253B21800D4063A /* FastSocket.swift */,
+				AC55ED9F2253B21800D4063A /* FastSockets.swift */,
 				AC93AF542279E33D0038B86D /* Transfer */,
 				AC93AF5E2279E4090038B86D /* Error */,
 				AC93AF5B2279E3EB0038B86D /* Protocols */,
@@ -213,19 +211,18 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		AC93AF9A2279E4C20038B86D /* Podspec+Readme */ = {
+		AC93AF9A2279E4C20038B86D /* Readme+CI */ = {
 			isa = PBXGroup;
 			children = (
 				AC24FFCE22820C6F0025AEDF /* LICENSE */,
 				AC93AF9B2279EC150038B86D /* Fastfile */,
-				AC55EDAB2253B37C00D4063A /* FastSocket.podspec */,
 				AC1536F5227341FF00F3A2E2 /* README.md */,
-				AC24FFD0228214CE0025AEDF /* CHANGELOG.md */,
+				ACAF20AD233BC6F1005DA16F /* CHANGELOG.md */,
 				AC6073B422906B890087E054 /* .slather.yml */,
 				AC9BF19A22985BB2008D0036 /* .swiftlint.yml */,
 				AC6073B222905F5A0087E054 /* .travis.yml */,
 			);
-			name = "Podspec+Readme";
+			name = "Readme+CI";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,11 +323,10 @@
 				AC9BF19B22985BB2008D0036 /* .swiftlint.yml in Resources */,
 				AC6073B322905F5A0087E054 /* .travis.yml in Resources */,
 				AC93AF9C2279EC150038B86D /* Fastfile in Resources */,
-				AC24FFD1228214CE0025AEDF /* CHANGELOG.md in Resources */,
 				AC1536F6227341FF00F3A2E2 /* README.md in Resources */,
 				AC24FFCF22820C6F0025AEDF /* LICENSE in Resources */,
+				ACAF20AE233BC6F1005DA16F /* CHANGELOG.md in Resources */,
 				AC6073B522906B890087E054 /* .slather.yml in Resources */,
-				AC55EDAC2253B37C00D4063A /* FastSocket.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +374,7 @@
 				AC55EDA52253B21800D4063A /* Frame.swift in Sources */,
 				AC0EF7BA227078DC00024EA5 /* Timer+Extension.swift in Sources */,
 				AC55EDA42253B21800D4063A /* FastSocketCallback.swift in Sources */,
-				AC55EDA72253B21800D4063A /* FastSocket.swift in Sources */,
+				AC55EDA72253B21800D4063A /* FastSockets.swift in Sources */,
 				AC55EDA32253B21800D4063A /* Error.swift in Sources */,
 				ACFAE9EF227C5B50009B0D96 /* String+Extensions.swift in Sources */,
 				AC2ACF82228A0DEF00976362 /* TransferType.swift in Sources */,
@@ -465,6 +461,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -523,6 +520,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -536,11 +534,12 @@
 		AC55ED952253B1ED00D4063A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 155;
+				CURRENT_PROJECT_VERSION = 160;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -554,11 +553,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = it.weist.fastsocket;
+				MARKETING_VERSION = 2.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -568,11 +566,12 @@
 		AC55ED962253B1ED00D4063A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 155;
+				CURRENT_PROJECT_VERSION = 160;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -586,11 +585,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = it.weist.fastsocket;
+				MARKETING_VERSION = 2.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

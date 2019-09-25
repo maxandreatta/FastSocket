@@ -14,53 +14,79 @@
 # update_fastlane
 
 default_platform(:ios)
+# project version number
+version = get_version_number(xcodeproj: "FastSocket.xcodeproj")
 
 platform :ios do
 
-  desc "Build with XCode tools"
+  desc "build with Xcode tools"
   lane :build_xcode do
-    UI.message("Start building")
+    UI.message("start building")
       xcodebuild(
         archive: nil,
-        scheme: "FastSocket"
+        scheme: "FastSocket",
+        destination: "generic/platform=iOS",
+        sdk: "iphoneos"
       )
-    UI.success("Finished building")
+    UI.success("finished building")
   end
 
-  desc "Run unit tests"
+  desc "run unit tests"
   lane :test_xcode do
-    UI.message("Performing unit tests")
-      # use scan file
-      scan
-    UI.success("Finished unit tests")
+    UI.message("performing unit tests")
+    run_tests(
+      devices: ["iPhone 11"],
+      scheme: "FastSocket")
+    UI.success("finished unit tests")
   end
-
-  desc "Build with Carthage"
-  lane :build_carthage do
-    # build with carthage
-    carthage(
-      command: "build",
-      no_skip_current: true,
-      verbose: false,
-      platform: "all",
-      log_path: "carthage.log"
+  
+  desc "archive for generic ios"
+  lane :archive_generic_ios_xcode do
+    # build and archive for generic ios platform
+    UI.message("archive for generic ios platform")
+    xcodebuild(
+      archive: true,
+      archive_path: "./fastlane/framework/FastSocket_iOS.xcarchive",
+      scheme: "FastSocket",
+      destination: "generic/platform=iOS",
+      sdk: "iphoneos"
     )
   end
-
-  desc "Create archive with carthage"
-  lane :archive_carthage do
-    # archive with carthage
-    carthage(
-      output: "FastSocket.framework.zip",
-      command: "archive",
-      verbose: false,
+  
+  desc "archive for ios simulator platform"
+  lane :archive_ios_simulator_xcode do
+    UI.message("successfully archived")
+    # build and archive for ios simulator platform
+    UI.message("archive for ios simulator")
+    xcodebuild(
+      archive: true,
+      archive_path: "./fastlane/framework/FastSocket_Simulator.xcarchive",
+      scheme: "FastSocket",
+      destination: "platform=iOS Simulator,name=iPhone 11,OS=13.0",
+      sdk: "iphonesimulator"
     )
+    UI.message("successfully archived")
   end
-
-  desc "Update and commit the podspec"
-  lane :update_podspec do
-    # get version from branch
-    # update podspec, commit and push
+  
+  desc "create archive and .xcframework"
+  lane :build_framework_xcode do
+    # create .xcframework from the archives
+    UI.message("create framework")
+    sh("xcodebuild -create-xcframework -framework ./framework/FastSocket_iOS.xcarchive/Products/Library/Frameworks/FastSocket.framework -framework ./framework/FastSocket_Simulator.xcarchive/Products/Library/Frameworks/FastSocket.framework -output ./framework/FastSocket.xcframework")
+    UI.message("successfully created")
+  end
+  
+  desc "release framework"
+  lane :release_framework do
+    # tag and release to github
+    github_release = set_github_release(
+      repository_name: "Vinz1911/FastSocket",
+      api_token: ENV["GITHUB_RELEASE"],
+      name: "Framework Release",
+      tag_name: version,
+      description: (File.read("./CHANGELOG.md") rescue "Changelog is missing!"),
+      upload_assets: ["./fastlane/framework/FastSocket.xcframework"]
+    )
   end
 
 end

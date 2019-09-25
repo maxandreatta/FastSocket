@@ -38,11 +38,9 @@ internal final class Frame: FrameProtocol {
     private var readBuffer = Data()
     /// private property to get parse the overhead size of a frame
     private var contentSize: UInt64 {
-        guard readBuffer.count >= Constant.overheadSize else {
-            return .zero
-        }
+        guard readBuffer.count >= Constant.overheadSize else { return .zero }
         let size = Data(readBuffer[1...Constant.overheadSize - 1])
-        return size.intValue()
+        return UInt64(size.integer)
     }
     /// crate instance of Frame
     internal required init() {
