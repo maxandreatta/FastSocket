@@ -12,6 +12,8 @@ internal enum Constant {
     static let prefixNetwork = "network.dispatch."
     /// queue prefix for timer
     static let prefixTimer = "timer.dispatch"
+    /// queue prefix for iteration
+    static let prefixIteration = "iteration.dispatch"
     /// for tcp socket reading, minimum stream length
     static let minimumIncompleteLength: Int = 1
     /// maximum tcp readbuffer size

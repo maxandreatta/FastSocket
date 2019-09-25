@@ -1,6 +1,0 @@
-scheme("FastSocket")
-devices(["iPhone 11"])
-clean(true)
-output_types("html")
-max_concurrent_simulators(1)
-disable_concurrent_testing(true)

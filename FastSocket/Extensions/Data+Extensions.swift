@@ -19,16 +19,11 @@ internal extension Data {
         guard self.count >= Constant.overheadSize else { return nil }
         return Data(self[Constant.overheadSize...])
     }
-    /// generates a sha256 hash value
-    /// from .utf8 data and returns the hash as data
-    var sha256: Data {
-       Data(SHA256.hash(data: self))
-    }
     /// slice data into chunks, dynamically based
     /// on maximum iterations for sending, minimum size
     /// is 8192 per sliceBytes
-    func chunk(by iterations: Int) -> [Data] {
-        var size = self.count / iterations
+    var chunk: [Data] {
+        var size = self.count / Constant.iterations
         if size <= Constant.minimumChunkSize {
             size = Constant.minimumChunkSize
         }
@@ -36,13 +31,16 @@ internal extension Data {
             Data(self[count..<Swift.min(count + size, self.count)])
         }
     }
+    /// generates a sha256 hash value
+    /// from .utf8 data and returns the hash as data
+    var sha256: Data {
+       Data(SHA256.hash(data: self))
+    }
     /// generic func to extract integers from data as big endian
-    func intValue<T: FixedWidthInteger>() -> T {
-        guard !self.isEmpty else {
-            return .zero
-        }
-        return T(bigEndian: withUnsafeBytes { bytes in
-            bytes.load(as: T.self)
+    var integer: Int {
+        guard !self.isEmpty else { return .zero }
+        return Int(bigEndian: withUnsafeBytes { bytes in
+            bytes.load(as: Int.self)
         })
     }
 }

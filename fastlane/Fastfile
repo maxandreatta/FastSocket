@@ -32,16 +32,14 @@ platform :ios do
   desc "run unit tests"
   lane :test_xcode do
     UI.message("performing unit tests")
-      scan
+    run_tests(
+      devices: ["iPhone 11"],
+      scheme: "FastSocket")
     UI.success("finished unit tests")
   end
   
-  desc "create archive and .xcframework"
-  lane :build_framework_xcode do
-    # remove old build destination
-    UI.message("remove old builds")
-    sh("rm -rf framework")
-    UI.message("successfully removed")
+  desc "archive for generic ios"
+  lane :archive_generic_ios_xcode do
     # build and archive for generic ios platform
     UI.message("archive for generic ios platform")
     xcodebuild(
@@ -51,6 +49,10 @@ platform :ios do
       destination: "generic/platform=iOS",
       sdk: "iphoneos"
     )
+  end
+  
+  desc "archive for ios simulator platform"
+  lane :archive_ios_simulator_xcode do
     UI.message("successfully archived")
     # build and archive for ios simulator platform
     UI.message("archive for ios simulator")
@@ -62,9 +64,26 @@ platform :ios do
       sdk: "iphonesimulator"
     )
     UI.message("successfully archived")
+  end
+  
+  desc "create archive and .xcframework"
+  lane :build_framework_xcode do
     # create .xcframework from the archives
     UI.message("create framework")
     sh("xcodebuild -create-xcframework -framework ./framework/FastSocket_iOS.xcarchive/Products/Library/Frameworks/FastSocket.framework -framework ./framework/FastSocket_Simulator.xcarchive/Products/Library/Frameworks/FastSocket.framework -output ./framework/FastSocket.xcframework")
     UI.message("successfully created")
+  end
+  
+  desc "release framework"
+  lane :release_framework do
+    version = get_version_number(xcodeproj: "FastSocket.xcodeproj")
+    github_release = set_github_release(
+      repository_name: "Vinz1911/FastSocket",
+      api_token: ENV["GITHUB_TOKEN"],
+      name: "Framework Release",
+      tag_name: version,
+      description: (File.read("CHANGELOG.md") rescue "No changelog provided"),
+      upload_assets: ["./framework/FastSocket.xcframework"]
+    )
   end
 end

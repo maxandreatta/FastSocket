@@ -71,7 +71,7 @@
 		AC55ED9F2253B21800D4063A /* FastSockets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSockets.swift; sourceTree = "<group>"; };
 		AC55EDA02253B21800D4063A /* NetworkTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransfer.swift; sourceTree = "<group>"; };
 		AC55EDA22253B21800D4063A /* Opcodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opcodes.swift; sourceTree = "<group>"; };
-		AC6073B222905F5A0087E054 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		AC6073B222905F5A0087E054 /* .travis.yml */ = {isa = PBXFileReference; explicitFileType = text.yaml; fileEncoding = 4; path = .travis.yml; sourceTree = "<group>"; };
 		AC6073B422906B890087E054 /* .slather.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .slather.yml; sourceTree = "<group>"; };
 		AC635E05226549AA00CFFBAD /* FastSocketProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
 		AC86306622771B78002C553C /* FrameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		AC55ED762253B1ED00D4063A = {
 			isa = PBXGroup;
 			children = (
-				AC93AF9A2279E4C20038B86D /* Maintainer */,
+				AC93AF9A2279E4C20038B86D /* Readme+CI */,
 				AC55ED822253B1ED00D4063A /* FastSocket */,
 				AC55ED8D2253B1ED00D4063A /* FastSocketTests */,
 				AC55ED812253B1ED00D4063A /* Products */,
@@ -211,7 +211,7 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		AC93AF9A2279E4C20038B86D /* Maintainer */ = {
+		AC93AF9A2279E4C20038B86D /* Readme+CI */ = {
 			isa = PBXGroup;
 			children = (
 				AC24FFCE22820C6F0025AEDF /* LICENSE */,
@@ -222,7 +222,7 @@
 				AC9BF19A22985BB2008D0036 /* .swiftlint.yml */,
 				AC6073B222905F5A0087E054 /* .travis.yml */,
 			);
-			name = Maintainer;
+			name = "Readme+CI";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
