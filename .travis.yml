@@ -8,12 +8,7 @@ osx_image: xcode11
 # the programming language
 language: swift
 
-# select branches
-# branches:
-#  only:
-#    - master
-#    - development
-
+# install tools before starting
 before_install:
   - gem install slather
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
@@ -24,12 +19,30 @@ before_install:
 install:
   - bundle install
   - bundle update fastlane
+  
+# build
+jobs:
+  include:
+    - stage: build
+      script: fastlane build_xcode
+    - stage: test
+      script: fastlane test_xcode
+    - stage: deploy
+      script:
+        - fastlane archive_generic_ios_xcode
+        - fastlane archive_ios_simulator_xcode
+        - fastlane build_framework_xcode
+        - fastlane release_framework
+    - stage: lint
+      script:
+        - slather
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
-# run fastlane
-script:
-  - fastlane build_xcode
-  - fastlane test_xcode
-
-after_script:
-  - slather
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+# run stages
+stages:
+  - build
+  - test
+  - name: deploy
+    if: branch = master
+  - name: lint
+    if: branch = master

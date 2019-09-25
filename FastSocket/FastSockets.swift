@@ -1,5 +1,5 @@
 //
-//  FastSocket.swift
+//  FastSockets.swift
 //  FastSocket
 //
 //  Created by Vinzenz Weist on 25.03.19.
@@ -7,14 +7,14 @@
 //
 import Foundation
 import Network
-/// FastSocket is a proprietary communication protocol directly
+/// FastSockets is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
 /// only 10 Bytes overhead per message, the handshake is done directly on TCP level.
 /// The motivation behind this protocol was, to use it as `Speedtest Protocol`, a
-/// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
-/// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
-public final class FastSocket: FastSocketProtocol {
+/// low level TCP communication protocol to measure TCP throughput performance. -> FastSockets is the answer
+/// FastSockets allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
+public final class FastSockets: FastSocketProtocol {
     public var on = FastSocketCallback()
     public var parameters = TransferParameters()
     private var host: String
@@ -25,7 +25,7 @@ public final class FastSocket: FastSocketProtocol {
     private var digest = Data()
     private var type: TransferType
     private var isLocked = false
-    /// create a instance of FastSocket
+    /// create a instance of FastSockets
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
@@ -37,21 +37,17 @@ public final class FastSocket: FastSocketProtocol {
     }
     /// connect to the server
     /// try to establish a connection to a
-    /// FastSocket compliant server
+    /// FastSockets compliant server
     public func connect() {
         initialize()
-        guard let transfer = transfer else {
-            return
-        }
+        guard let transfer = transfer else { return }
         transfer.connect()
         startTimeout()
     }
     /// disconnect from the server
     /// closes the connection `normally`
     public func disconnect() {
-        guard let transfer = transfer else {
-            return
-        }
+        guard let transfer = transfer else { return }
         transfer.disconnect()
         stopTimeout()
     }
@@ -59,9 +55,7 @@ public final class FastSocket: FastSocketProtocol {
     /// - parameters:
     ///     - message: generic type (accepts data or string)
     public func send<T: MessageProtocol>(message: T) {
-        guard isLocked, let transfer = transfer else {
-            return
-        }
+        guard isLocked, let transfer = transfer else { return }
         do {
             let data = try frame.create(message: message)
             transfer.send(data: data)
@@ -71,7 +65,7 @@ public final class FastSocket: FastSocketProtocol {
     }
 }
 
-private extension FastSocket {
+private extension FastSockets {
     /// private func to reset all needed values
     /// and initialize
     private func initialize() {
@@ -91,17 +85,13 @@ private extension FastSocket {
         if let timer = timer {
             timer.cancel()
         }
-        guard let error = error else {
-            return
-        }
+        guard let error = error else { return }
         on.error(error)
         disconnect()
     }
     /// send the handshake frame
     private func handshake() {
-        guard let transfer = transfer else {
-            return
-        }
+        guard let transfer = transfer else { return }
         guard let data = UUID().uuidString.data(using: .utf8) else {
             onError(FastSocketError.handshakeInitializationFailed)
             return
@@ -117,30 +107,22 @@ private extension FastSocket {
     }
     /// stop timeout
     private func stopTimeout() {
-        guard let timer = timer else {
-            return
-        }
+        guard let timer = timer else { return }
         timer.cancel()
     }
 }
 
-private extension FastSocket {
+private extension FastSockets {
     /// closures from the transfer protocol
     /// handles incoming data and handshake
     private func transferCallbacks() {
-        guard let transfer = transfer else {
-            return
-        }
+        guard let transfer = transfer else { return }
         transfer.on.ready = { [weak self] in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.handleReadyState()
         }
         transfer.on.message = { [weak self] data in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             self.handleMessageState(data: data)
         }
         transfer.on.error = onError
@@ -149,7 +131,7 @@ private extension FastSocket {
     }
 }
 
-private extension FastSocket {
+private extension FastSockets {
     /// this function is called from
     /// the transfer, to handle all necessary
     /// things `on ready`
@@ -160,9 +142,7 @@ private extension FastSocket {
     /// the transfer, to handle all necessary
     /// things `on message`
     private func handleMessageState(data: MessageProtocol) {
-        guard case let data as Data = data else {
-            return
-        }
+        guard case let data as Data = data else { return }
         switch self.isLocked {
         case true:
             do {
