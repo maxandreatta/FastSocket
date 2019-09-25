@@ -46,14 +46,6 @@ playground.xcworkspace
 # Package.pins
 .build/
 
-# CocoaPods - Refactored to standalone file
-Pods/
-
-# Carthage - Refactored to standalone file
-Carthage/
-carthage.log
-FastSocket.framework.zip
-
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
@@ -66,6 +58,9 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/README.md
+
+# Gem
+Gemfile.lock
 
 
 # End of https://www.gitignore.io/api/swift
