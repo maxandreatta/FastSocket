@@ -48,6 +48,6 @@ stages:
   - build
   - test
   - name: deploy
-    if: branch = testbranch AND commit_message = "release"
+    if: branch = testbranch AND commit_message IS "release"
   - name: lint
     if: branch = master
