@@ -32,6 +32,7 @@ jobs:
         - fastlane archive_generic_ios_xcode
         - fastlane archive_ios_simulator_xcode
         - fastlane build_framework_xcode
+        - fastlane release_framework
     - stage: lint
       script:
         - slather
@@ -42,6 +43,6 @@ stages:
   - build
   - test
   - name: deploy
-    if: tag IS present
+    if: branch = master
   - name: lint
     if: branch = master

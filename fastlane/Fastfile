@@ -14,6 +14,8 @@
 # update_fastlane
 
 default_platform(:ios)
+# project version number
+version = get_version_number(xcodeproj: "FastSocket.xcodeproj")
 
 platform :ios do
 
@@ -76,14 +78,15 @@ platform :ios do
   
   desc "release framework"
   lane :release_framework do
-    version = get_version_number(xcodeproj: "FastSocket.xcodeproj")
+    # tag and release to github
     github_release = set_github_release(
       repository_name: "Vinz1911/FastSocket",
-      api_token: ENV["GITHUB_TOKEN"],
+      api_token: ENV["GITHUB_RELEASE"],
       name: "Framework Release",
       tag_name: version,
-      description: (File.read("CHANGELOG.md") rescue "No changelog provided"),
-      upload_assets: ["./framework/FastSocket.xcframework"]
+      description: (File.read("./CHANGELOG.md") rescue "Changelog is missing!"),
+      upload_assets: ["./fastlane/framework/FastSocket.xcframework"]
     )
   end
+
 end
