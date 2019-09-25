@@ -1,7 +1,6 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=d212e877cf83b527bc6966a88b0a2dbdd37dd25e66af926eaa3887811d9dff9a
-    - CURRENT_TAG = ""
 
 # The OSX Image on which the build should be testet
 osx_image: xcode11
@@ -48,6 +47,6 @@ stages:
   - build
   - test
   - name: deploy
-    if: branch = testbranch AND commit_message IS "release"
+    if: branch = master
   - name: lint
     if: branch = master
