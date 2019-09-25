@@ -50,4 +50,4 @@ stages:
   - name: deploy
     if: branch = testbranch AND commit_message = "release"
   - name: lint
-    if: branch = master
+    if: branch = testbranch
