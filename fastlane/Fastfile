@@ -15,7 +15,8 @@
 
 default_platform(:ios)
 # project version number
-version = get_version_number(xcodeproj: "FastSocket.xcodeproj")
+version = get_version_number(xcodeproj: "FastSocketKit.xcodeproj", target: "FastSocketKit")
+UI.message("Current project version: " + version)
 
 platform :ios do
 
@@ -24,7 +25,7 @@ platform :ios do
     UI.message("start building")
       xcodebuild(
         archive: nil,
-        scheme: "FastSocket",
+        scheme: "FastSocketKit",
         destination: "generic/platform=iOS",
         sdk: "iphoneos"
       )
@@ -36,7 +37,7 @@ platform :ios do
     UI.message("performing unit tests")
     run_tests(
       devices: ["iPhone 11"],
-      scheme: "FastSocket")
+      scheme: "FastSocketKit")
     UI.success("finished unit tests")
   end
   
@@ -46,8 +47,8 @@ platform :ios do
     UI.message("archive for generic ios platform")
     xcodebuild(
       archive: true,
-      archive_path: "./fastlane/framework/FastSocket_iOS.xcarchive",
-      scheme: "FastSocket",
+      archive_path: "./fastlane/framework/FastSocketKit_iOS.xcarchive",
+      scheme: "FastSocketKit",
       destination: "generic/platform=iOS",
       sdk: "iphoneos"
     )
@@ -60,8 +61,8 @@ platform :ios do
     UI.message("archive for ios simulator")
     xcodebuild(
       archive: true,
-      archive_path: "./fastlane/framework/FastSocket_Simulator.xcarchive",
-      scheme: "FastSocket",
+      archive_path: "./fastlane/framework/FastSocketKit_Simulator.xcarchive",
+      scheme: "FastSocketKit",
       destination: "platform=iOS Simulator,name=iPhone 11,OS=13.0",
       sdk: "iphonesimulator"
     )
@@ -72,7 +73,7 @@ platform :ios do
   lane :build_framework_xcode do
     # create .xcframework from the archives
     UI.message("create framework")
-    sh("xcodebuild -create-xcframework -framework ./framework/FastSocket_iOS.xcarchive/Products/Library/Frameworks/FastSocket.framework -framework ./framework/FastSocket_Simulator.xcarchive/Products/Library/Frameworks/FastSocket.framework -output ./framework/FastSocket.xcframework")
+    sh("xcodebuild -create-xcframework -framework ./framework/FastSocketKit_iOS.xcarchive/Products/Library/Frameworks/FastSocketKit.framework -framework ./framework/FastSocketKit_Simulator.xcarchive/Products/Library/Frameworks/FastSocketKit.framework -output ./framework/FastSocketKit.xcframework")
     UI.message("successfully created")
   end
   
@@ -82,10 +83,10 @@ platform :ios do
     github_release = set_github_release(
       repository_name: "Vinz1911/FastSocket",
       api_token: ENV["GITHUB_RELEASE"],
-      name: "Framework Release",
+      name: "Framework Release " + version,
       tag_name: version,
       description: (File.read("./CHANGELOG.md") rescue "Changelog is missing!"),
-      upload_assets: ["./fastlane/framework/FastSocket.xcframework"]
+      upload_assets: ["./fastlane/framework/FastSocketKit.xcframework"]
     )
   end
 
