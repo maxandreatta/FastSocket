@@ -91,7 +91,7 @@
 		AC0A242C233CD8DA00DEBF78 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = fastlane/CHANGELOG.md; sourceTree = "<group>"; };
 		AC0A242D233CD90700DEBF78 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
 		"FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FastSocketKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		"FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = FastSocketKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FastSocketKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_12 /* FastSocketKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketKitTests.swift; sourceTree = "<group>"; };
 		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -303,6 +303,9 @@
 				LastUpgradeCheck = 9999;
 				TargetAttributes = {
 					"FastSocketKit::FastSocketKit" = {
+						ProvisioningStyle = Manual;
+					};
+					"FastSocketKit::FastSocketKitTests" = {
 						ProvisioningStyle = Manual;
 					};
 					"FastSocketKit::SwiftPMPackageDescription" = {
@@ -525,6 +528,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -538,6 +543,8 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 				TARGET_NAME = FastSocketKitTests;
@@ -550,6 +557,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -563,6 +572,8 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
 				SWIFT_VERSION = 5.0;
 				TARGET_NAME = FastSocketKitTests;
