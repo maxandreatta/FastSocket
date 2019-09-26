@@ -143,7 +143,7 @@ class FastSocketKitTests: XCTestCase {
             XCTFail()
         }
         socket.connect()
-        wait(for: [exp], timeout: 1000.0)
+        wait(for: [exp], timeout: 10.0)
     }
     /// a test to look if the client can close a connection
     func testClose() {
