@@ -38,8 +38,7 @@ class FastSocketKitTests: XCTestCase {
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            debugPrint("Failed with Error: \(error)")
-            XCTFail()
+            XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
         wait(for: [exp], timeout: 10.0)
@@ -71,8 +70,7 @@ class FastSocketKitTests: XCTestCase {
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            debugPrint("Failed with Error: \(error)")
-            XCTFail()
+            XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
         wait(for: [exp], timeout: 10.0)
@@ -105,8 +103,7 @@ class FastSocketKitTests: XCTestCase {
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            debugPrint("Failed with Error: \(error)")
-            XCTFail()
+            XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
         wait(for: [exp], timeout: 10.0)
@@ -139,8 +136,7 @@ class FastSocketKitTests: XCTestCase {
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            debugPrint("Failed with Error: \(error)")
-            XCTFail()
+            XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
         wait(for: [exp], timeout: 10.0)
@@ -158,8 +154,7 @@ class FastSocketKitTests: XCTestCase {
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            debugPrint("Failed with Error: \(error)")
-            XCTFail()
+            XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
         wait(for: [exp], timeout: 15.0)
@@ -179,8 +174,7 @@ class FastSocketKitTests: XCTestCase {
         }
         socket.on.error = { error in
             guard let error = error else { return }
-            debugPrint("Failed with Error: \(error)")
-            XCTFail()
+            XCTFail("Failed with Error: \(error)")
         }
         startTime = Date().timeIntervalSince1970
         socket.connect()

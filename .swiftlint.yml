@@ -2,7 +2,7 @@ disabled_rules:
   - unused_closure_parameter
   - identifier_name
 excluded:
-  - FastSocketTests
-  - Pods
+  - Package.swift
+  - Tests/FastSocketKitTests
 
 line_length: 300
