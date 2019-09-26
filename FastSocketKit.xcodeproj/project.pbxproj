@@ -1,0 +1,682 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		"FastSocketKit::FastSocketKitPackageTests::ProductTarget" /* FastSocketKitPackageTests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = OBJ_31 /* Build configuration list for PBXAggregateTarget "FastSocketKitPackageTests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				OBJ_34 /* PBXTargetDependency */,
+			);
+			name = FastSocketKitPackageTests;
+			productName = FastSocketKitPackageTests;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		AC0A2413233CD5BF00DEBF78 /* TransferParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */; };
+		AC0A2414233CD5BF00DEBF78 /* FastSocketCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */; };
+		AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FD233CD5BE00DEBF78 /* Frame.swift */; };
+		AC0A2416233CD5BF00DEBF78 /* ByteCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */; };
+		AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2400233CD5BE00DEBF78 /* Constants.swift */; };
+		AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */; };
+		AC0A2419233CD5BF00DEBF78 /* TransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2402233CD5BE00DEBF78 /* TransferType.swift */; };
+		AC0A241A233CD5BF00DEBF78 /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */; };
+		AC0A241B233CD5BF00DEBF78 /* MessageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */; };
+		AC0A241C233CD5BF00DEBF78 /* FrameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */; };
+		AC0A241D233CD5BF00DEBF78 /* MessageTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2407233CD5BE00DEBF78 /* MessageTypeProtocol.swift */; };
+		AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */; };
+		AC0A241F233CD5BF00DEBF78 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240A233CD5BE00DEBF78 /* Error.swift */; };
+		AC0A2420233CD5BF00DEBF78 /* FastSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */; };
+		AC0A2421233CD5BF00DEBF78 /* NetworkTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */; };
+		AC0A2422233CD5BF00DEBF78 /* UInt64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240F233CD5BF00DEBF78 /* UInt64+Extensions.swift */; };
+		AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */; };
+		AC0A2424233CD5BF00DEBF78 /* Timer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */; };
+		AC0A2425233CD5BF00DEBF78 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */; };
+		ACAF20B4233CD08E005DA16F /* FastSocketKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* FastSocketKitTests.swift */; };
+		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
+		OBJ_43 /* FastSocketKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ACAF20B2233CC7E3005DA16F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "FastSocketKit::FastSocketKit";
+			remoteInfo = FastSocketKit;
+		};
+		ACAF20B3233CC7E4005DA16F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "FastSocketKit::FastSocketKitTests";
+			remoteInfo = FastSocketKitTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferParameters.swift; sourceTree = "<group>"; };
+		AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketCallback.swift; sourceTree = "<group>"; };
+		AC0A23FD233CD5BE00DEBF78 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteCountResult.swift; sourceTree = "<group>"; };
+		AC0A2400233CD5BE00DEBF78 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opcodes.swift; sourceTree = "<group>"; };
+		AC0A2402233CD5BE00DEBF78 /* TransferType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferType.swift; sourceTree = "<group>"; };
+		AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
+		AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageProtocol.swift; sourceTree = "<group>"; };
+		AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
+		AC0A2407233CD5BE00DEBF78 /* MessageTypeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTypeProtocol.swift; sourceTree = "<group>"; };
+		AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
+		AC0A240A233CD5BE00DEBF78 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocket.swift; sourceTree = "<group>"; };
+		AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransfer.swift; sourceTree = "<group>"; };
+		AC0A240F233CD5BF00DEBF78 /* UInt64+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UInt64+Extensions.swift"; sourceTree = "<group>"; };
+		AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+Extension.swift"; sourceTree = "<group>"; };
+		AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		AC0A2427233CD89D00DEBF78 /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; };
+		AC0A2428233CD8D200DEBF78 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		AC0A2429233CD8D200DEBF78 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		AC0A242A233CD8D200DEBF78 /* .slather.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .slather.yml; sourceTree = "<group>"; };
+		AC0A242B233CD8D200DEBF78 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		AC0A242C233CD8DA00DEBF78 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = fastlane/CHANGELOG.md; sourceTree = "<group>"; };
+		AC0A242D233CD90700DEBF78 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
+		"FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FastSocketKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FastSocketKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_12 /* FastSocketKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketKitTests.swift; sourceTree = "<group>"; };
+		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_23 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_43 /* FastSocketKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AC0A23FA233CD5BE00DEBF78 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */,
+				AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */,
+				AC0A23FD233CD5BE00DEBF78 /* Frame.swift */,
+				AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AC0A23FF233CD5BE00DEBF78 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				AC0A2400233CD5BE00DEBF78 /* Constants.swift */,
+				AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */,
+				AC0A2402233CD5BE00DEBF78 /* TransferType.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		AC0A2403233CD5BE00DEBF78 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */,
+				AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */,
+				AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */,
+				AC0A2407233CD5BE00DEBF78 /* MessageTypeProtocol.swift */,
+				AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		AC0A2409233CD5BE00DEBF78 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				AC0A240A233CD5BE00DEBF78 /* Error.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		AC0A240C233CD5BF00DEBF78 /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */,
+			);
+			path = Transfer;
+			sourceTree = "<group>";
+		};
+		AC0A240E233CD5BF00DEBF78 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AC0A240F233CD5BF00DEBF78 /* UInt64+Extensions.swift */,
+				AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */,
+				AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */,
+				AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		OBJ_10 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_11 /* FastSocketKitTests */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_11 /* FastSocketKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_12 /* FastSocketKitTests.swift */,
+				OBJ_13 /* XCTestManifests.swift */,
+			);
+			name = FastSocketKitTests;
+			path = Tests/FastSocketKitTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_14 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */,
+				"FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				AC0A242B233CD8D200DEBF78 /* LICENSE */,
+				AC0A2427233CD89D00DEBF78 /* Fastfile */,
+				AC0A2428233CD8D200DEBF78 /* .swiftlint.yml */,
+				AC0A242D233CD90700DEBF78 /* .travis.yml */,
+				AC0A242A233CD8D200DEBF78 /* .slather.yml */,
+				AC0A242C233CD8DA00DEBF78 /* CHANGELOG.md */,
+				AC0A2429233CD8D200DEBF78 /* README.md */,
+				OBJ_7 /* Sources */,
+				OBJ_10 /* Tests */,
+				OBJ_14 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* FastSocketKit */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* FastSocketKit */ = {
+			isa = PBXGroup;
+			children = (
+				AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */,
+				AC0A240C233CD5BF00DEBF78 /* Transfer */,
+				AC0A23FA233CD5BE00DEBF78 /* Model */,
+				AC0A2403233CD5BE00DEBF78 /* Protocols */,
+				AC0A23FF233CD5BE00DEBF78 /* Constants */,
+				AC0A2409233CD5BE00DEBF78 /* Error */,
+				AC0A240E233CD5BF00DEBF78 /* Extensions */,
+			);
+			name = FastSocketKit;
+			path = Sources/FastSocketKit;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"FastSocketKit::FastSocketKit" /* FastSocketKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_18 /* Build configuration list for PBXNativeTarget "FastSocketKit" */;
+			buildPhases = (
+				OBJ_21 /* Sources */,
+				OBJ_23 /* Frameworks */,
+				AC1F6C31233D125B000B17BD /* Swiftlint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FastSocketKit;
+			productName = FastSocketKit;
+			productReference = "FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"FastSocketKit::FastSocketKitTests" /* FastSocketKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_36 /* Build configuration list for PBXNativeTarget "FastSocketKitTests" */;
+			buildPhases = (
+				OBJ_39 /* Sources */,
+				OBJ_42 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_44 /* PBXTargetDependency */,
+			);
+			name = FastSocketKitTests;
+			productName = FastSocketKitTests;
+			productReference = "FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		"FastSocketKit::SwiftPMPackageDescription" /* FastSocketKitPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_25 /* Build configuration list for PBXNativeTarget "FastSocketKitPackageDescription" */;
+			buildPhases = (
+				OBJ_28 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FastSocketKitPackageDescription;
+			productName = FastSocketKitPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 9999;
+				LastUpgradeCheck = 9999;
+				TargetAttributes = {
+					"FastSocketKit::FastSocketKit" = {
+						ProvisioningStyle = Manual;
+					};
+					"FastSocketKit::FastSocketKitTests" = {
+						ProvisioningStyle = Manual;
+					};
+					"FastSocketKit::SwiftPMPackageDescription" = {
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "FastSocketKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5;
+			productRefGroup = OBJ_14 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"FastSocketKit::FastSocketKit" /* FastSocketKit */,
+				"FastSocketKit::SwiftPMPackageDescription" /* FastSocketKitPackageDescription */,
+				"FastSocketKit::FastSocketKitPackageTests::ProductTarget" /* FastSocketKitPackageTests */,
+				"FastSocketKit::FastSocketKitTests" /* FastSocketKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AC1F6C31233D125B000B17BD /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				AC0A2413233CD5BF00DEBF78 /* TransferParameters.swift in Sources */,
+				AC0A241B233CD5BF00DEBF78 /* MessageProtocol.swift in Sources */,
+				AC0A2424233CD5BF00DEBF78 /* Timer+Extension.swift in Sources */,
+				AC0A2416233CD5BF00DEBF78 /* ByteCountResult.swift in Sources */,
+				AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */,
+				AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */,
+				AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */,
+				AC0A241D233CD5BF00DEBF78 /* MessageTypeProtocol.swift in Sources */,
+				AC0A2425233CD5BF00DEBF78 /* Data+Extensions.swift in Sources */,
+				AC0A241A233CD5BF00DEBF78 /* TransferProtocol.swift in Sources */,
+				AC0A2419233CD5BF00DEBF78 /* TransferType.swift in Sources */,
+				AC0A241C233CD5BF00DEBF78 /* FrameProtocol.swift in Sources */,
+				AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */,
+				AC0A2414233CD5BF00DEBF78 /* FastSocketCallback.swift in Sources */,
+				AC0A241F233CD5BF00DEBF78 /* Error.swift in Sources */,
+				AC0A2422233CD5BF00DEBF78 /* UInt64+Extensions.swift in Sources */,
+				AC0A2420233CD5BF00DEBF78 /* FastSocket.swift in Sources */,
+				AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */,
+				AC0A2421233CD5BF00DEBF78 /* NetworkTransfer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_29 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_41 /* XCTestManifests.swift in Sources */,
+				ACAF20B4233CD08E005DA16F /* FastSocketKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		OBJ_34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "FastSocketKit::FastSocketKitTests" /* FastSocketKitTests */;
+			targetProxy = ACAF20B3233CC7E4005DA16F /* PBXContainerItemProxy */;
+		};
+		OBJ_44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "FastSocketKit::FastSocketKit" /* FastSocketKit */;
+			targetProxy = ACAF20B2233CC7E3005DA16F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 180;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKit_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MARKETING_VERSION = 2.2.0;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = it.weistFastSocketKit;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGET_NAME = FastSocketKit;
+			};
+			name = Debug;
+		};
+		OBJ_20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 180;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKit_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MARKETING_VERSION = 2.2.0;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = it.weistFastSocketKit;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGET_NAME = FastSocketKit;
+			};
+			name = Release;
+		};
+		OBJ_26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		OBJ_27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 5 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -package-description-version 5.1";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_32 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		OBJ_37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKitTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = FastSocketKitTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		OBJ_38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKitTests_Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = FastSocketKitTests;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_18 /* Build configuration list for PBXNativeTarget "FastSocketKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_19 /* Debug */,
+				OBJ_20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_2 /* Build configuration list for PBXProject "FastSocketKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_25 /* Build configuration list for PBXNativeTarget "FastSocketKitPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_26 /* Debug */,
+				OBJ_27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_31 /* Build configuration list for PBXAggregateTarget "FastSocketKitPackageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_32 /* Debug */,
+				OBJ_33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_36 /* Build configuration list for PBXNativeTarget "FastSocketKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_37 /* Debug */,
+				OBJ_38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}

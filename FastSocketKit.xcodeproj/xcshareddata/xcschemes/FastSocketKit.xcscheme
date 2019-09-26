@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1010"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AC55ED7F2253B1ED00D4063A"
-               BuildableName = "FastSocket.framework"
-               BlueprintName = "FastSocket"
-               ReferencedContainer = "container:FastSocket.xcodeproj">
+               BlueprintIdentifier = "FastSocketKit::FastSocketKit"
+               BuildableName = "FastSocketKit.framework"
+               BlueprintName = "FastSocketKit"
+               ReferencedContainer = "container:FastSocketKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,36 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AC55ED7F2253B1ED00D4063A"
-            BuildableName = "FastSocket.framework"
-            BlueprintName = "FastSocket"
-            ReferencedContainer = "container:FastSocket.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AC55ED7F2253B1ED00D4063A"
-            BuildableName = "FastSocket.framework"
-            BlueprintName = "FastSocket"
-            ReferencedContainer = "container:FastSocket.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AC55ED882253B1ED00D4063A"
-               BuildableName = "FastSocketTests.xctest"
-               BlueprintName = "FastSocketTests"
-               ReferencedContainer = "container:FastSocket.xcodeproj">
+               BlueprintIdentifier = "FastSocketKit::FastSocketKitTests"
+               BuildableName = "FastSocketKitTests.xctest"
+               BlueprintName = "FastSocketKitTests"
+               ReferencedContainer = "container:FastSocketKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -70,15 +50,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AC55ED7F2253B1ED00D4063A"
-            BuildableName = "FastSocket.framework"
-            BlueprintName = "FastSocket"
-            ReferencedContainer = "container:FastSocket.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -89,10 +60,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AC55ED7F2253B1ED00D4063A"
-            BuildableName = "FastSocket.framework"
-            BlueprintName = "FastSocket"
-            ReferencedContainer = "container:FastSocket.xcodeproj">
+            BlueprintIdentifier = "FastSocketKit::FastSocketKit"
+            BuildableName = "FastSocketKit.framework"
+            BlueprintName = "FastSocketKit"
+            ReferencedContainer = "container:FastSocketKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

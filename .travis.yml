@@ -25,16 +25,20 @@ jobs:
   include:
     - stage: build
       script: fastlane build_xcode
+
     - stage: test
       script: fastlane test_xcode
+
     - stage: deploy
       script:
         - fastlane archive_generic_ios_xcode
         - fastlane archive_ios_simulator_xcode
         - fastlane build_framework_xcode
         - fastlane release_framework
+
     - stage: lint
       script:
+        - fastlane test_xcode
         - slather
         - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 

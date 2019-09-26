@@ -5,7 +5,6 @@
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-// swiftlint:disable closure_body_length multiline_arguments
 import Foundation
 import Network
 /// NetworkTransfer is a raw TCP transfer

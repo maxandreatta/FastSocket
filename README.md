@@ -27,22 +27,24 @@
 - [X] XCFramework support
 
 ## License:
-[![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=for-the-badge)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=flat)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
 
 ## Swift Version:
-[![Swift 5.1](https://img.shields.io/badge/Swift-5.1-orange.svg?logo=swift&style=for-the-badge)](https://swift.org)
+[![Swift 5.1](https://img.shields.io/badge/Swift-5.1-orange.svg?logo=swift&style=flat)](https://swift.org) [![Swift 5.1](https://img.shields.io/badge/SPM-Support-orange.svg?logo=swift&style=flat)](https://swift.org)
 
 ## Build Status:
 |  Branch |                                                                                     Build Status                                                                                    |                                                                                                    Coverage                                                                                                   |                                                                                              Maintainability                                                                                              |
 |:-------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|  master |   [![Travis Master](https://img.shields.io/travis/Vinz1911/FastSocket/master.svg?label=master&logo=travis&style=for-the-badge)](https://travis-ci.org/Vinz1911/FastSocket/builds)   | [![Code Climate Coverage](https://img.shields.io/codeclimate/coverage/Vinz1911/FastSocket.svg?color=brightgreen&logo=code%20climate&style=for-the-badge)](https://codeclimate.com/github/Vinz1911/FastSocket) | [![Code Climate Maintainability](https://img.shields.io/codeclimate/maintainability/Vinz1911/FastSocket.svg?logo=Code%20Climate&style=for-the-badge)](https://codeclimate.com/github/Vinz1911/FastSocket) |
-| develop |  [![Travis Develop](https://img.shields.io/travis/Vinz1911/FastSocket/develop.svg?label=develop&logo=travis&style=for-the-badge)](https://travis-ci.org/Vinz1911/FastSocket/builds) |                                                                                                                                                                                                               |                                                                                                                                                                                                           |
+|  master |   [![Travis Master](https://img.shields.io/travis/Vinz1911/FastSocket/master.svg?label=master&logo=travis&style=flat)](https://travis-ci.org/Vinz1911/FastSocket/builds)   | [![Code Climate Coverage](https://img.shields.io/codeclimate/coverage/Vinz1911/FastSocket.svg?color=brightgreen&logo=code%20climate&style=flat)](https://codeclimate.com/github/Vinz1911/FastSocket) | [![Code Climate Maintainability](https://img.shields.io/codeclimate/maintainability/Vinz1911/FastSocket.svg?logo=Code%20Climate&style=flat)](https://codeclimate.com/github/Vinz1911/FastSocket) |
+| develop |  [![Travis Develop](https://img.shields.io/travis/Vinz1911/FastSocket/develop.svg?label=develop&logo=travis&style=flat)](https://travis-ci.org/Vinz1911/FastSocket/builds) |                                                                                                                                                                                                               |                                                                                                                                                                                                           |
 
 ## Installation:
 ### XCFramework
-
 Download the latest Framework Version from the [Release](https://github.com/Vinz1911/FastSocket/releases) section. 
 Copy the FastSocket.xcframework to your `Frameworks and Libraries` section.
+
+### Swift Packages
+Full support for [SwiftPackageManager](https://developer.apple.com/documentation/swift_packages). Just add the repo to your project in the project settings under Swift Packages.
 
 ## Import:
 ```swift
