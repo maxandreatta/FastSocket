@@ -1,16 +1,8 @@
-//
-//  FastSocketTests.swift
-//  FastSocketTests
-//
-//  Created by Vinzenz Weist on 02.04.19.
-//  Copyright © 2019 Vinzenz Weist. All rights reserved.
-//
-
-import XCTest
 import Network
-@testable import FastSocket
-/// a class for testing the framework
-class FastSocketTests: XCTestCase {
+import XCTest
+@testable import FastSocketKit
+
+class FastSocketKitTests: XCTestCase {
     /// the host address
     var host: String = "socket.weist.it"
     /// the port
@@ -24,7 +16,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "50000"
         var datacount = 0
-        let socket = FastSockets(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -58,7 +50,7 @@ class FastSocketTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 50000)
         var datacount = 0
-        let socket = FastSockets(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -92,7 +84,7 @@ class FastSocketTests: XCTestCase {
         let buffer = Data(count: 100)
         var messages = 0
         let sendValue = 100
-        let socket = FastSockets(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             for _ in 1...sendValue {
                 socket.send(message: buffer)
@@ -126,7 +118,7 @@ class FastSocketTests: XCTestCase {
         let buffer = "100"
         var messages = 0
         let sendValue = 100
-        let socket = FastSockets(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             for _ in 1...sendValue {
                 socket.send(message: buffer)
@@ -156,7 +148,7 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the client can close a connection
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSockets(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
             socket.disconnect()
         }
@@ -176,7 +168,7 @@ class FastSocketTests: XCTestCase {
     /// and the connection is ready to be used
     func testPerformance() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSockets(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port, type: type)
         var startTime = Date().timeIntervalSince1970
         socket.on.ready = {
             debugPrint(Date().timeIntervalSince1970 - startTime)
@@ -198,7 +190,7 @@ class FastSocketTests: XCTestCase {
     /// if the host doesnt respond
     func testTimeout() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSockets(host: "telekom.de", port: port)
+        let socket = FastSocket(host: "telekom.de", port: port)
         socket.on.error = { error in
             guard let error = error else { return }
             XCTAssertEqual(error as! FastSocketError, FastSocketError.timeoutError)
@@ -210,7 +202,7 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the tls config is loaded
     func testTLSError() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSockets(host: host, port: port, type: .tls)
+        let socket = FastSocket(host: host, port: port, type: .tls)
         socket.on.error = { error in
             guard let error = error else { return }
             debugPrint(error)
@@ -222,7 +214,7 @@ class FastSocketTests: XCTestCase {
     }
     /// a test to look if the framework recognize empty host addresses
     func testFastSocketError() {
-        let socket = FastSockets(host: "", port: port)
+        let socket = FastSocket(host: "", port: port)
         socket.on.error = { error in
             guard let error = error else { return }
             XCTAssertEqual(error as! FastSocketError, FastSocketError.emptyHost)
@@ -258,7 +250,7 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the framework recognize early send error
     /// that will be thrown if you try to send a string before a connection is established
     func testSendStringError() {
-        let socket = FastSockets(host: host, port: port)
+        let socket = FastSocket(host: host, port: port)
         socket.on.error = { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
         }
@@ -267,7 +259,7 @@ class FastSocketTests: XCTestCase {
     /// a test to look if the framework recognize early send error
     /// that will be thrown if you try to send data before a connection is established
     func testSendDataError() {
-        let socket = FastSockets(host: host, port: port)
+        let socket = FastSocket(host: host, port: port)
         socket.on.error = { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.sendToEarly)
         }
