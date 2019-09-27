@@ -27,7 +27,11 @@ jobs:
       script: fastlane build_xcode
 
     - stage: test
-      script: fastlane test_xcode
+      script:
+        - fastlane test_xcode
+        if: branch = master
+        - slather
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
     - stage: deploy
       script:
@@ -36,17 +40,15 @@ jobs:
         - fastlane build_framework_xcode
         - fastlane release_framework
 
-    - stage: lint
-      script:
-        - fastlane test_xcode
-        - slather
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+#    - stage: lint
+#      script:
+#        - fastlane test_xcode
+#        - slather
+#        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 # run stages
 stages:
   - build
   - test
   - name: deploy
-    if: branch = master
-  - name: lint
     if: branch = master
