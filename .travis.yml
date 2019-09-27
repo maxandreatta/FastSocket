@@ -27,9 +27,9 @@ jobs:
       script: fastlane build_xcode
 
     - stage: test
+      script: fastlane test_xcode
+      if: branch = master
       script:
-        - fastlane test_xcode
-        if: branch = master
         - slather
         - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
