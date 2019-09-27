@@ -1,7 +1,7 @@
 coverage_service: cobertura_xml
-xcodeproj: ./FastSocket.xcodeproj
-scheme: FastSocket
-source_directory: ./FastSocket
+xcodeproj: ./FastSocketKit.xcodeproj
+scheme: FastSocketKit
+source_directory: ./Sources/FastSocketKit
 output_directory: ./
 ignore:
 - "**/Pods/*"
