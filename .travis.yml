@@ -1,7 +1,3 @@
-env:
-  global:
-    - CC_TEST_REPORTER_ID=d212e877cf83b527bc6966a88b0a2dbdd37dd25e66af926eaa3887811d9dff9a
-
 # The OSX Image on which the build should be testet
 osx_image: xcode11
 
@@ -28,10 +24,6 @@ jobs:
 
     - stage: test
       script: fastlane test_xcode
-      if: branch = master
-      script:
-        - slather
-        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
     - stage: deploy
       script:
@@ -40,15 +32,17 @@ jobs:
         - fastlane build_framework_xcode
         - fastlane release_framework
 
-#    - stage: lint
-#      script:
-#        - fastlane test_xcode
-#        - slather
-#        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+    - stage: lint
+      script:
+        - fastlane test_xcode
+        - slather
+        - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 # run stages
 stages:
   - build
   - test
   - name: deploy
+    if: branch = master
+  - name: lint
     if: branch = master
