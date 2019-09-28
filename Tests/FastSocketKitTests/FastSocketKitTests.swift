@@ -10,6 +10,12 @@ class FastSocketKitTests: XCTestCase {
     /// the transfer type
     var type: TransferType = .tcp
 
+    /// check if version exists
+    func testPrintVersionString() {
+        let version = FastSocket.version
+        print("FastSocket Version: \(version)")
+        XCTAssertTrue(!version.isEmpty)
+    }
     /// a test for sending strings and responding data from the backend
     /// this is the definition of a download speedtest
     func testStringSendAndRespond() {

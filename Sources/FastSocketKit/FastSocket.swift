@@ -10,12 +10,26 @@ import Network
 /// FastSocket is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
-/// only 10 Bytes overhead per message, the handshake is done directly on TCP level.
+/// only 5 Bytes overhead per message, the handshake is done directly on TCP level.
 /// The motivation behind this protocol was, to use it as `Speedtest Protocol`, a
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSockets is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public final class FastSocket: FastSocketProtocol {
+    /// returns the current version of the framework
+    public static var version: String {
+        guard let bundle = Bundle(identifier: "it.weist.FastSocketKit"), let dict = bundle.infoDictionary else {
+            return String()
+        }
+        guard case let version as String = dict["CFBundleShortVersionString"] else {
+            return String()
+        }
+        return version
+    }
+    /// access to the event based closures
     public var on = FastSocketCallback()
+    /// access to the Network.framework parameter options
+    /// that gives you the ability (for example) to define on which
+    /// interface the traffic should be send
     public var parameters = TransferParameters()
     private var host: String
     private var port: UInt16
@@ -64,7 +78,7 @@ public final class FastSocket: FastSocketProtocol {
         }
     }
 }
-
+// MARK: - extension for private functions
 private extension FastSocket {
     /// private func to reset all needed values
     /// and initialize
@@ -111,7 +125,7 @@ private extension FastSocket {
         timer.cancel()
     }
 }
-
+// MARK: - extension for closure handling
 private extension FastSocket {
     /// closures from the transfer protocol
     /// handles incoming data and handshake
@@ -119,47 +133,32 @@ private extension FastSocket {
         guard let transfer = transfer else { return }
         transfer.on.ready = { [weak self] in
             guard let self = self else { return }
-            self.handleReadyState()
+            self.handshake()
         }
         transfer.on.message = { [weak self] data in
             guard let self = self else { return }
-            self.handleMessageState(data: data)
+            guard case let data as Data = data else { return }
+            switch self.isLocked {
+            case true:
+                do {
+                    try self.frame.parse(data: data) { message in
+                        self.on.message(message)
+                    }
+                } catch {
+                    self.onError(error)
+                }
+            case false:
+                guard data == self.digest else {
+                    self.onError(FastSocketError.handshakeVerificationFailed)
+                    return
+                }
+                self.isLocked = true
+                self.stopTimeout()
+                self.on.ready()
+            }
         }
         transfer.on.error = onError
         transfer.on.close = on.close
         transfer.on.bytes = on.bytes
-    }
-}
-
-private extension FastSocket {
-    /// this function is called from
-    /// the transfer, to handle all necessary
-    /// things `on ready`
-    private func handleReadyState() {
-        self.handshake()
-    }
-    /// this function is called from
-    /// the transfer, to handle all necessary
-    /// things `on message`
-    private func handleMessageState(data: MessageProtocol) {
-        guard case let data as Data = data else { return }
-        switch self.isLocked {
-        case true:
-            do {
-                try self.frame.parse(data: data) { message in
-                    on.message(message)
-                }
-            } catch {
-                self.onError(error)
-            }
-        case false:
-            guard data == self.digest else {
-                self.onError(FastSocketError.handshakeVerificationFailed)
-                return
-            }
-            self.isLocked = true
-            self.stopTimeout()
-            self.on.ready()
-        }
     }
 }
