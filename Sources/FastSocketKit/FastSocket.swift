@@ -15,16 +15,6 @@ import Network
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSockets is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public final class FastSocket: FastSocketProtocol {
-    /// returns the current version of the framework
-    public static var version: String {
-        guard let bundle = Bundle(identifier: "it.weist.FastSocketKit"), let dict = bundle.infoDictionary else {
-            return String()
-        }
-        guard case let version as String = dict["CFBundleShortVersionString"] else {
-            return String()
-        }
-        return version
-    }
     /// access to the event based closures
     public var on = FastSocketCallback()
     /// access to the Network.framework parameter options
