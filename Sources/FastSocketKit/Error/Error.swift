@@ -43,7 +43,7 @@ public enum FastSocketError: Int, Error {
     /// thrown if opcode was unknown
     case unknownOpcode = 1000
 }
-
+// MARK: - extension for public functions
 public extension FastSocketError {
     static var errorDomain: String { "fastsocket.error" }
     var errorCode: Int { rawValue }
