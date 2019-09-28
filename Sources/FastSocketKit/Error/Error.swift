@@ -45,8 +45,8 @@ public enum FastSocketError: Int, Error {
 }
 
 public extension FastSocketError {
-    static var errorDomain: String { return "fastsocket.error" }
-    var errorCode: Int { return rawValue }
+    static var errorDomain: String { "fastsocket.error" }
+    var errorCode: Int { rawValue }
     var errorUserInfo: [String: String] {
         switch self {
         case .none:

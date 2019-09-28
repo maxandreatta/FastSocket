@@ -31,12 +31,11 @@
 		AC0A241A233CD5BF00DEBF78 /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */; };
 		AC0A241B233CD5BF00DEBF78 /* MessageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */; };
 		AC0A241C233CD5BF00DEBF78 /* FrameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */; };
-		AC0A241D233CD5BF00DEBF78 /* MessageTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2407233CD5BE00DEBF78 /* MessageTypeProtocol.swift */; };
 		AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */; };
 		AC0A241F233CD5BF00DEBF78 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240A233CD5BE00DEBF78 /* Error.swift */; };
 		AC0A2420233CD5BF00DEBF78 /* FastSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */; };
 		AC0A2421233CD5BF00DEBF78 /* NetworkTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */; };
-		AC0A2422233CD5BF00DEBF78 /* UInt64+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240F233CD5BF00DEBF78 /* UInt64+Extensions.swift */; };
+		AC0A2422233CD5BF00DEBF78 /* UInt32+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240F233CD5BF00DEBF78 /* UInt32+Extensions.swift */; };
 		AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */; };
 		AC0A2424233CD5BF00DEBF78 /* Timer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */; };
 		AC0A2425233CD5BF00DEBF78 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */; };
@@ -74,12 +73,11 @@
 		AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
 		AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageProtocol.swift; sourceTree = "<group>"; };
 		AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
-		AC0A2407233CD5BE00DEBF78 /* MessageTypeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTypeProtocol.swift; sourceTree = "<group>"; };
 		AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
 		AC0A240A233CD5BE00DEBF78 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocket.swift; sourceTree = "<group>"; };
 		AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransfer.swift; sourceTree = "<group>"; };
-		AC0A240F233CD5BF00DEBF78 /* UInt64+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UInt64+Extensions.swift"; sourceTree = "<group>"; };
+		AC0A240F233CD5BF00DEBF78 /* UInt32+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UInt32+Extensions.swift"; sourceTree = "<group>"; };
 		AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+Extension.swift"; sourceTree = "<group>"; };
 		AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
@@ -140,11 +138,10 @@
 		AC0A2403233CD5BE00DEBF78 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */,
-				AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */,
-				AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */,
-				AC0A2407233CD5BE00DEBF78 /* MessageTypeProtocol.swift */,
 				AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */,
+				AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */,
+				AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */,
+				AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -168,7 +165,7 @@
 		AC0A240E233CD5BF00DEBF78 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AC0A240F233CD5BF00DEBF78 /* UInt64+Extensions.swift */,
+				AC0A240F233CD5BF00DEBF78 /* UInt32+Extensions.swift */,
 				AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */,
 				AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */,
 				AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */,
@@ -367,7 +364,6 @@
 				AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */,
 				AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */,
 				AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */,
-				AC0A241D233CD5BF00DEBF78 /* MessageTypeProtocol.swift in Sources */,
 				AC0A2425233CD5BF00DEBF78 /* Data+Extensions.swift in Sources */,
 				AC0A241A233CD5BF00DEBF78 /* TransferProtocol.swift in Sources */,
 				AC0A2419233CD5BF00DEBF78 /* TransferType.swift in Sources */,
@@ -375,7 +371,7 @@
 				AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */,
 				AC0A2414233CD5BF00DEBF78 /* FastSocketCallback.swift in Sources */,
 				AC0A241F233CD5BF00DEBF78 /* Error.swift in Sources */,
-				AC0A2422233CD5BF00DEBF78 /* UInt64+Extensions.swift in Sources */,
+				AC0A2422233CD5BF00DEBF78 /* UInt32+Extensions.swift in Sources */,
 				AC0A2420233CD5BF00DEBF78 /* FastSocket.swift in Sources */,
 				AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */,
 				AC0A2421233CD5BF00DEBF78 /* NetworkTransfer.swift in Sources */,
@@ -420,7 +416,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 195;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -431,11 +427,11 @@
 				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKit_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.5.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = it.weistFastSocketKit;
+				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketKit;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -453,7 +449,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 195;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -464,11 +460,11 @@
 				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKit_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.5.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = it.weistFastSocketKit;
+				PRODUCT_BUNDLE_IDENTIFIER = it.weist.FastSocketKit;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

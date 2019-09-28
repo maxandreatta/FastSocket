@@ -1,5 +1,5 @@
 //
-//  Int+Extensions.swift
+//  UInt32+Extensions.swift
 //  FastSocket
 //
 //  Created by Vinzenz Weist on 09.05.19.
@@ -7,11 +7,11 @@
 //
 import Foundation
 // internal extensions
-internal extension UInt64 {
+internal extension UInt32 {
     /// convert an integer value with BigEndianUint64
     /// to an Data array
     var data: Data {
-        return withUnsafeBytes(of: UInt64(bigEndian: self)) { bytes in
+        withUnsafeBytes(of: UInt32(bigEndian: self)) { bytes in
             Data(bytes)
         }
     }

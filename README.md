@@ -15,7 +15,7 @@
 - [X] send and receive text and data messages
 - [X] async, non-blocking & very fast
 - [X] threading is handled by the framework itself
-- [X] track every 8192 send & received bytes
+- [X] track send & received bytes
 - [X] allows you to chose the network interface!
 - [X] zer0 dependencies, native swift implementation with Network.framework
 - [X] custom error management
@@ -25,6 +25,7 @@
 - [X] send/receive multiple messages at once (currently only in debug mode)
 - [X] TLS support
 - [X] XCFramework support
+- [X] Swift Packages support
 
 ## License:
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=flat)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
