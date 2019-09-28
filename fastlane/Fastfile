@@ -63,7 +63,7 @@ platform :ios do
       archive: true,
       archive_path: "./fastlane/framework/FastSocketKit_Simulator.xcarchive",
       scheme: "FastSocketKit",
-      destination: "platform=iOS Simulator,name=iPhone 11,OS=13.0",
+      destination: "platform=iOS Simulator,name=iPhone 11",
       sdk: "iphonesimulator"
     )
     UI.message("successfully archived")
