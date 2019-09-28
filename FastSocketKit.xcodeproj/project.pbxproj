@@ -24,7 +24,7 @@
 		AC0A2413233CD5BF00DEBF78 /* TransferParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */; };
 		AC0A2414233CD5BF00DEBF78 /* FastSocketCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */; };
 		AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FD233CD5BE00DEBF78 /* Frame.swift */; };
-		AC0A2416233CD5BF00DEBF78 /* ByteCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */; };
+		AC0A2416233CD5BF00DEBF78 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */; };
 		AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2400233CD5BE00DEBF78 /* Constants.swift */; };
 		AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */; };
 		AC0A2419233CD5BF00DEBF78 /* TransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2402233CD5BE00DEBF78 /* TransferType.swift */; };
@@ -66,7 +66,7 @@
 		AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferParameters.swift; sourceTree = "<group>"; };
 		AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketCallback.swift; sourceTree = "<group>"; };
 		AC0A23FD233CD5BE00DEBF78 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
-		AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteCountResult.swift; sourceTree = "<group>"; };
+		AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bytes.swift; sourceTree = "<group>"; };
 		AC0A2400233CD5BE00DEBF78 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opcodes.swift; sourceTree = "<group>"; };
 		AC0A2402233CD5BE00DEBF78 /* TransferType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferType.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 				AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */,
 				AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */,
 				AC0A23FD233CD5BE00DEBF78 /* Frame.swift */,
-				AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */,
+				AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,7 +360,7 @@
 				AC0A2413233CD5BF00DEBF78 /* TransferParameters.swift in Sources */,
 				AC0A241B233CD5BF00DEBF78 /* MessageProtocol.swift in Sources */,
 				AC0A2424233CD5BF00DEBF78 /* Timer+Extension.swift in Sources */,
-				AC0A2416233CD5BF00DEBF78 /* ByteCountResult.swift in Sources */,
+				AC0A2416233CD5BF00DEBF78 /* Bytes.swift in Sources */,
 				AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */,
 				AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */,
 				AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */,

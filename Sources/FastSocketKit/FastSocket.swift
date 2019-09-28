@@ -58,7 +58,7 @@ public final class FastSocket: FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    public func send<T: MessageProtocol>(message: T) {
+    public func send<T: Message>(message: T) {
         guard isLocked, let transfer = transfer else { return }
         do {
             let data = try frame.create(message: message)

@@ -8,7 +8,7 @@
 import CryptoKit
 import Foundation
 
-extension Data: MessageProtocol {
+extension Data: Message {
     // conformance to send protocol
 }
 // internal extensions

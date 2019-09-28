@@ -51,7 +51,7 @@ internal final class Frame: FrameProtocol {
     /// message frame
     /// - parameters:
     ///     - message: generic parameter, accepts string and data
-    internal func create<T: MessageProtocol>(message: T) throws -> Data {
+    internal func create<T: Message>(message: T) throws -> Data {
         var frame = Data()
         switch message {
         case let message as String:
@@ -74,7 +74,7 @@ internal final class Frame: FrameProtocol {
     /// parse a FastSocket Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data
-    internal func parse(data: Data, _ completion: (MessageProtocol) -> Void) throws {
+    internal func parse(data: Data, _ completion: (Message) -> Void) throws {
         guard !data.isEmpty else {
             throw FastSocketError.zeroData
         }
