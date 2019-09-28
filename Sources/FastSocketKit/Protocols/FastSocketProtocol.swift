@@ -10,11 +10,13 @@ import Network
 /// FastSocket is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
-/// only 10 Bytes overhead per message, the handshake is done directly on TCP level.
+/// only 5 Bytes overhead per message, the handshake is done directly on TCP level.
 /// The motivation behind this protocol was, to use it as `Speedtest Protocol`, a
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSocket is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
 public protocol FastSocketProtocol: class {
+    /// returns the current version of the framework
+    static var version: String { get }
     /// public access to the event based closures
     var on: FastSocketCallback { get set }
     /// public access to the Network.framework parameter options

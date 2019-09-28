@@ -37,10 +37,10 @@ internal extension Data {
        Data(SHA256.hash(data: self))
     }
     /// generic func to extract integers from data as big endian
-    var integer: Int {
+    var integer: UInt32 {
         guard !self.isEmpty else { return .zero }
-        return Int(bigEndian: withUnsafeBytes { bytes in
-            bytes.load(as: Int.self)
+        return UInt32(bigEndian: withUnsafeBytes { bytes in
+            bytes.load(as: UInt32.self)
         })
     }
 }

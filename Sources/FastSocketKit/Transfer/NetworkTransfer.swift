@@ -107,7 +107,7 @@ internal final class NetworkTransfer: TransferProtocol {
         }
     }
 }
-
+// MARK: - extension for private functions
 private extension NetworkTransfer {
     /// cleanup a connection
     private func clean() {
@@ -157,6 +157,7 @@ private extension NetworkTransfer {
                 if let error = error {
                     guard error != NWError.posix(.ECANCELED) else { return }
                     self.on.error(error)
+                    self.clean()
                     return
                 }
                 if let data = data {

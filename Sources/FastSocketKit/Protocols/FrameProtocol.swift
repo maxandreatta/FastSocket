@@ -7,18 +7,18 @@
 //
 import Foundation
 
-// 0                 1       N
-// +-----------------+-------+
-// |0|1 2 3 4 5 6 7 8|0 1 2 3|
-// +-+---------------+-------+
-// |O| FRAME LENGTH  |PAYLOAD|
-// |P|     (8)       |  (N)  |
-// |C|               |       |
-// +-+---------------+-------+
-// :Payload Data continued...:
-// + - - - - - - - - - - - - +
-// |Payload Data continued...|
-// +-------------------------+
+// 0         1           N
+// +---------+-----------+
+// |0|1 2 3 4|0 1 2 3... |
+// +-+-------+-----------+
+// |O| FRAME |  PAYLOAD  |
+// |P| LENGTH|    (N)    |
+// |C|  (4)  |           |
+// +-+-------+-----------+
+// :Payload continued... :
+// + - - - - - - - - - - +
+// |Payload continued... |
+// +---------------------+
 //
 // This describes the framing protocol.
 // - OPC:
@@ -28,7 +28,7 @@ import Foundation
 //      - 0x3: this is the fin byte, which is part of OPC
 //      - 0x6 - 0xF: this bytes are reserved
 // - FRAME LENGTH:
-//      - this uses 8 bytes to store the entire frame size as a big endian uint64 value
+//      - this uses 8 bytes to store the entire frame size as a big endian uint32 value
 // - PAYLOAD:
 //      - continued payload data
 
