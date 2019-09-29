@@ -29,6 +29,7 @@ public final class FastSocket: FastSocketProtocol {
     private var digest = Data()
     private var type: TransferType
     private var isLocked = false
+    private var queue = DispatchQueue(label: "\(Constant.prefixFrame).\(UUID().uuidString)")
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
@@ -60,11 +61,14 @@ public final class FastSocket: FastSocketProtocol {
     ///     - message: generic type (accepts data or string)
     public func send<T: Message>(message: T) {
         guard isLocked, let transfer = transfer else { return }
-        do {
-            let data = try frame.create(message: message)
-            transfer.send(data: data)
-        } catch {
-            onError(error)
+        self.queue.async { [weak self] in
+            guard let self = self else { return }
+            do {
+                let data = try self.frame.create(message: message)
+                transfer.send(data: data)
+            } catch {
+                self.onError(error)
+            }
         }
     }
 }
@@ -130,12 +134,15 @@ private extension FastSocket {
             guard case let data as Data = data else { return }
             switch self.isLocked {
             case true:
-                do {
-                    try self.frame.parse(data: data) { message in
-                        self.on.message(message)
+                self.queue.async { [weak self] in
+                    guard let self = self else { return }
+                    do {
+                        try self.frame.parse(data: data) { message in
+                            self.on.message(message)
+                        }
+                    } catch {
+                        self.onError(error)
                     }
-                } catch {
-                    self.onError(error)
                 }
             case false:
                 guard data == self.digest else {

@@ -66,7 +66,7 @@ internal final class Frame: FrameProtocol {
         default:
             throw FastSocketError.unknownOpcode
         }
-        guard frame.count <= Constant.maximumContentLength else {
+        guard frame.count <= Constant.maximumFrameLength else {
             throw FastSocketError.writeBufferOverflow
         }
         return frame
@@ -79,7 +79,7 @@ internal final class Frame: FrameProtocol {
             throw FastSocketError.zeroData
         }
         readBuffer.append(data)
-        guard readBuffer.count <= Constant.maximumContentLength else {
+        guard readBuffer.count <= Constant.maximumFrameLength else {
             throw FastSocketError.readBufferOverflow
         }
         guard readBuffer.count >= Constant.overheadSize, readBuffer.count >= contentSize else { return }

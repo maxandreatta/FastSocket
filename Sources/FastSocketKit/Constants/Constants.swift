@@ -14,6 +14,8 @@ internal enum Constant {
     static let prefixTimer = "timer.dispatch"
     /// queue prefix for iteration
     static let prefixIteration = "iteration.dispatch"
+    /// queue prefix for framing protocol
+    static let prefixFrame = "frame.dispatch"
     /// for tcp socket reading, minimum stream length
     static let minimumIncompleteLength: Int = 1
     /// maximum tcp readbuffer size
@@ -21,7 +23,7 @@ internal enum Constant {
     /// timeout time
     static let timeout: TimeInterval = 3.0
     /// maximum per message size
-    static let maximumContentLength: Int = 16_777_216
+    static let maximumFrameLength: Int = 16_777_216
     /// framing overhead
     static let overheadSize: Int = 5
     /// maximum iteration size

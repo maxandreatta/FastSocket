@@ -117,10 +117,10 @@
 		AC0A23FA233CD5BE00DEBF78 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */,
-				AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */,
 				AC0A23FD233CD5BE00DEBF78 /* Frame.swift */,
 				AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */,
+				AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */,
+				AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

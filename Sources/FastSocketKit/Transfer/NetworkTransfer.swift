@@ -82,27 +82,24 @@ internal final class NetworkTransfer: TransferProtocol {
     ///     - data: the data which should be written on the socket
     internal func send(data: Data) {
         guard let connection = connection else { return }
-        queue.async { [weak self] in
+        connection.batch { [weak self] in
             guard let self = self else { return }
-            connection.batch { [weak self] in
-                guard let self = self else { return }
-                guard self.connectionState == .ready else {
-                    self.on.error(FastSocketError.sendToEarly)
-                    return
-                }
-                let queued = data.chunk
-                guard !queued.isEmpty else { return }
-                var iterator = queued.makeIterator()
-                while let data = iterator.next() {
-                    connection.send(content: data, completion: .contentProcessed({ error in
-                        if let error = error {
-                            guard error != NWError.posix(.ECANCELED) else { return }
-                            self.on.error(error)
-                            return
-                        }
-                        self.on.bytes(.output(data.count))
-                    }))
-                }
+            guard self.connectionState == .ready else {
+                self.on.error(FastSocketError.sendToEarly)
+                return
+            }
+            let queued = data.chunk
+            guard !queued.isEmpty else { return }
+            var iterator = queued.makeIterator()
+            while let data = iterator.next() {
+                connection.send(content: data, completion: .contentProcessed({ error in
+                    if let error = error {
+                        guard error != NWError.posix(.ECANCELED) else { return }
+                        self.on.error(error)
+                        return
+                    }
+                    self.on.bytes(.output(data.count))
+                }))
             }
         }
     }

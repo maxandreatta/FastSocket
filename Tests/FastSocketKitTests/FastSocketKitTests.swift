@@ -226,7 +226,7 @@ class FastSocketKitTests: XCTestCase {
     /// a test to look if the framing recognize a memory overflow
     func testFrameErrorOverflow() {
         let frame = Frame()
-        let data = Data(count: Constant.maximumContentLength)
+        let data = Data(count: Constant.maximumFrameLength)
         XCTAssertThrowsError(try frame.create(message: data)) { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.writeBufferOverflow)
         }
@@ -295,5 +295,14 @@ class FastSocketKitTests: XCTestCase {
             exp.fulfill()
         }
         wait(for: [exp], timeout: 2.0)
+    }
+    /// measue parser performance
+    func testMeasureParserPerformance() {
+        let frame = Frame()
+        let data = Data(count: Constant.maximumFrameLength - Constant.overheadSize)
+        let message = try! frame.create(message: data)
+        measure {
+            try! frame.parse(data: message) { message in }
+        }
     }
 }
