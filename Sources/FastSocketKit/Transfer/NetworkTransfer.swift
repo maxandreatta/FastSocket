@@ -152,9 +152,9 @@ private extension NetworkTransfer {
     /// readloop for the tcp socket incoming data
     private func readLoop() {
         guard let connection = connection else { return }
+        guard isRunning else { return }
         queue.async { [weak self] in
             guard let self = self else { return }
-            guard self.isRunning else { return }
             connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength) { [weak self] data, _, isComplete, error in
                 guard let self = self else { return }
                 if let error = error {
