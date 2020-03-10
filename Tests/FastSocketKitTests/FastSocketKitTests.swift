@@ -4,9 +4,9 @@ import XCTest
 
 class FastSocketKitTests: XCTestCase {
     /// the host address
-    var host: String = "socket.weist.it"
+    var host: String = "ifast.dev"
     /// the port
-    var port: UInt16 = 8080
+    var port: UInt16 = 7878
     /// the transfer type
     var type: TransferType = .tcp
 
@@ -22,7 +22,6 @@ class FastSocketKitTests: XCTestCase {
         }
         socket.on.message = { message in
             if case let message as Data = message {
-                debugPrint("RECEIVED THIS COUNT: \(message.count)")
                 XCTAssertEqual(message.count, Int(buffer))
                 exp.fulfill()
             }
@@ -73,29 +72,36 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 10.0)
+        wait(for: [exp], timeout: 15.0)
     }
     /// a test for multiple sending data to the backend and receive
     /// multiple strings from the backend
     func testMultipleSendDataAndReceiveString() {
         let exp = expectation(description: "Wait for speed test to finish")
-        let buffer = Data(count: 100)
+        let buffer = Data(count: 50)
         var messages = 0
-        let sendValue = 100
+        let sendValue = 50_000
+        var index = 0
         let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
-            for _ in 1...sendValue {
-                socket.send(message: buffer)
+            func send() {
+                socket.send(message: buffer) {
+                    if index != sendValue {
+                        send()
+                    }
+                    index += 1
+                }
             }
+            send()
         }
         socket.on.message = { message in
             if case let message as String = message {
-                debugPrint("RECEIVED THIS COUNT: \(message)")
-                messages += 1
-                debugPrint("Responded Times: \(messages)")
                 if messages == sendValue {
+                    debugPrint("RECEIVED THIS COUNT: \(message)")
+                    debugPrint("Responded Times: \(messages)")
                     exp.fulfill()
                 }
+                messages += 1
             }
         }
         socket.on.close = {
@@ -106,29 +112,36 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 10.0)
+        wait(for: [exp], timeout: 30.0)
     }
     /// a test for multiple sending strings to the backend and receive
     /// multiple data from the backend
     func testMultipleSendStringAndReceiveData() {
         let exp = expectation(description: "Wait for speed test to finish")
-        let buffer = "100"
+        let buffer = "50"
         var messages = 0
-        let sendValue = 100
+        let sendValue = 50_000
+        var index = 0
         let socket = FastSocket(host: host, port: port, type: type)
         socket.on.ready = {
-            for _ in 1...sendValue {
-                socket.send(message: buffer)
+            func send() {
+                socket.send(message: buffer) {
+                    if index != sendValue {
+                        send()
+                    }
+                    index += 1
+                }
             }
+            send()
         }
         socket.on.message = { message in
             if case let message as Data = message {
-                debugPrint("RECEIVED THIS COUNT: \(message.count)")
-                messages += 1
-                debugPrint("Responded Times: \(messages)")
                 if messages == sendValue {
+                    debugPrint("RECEIVED THIS COUNT: \(message.count)")
+                    debugPrint("Responded Times: \(messages)")
                     exp.fulfill()
                 }
+                messages += 1
             }
         }
         socket.on.close = {
@@ -139,7 +152,7 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 10.0)
+        wait(for: [exp], timeout: 30.0)
     }
     /// a test to look if the client can close a connection
     func testClose() {
@@ -188,19 +201,6 @@ class FastSocketKitTests: XCTestCase {
         socket.on.error = { error in
             guard let error = error else { return }
             XCTAssertEqual(error as! FastSocketError, FastSocketError.timeoutError)
-            exp.fulfill()
-        }
-        socket.connect()
-        wait(for: [exp], timeout: 15.0)
-    }
-    /// a test to look if the tls config is loaded
-    func testTLSError() {
-        let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: host, port: port, type: .tls)
-        socket.on.error = { error in
-            guard let error = error else { return }
-            debugPrint(error)
-            XCTAssertEqual(error as! NWError, NWError.posix(.ENETDOWN))
             exp.fulfill()
         }
         socket.connect()

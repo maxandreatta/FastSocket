@@ -15,4 +15,7 @@ internal extension UInt32 {
             Data(bytes)
         }
     }
+    /// penultimate represents the -1 element of an index
+    /// this should only be used on index based enumerations
+    var penultimate: UInt32 { self - 1 }
 }

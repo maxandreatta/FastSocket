@@ -24,8 +24,8 @@ internal extension Data {
     /// is 8192 per sliceBytes
     var chunk: [Data] {
         var size = self.count / Constant.iterations
-        if size <= Constant.minimumChunkSize {
-            size = Constant.minimumChunkSize
+        if size <= Constant.maximumLength {
+            size = Constant.maximumLength
         }
         return stride(from: .zero, to: self.count, by: size).map { count in
             Data(self[count..<Swift.min(count + size, self.count)])
@@ -36,7 +36,7 @@ internal extension Data {
     var sha256: Data {
        Data(SHA256.hash(data: self))
     }
-    /// generic func to extract integers from data as big endian
+    /// func to extract integers from data as big endian
     var integer: UInt32 {
         guard !self.isEmpty else { return .zero }
         return UInt32(bigEndian: withUnsafeBytes { bytes in

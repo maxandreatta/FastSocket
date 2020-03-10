@@ -22,6 +22,7 @@ internal final class NetworkTransfer: TransferProtocol {
     private var queue: DispatchQueue
     private var type: TransferType
     private var isRunning: Bool = false
+    private var isProcessed: Bool = true
     /// computed property to create the right transfer type
     /// and mapps the allowed parameters to the NWParameters
     /// - returns: NWParameters object
@@ -80,18 +81,19 @@ internal final class NetworkTransfer: TransferProtocol {
     /// slices big data into chunks and send it stacked
     /// - parameters:
     ///     - data: the data which should be written on the socket
-    internal func send(data: Data) {
+    internal func send(data: Data, _ completion: @escaping () -> Void) {
         guard let connection = connection else { return }
-        connection.batch { [weak self] in
+        guard connectionState == .ready else {
+            on.error(FastSocketError.sendToEarly)
+            return
+        }
+        guard isProcessed else { return }
+        isProcessed = false
+        queue.async { [weak self] in
             guard let self = self else { return }
-            guard self.connectionState == .ready else {
-                self.on.error(FastSocketError.sendToEarly)
-                return
-            }
             let queued = data.chunk
             guard !queued.isEmpty else { return }
-            var iterator = queued.makeIterator()
-            while let data = iterator.next() {
+            for (i, data) in queued.enumerated() {
                 connection.send(content: data, completion: .contentProcessed({ error in
                     if let error = error {
                         guard error != NWError.posix(.ECANCELED) else { return }
@@ -99,6 +101,10 @@ internal final class NetworkTransfer: TransferProtocol {
                         return
                     }
                     self.on.bytes(.output(data.count))
+                    if i == queued.endIndex.penultimate {
+                        self.isProcessed = true
+                        completion()
+                    }
                 }))
             }
         }
@@ -146,9 +152,9 @@ private extension NetworkTransfer {
     /// readloop for the tcp socket incoming data
     private func readLoop() {
         guard let connection = connection else { return }
-        connection.batch { [weak self] in
+        guard isRunning else { return }
+        queue.async { [weak self] in
             guard let self = self else { return }
-            guard isRunning else { return }
             connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength) { [weak self] data, _, isComplete, error in
                 guard let self = self else { return }
                 if let error = error {
