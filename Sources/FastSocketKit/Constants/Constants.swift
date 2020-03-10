@@ -23,7 +23,7 @@ internal enum Constant {
     /// timeout time
     static let timeout: TimeInterval = 3.0
     /// maximum per message size
-    static let maximumFrameLength: Int = 8_388_608 
+    static let maximumFrameLength: Int = 16_777_216
     /// framing overhead
     static let overheadSize: Int = 5
     /// maximum iteration size
