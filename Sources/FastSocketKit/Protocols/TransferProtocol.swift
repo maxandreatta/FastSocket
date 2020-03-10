@@ -31,5 +31,5 @@ internal protocol TransferProtocol: class {
     /// slices big data into chunks and send it stacked
     /// - parameters:
     ///     - data: the data which should be written on the socket
-    func send(data: Data)
+    func send(data: Data, _ completion: @escaping () -> Void)
 }

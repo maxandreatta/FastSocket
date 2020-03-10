@@ -40,9 +40,9 @@ internal protocol FrameProtocol: class {
     /// message frame
     /// - parameters:
     ///     - message: generic parameter, accepts string and data
-    func create<T: MessageProtocol>(message: T) throws -> Data
+    func create<T: Message>(message: T) throws -> Data
     /// parse a FastSocket Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data
-    func parse(data: Data, _ completion: (MessageProtocol) -> Void) throws
+    func parse(data: Data, _ completion: (Message) -> Void) throws
 }

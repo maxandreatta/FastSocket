@@ -6,7 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
-extension String: MessageProtocol {
+extension String: Message {
     // conformance to send protocol
 }
 // internal extensions

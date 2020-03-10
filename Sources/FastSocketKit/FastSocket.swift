@@ -29,6 +29,7 @@ public final class FastSocket: FastSocketProtocol {
     private var digest = Data()
     private var type: TransferType
     private var isLocked = false
+    private var queue = DispatchQueue(label: "\(Constant.prefixFrame).\(UUID().uuidString)")
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
@@ -58,13 +59,19 @@ public final class FastSocket: FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
-    public func send<T: MessageProtocol>(message: T) {
+    public func send<T: Message>(message: T, _ completion: (() -> Void)? = nil) {
         guard isLocked, let transfer = transfer else { return }
-        do {
-            let data = try frame.create(message: message)
-            transfer.send(data: data)
-        } catch {
-            onError(error)
+        self.queue.async { [weak self] in
+            guard let self = self else { return }
+            do {
+                let data = try self.frame.create(message: message)
+                transfer.send(data: data) {
+                    guard let completion = completion else { return }
+                    completion()
+                }
+            } catch {
+                self.onError(error)
+            }
         }
     }
 }
@@ -80,7 +87,7 @@ private extension FastSocket {
         isLocked = false
         digest = Data()
         transfer = NetworkTransfer(host: host, port: port, type: type, parameters: parameters)
-        transferCallbacks()
+        callbacks()
     }
     /// suspends timeout and report on error
     /// - parameters:
@@ -101,7 +108,7 @@ private extension FastSocket {
             return
         }
         digest = data.sha256
-        transfer.send(data: data)
+        transfer.send(data: data) { /* idempotent */ }
     }
     /// start timeout on connecting
     private func startTimeout() {
@@ -119,7 +126,7 @@ private extension FastSocket {
 private extension FastSocket {
     /// closures from the transfer protocol
     /// handles incoming data and handshake
-    private func transferCallbacks() {
+    private func callbacks() {
         guard let transfer = transfer else { return }
         transfer.on.ready = { [weak self] in
             guard let self = self else { return }
@@ -130,12 +137,15 @@ private extension FastSocket {
             guard case let data as Data = data else { return }
             switch self.isLocked {
             case true:
-                do {
-                    try self.frame.parse(data: data) { message in
-                        self.on.message(message)
+                self.queue.async { [weak self] in
+                    guard let self = self else { return }
+                    do {
+                        try self.frame.parse(data: data) { message in
+                            self.on.message(message)
+                        }
+                    } catch {
+                        self.onError(error)
                     }
-                } catch {
-                    self.onError(error)
                 }
             case false:
                 guard data == self.digest else {
@@ -147,8 +157,8 @@ private extension FastSocket {
                 self.on.ready()
             }
         }
-        transfer.on.error = onError
         transfer.on.close = on.close
         transfer.on.bytes = on.bytes
+        transfer.on.error = onError
     }
 }

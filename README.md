@@ -1,7 +1,7 @@
 <div align="center">
     <h1>
         <br>
-            <a href="https://github.com/Vinz1911/FastSocket"><img src="http://weist.it/content/assets/images/fastsocket.svg" alt="FastSocket" width="600"></a>
+            <a href="https://github.com/Vinz1911/FastSocket"><img src="https://github.com/Vinz1911/FastSocket/blob/develop/.fastsocket.svg" alt="FastSocket" width="600"></a>
         <br>
             FastSocket
         <br>
@@ -10,8 +10,9 @@
 
 `FastSocket` is a proprietary bi-directional message based communication protocol on top of TCP (optionally over other layers in the future). The idea behind this project was, to create a TCP communication like the [WebSocket Protocol](https://tools.ietf.org/html/rfc6455) with less overhead and the ability to track every 8192 bytes read or written on the socket without waiting for the whole message to be transmitted. This allows it to use it as **protocol for speed tests** for measuring the TCP throughput performance. Our server-sided implementation is written in [golang](https://golang.org/) and it's optimized for maximum speed and performance.
 
-## Features:
+The server sided implementation of the FastSocket Protocol can be found here: [FastSocketServer](https://github.com/Vinz1911/FastSocketServer). The repository also contains a demo implementation of the server code with a simple speedtest.
 
+## Features:
 - [X] send and receive text and data messages
 - [X] async, non-blocking & very fast
 - [X] threading is handled by the framework itself
@@ -22,7 +23,7 @@
 - [X] all errors are routed through the error closure
 - [X] maximum frame size 16777216 bytes (with overhead)
 - [X] content length base framing instead of fin byte termination
-- [X] send/receive multiple messages at once (currently only in debug mode)
+- [X] send/receive multiple messages at once
 - [X] TLS support
 - [X] XCFramework support
 - [X] Swift Packages support
@@ -50,7 +51,7 @@ Full support for [SwiftPackageManager](https://developer.apple.com/documentation
 ## Import:
 ```swift
 // import the Framework
-import FastSocket
+import FastSocketKit
 // normal init with TCP (unsecure) transfer type
 let socket = FastSocket(host: "example.com", port: 8080)
 // enhanced init with the ability to set TLS (secure) as transfer type
@@ -67,9 +68,9 @@ socket.on.message = { message in
     // this is called everytime
     // a message was received
 }
-socket.on.bytes = { count in
-    // this is called every 8192 bytes
-    // are readed from the socket
+socket.on.bytes = { bytes in
+    // this is called everytime bytes are readed 
+    // or written from/on the socket
 }
 socket.on.close = {
     // this is called after
@@ -118,7 +119,7 @@ socket.on.bytes = { bytes in
 ## Connect:
 ```swift
 // try to connect to the host
-// timeout after 5.0 seconds
+// timeout after 3.0 seconds
 socket.connect()
 ```
 
@@ -126,14 +127,48 @@ socket.connect()
 ```swift
 // closes the connection
 socket.disconnect()
-
 ```
 
 ## Send Messages:
 ```swift
 // the send func is a generic func
 // it allows to send `String` and `Data`
+// generic T don't accept other data types
 socket.send(message: T)
+
+// the send function also has an optional completion block
+// this is only possible if its not referenced by the protocol
+// if it's referenced by the protocol, you need to implement 
+// the completion block, because there are no default values in protocols
+socket.send(message: T) {
+    // do anything if data is successfully
+    // processed by the network stack
+}
+
+// NOTE: it's possible to send multiple messages at once
+// we discovered a problem if you doing this in a loop,
+// this can cause a overflow problem in network.framework's send process
+// and the entire process get's stucked. So we implemented some technics to prevent this
+// you can now send in a loop but this will end up in lost data because we give the process
+// the time he needs to fully process the data into the network stack. If you want to send multiple
+// messages at once you should do this inside the completion block. This guarantees the following:
+// - 1. The entire data will be transmit, no data will be skipped
+// - 2. The process performs with the maximum performance that network.framework can provide
+// - 3. The performance scales linear, so it's no problem to send 1M+ messages after each other
+// EXAMPLE:
+
+// counter
+var count: Int = 0
+
+// send the message
+func send() {
+    socket.send(message: "Hello World!") {
+        guard count <= 1_000_000 else { return }
+        count += 1
+        // recursive function call of the send method
+        send()
+    }
+}
 ```
 
 ## Additional Parameters:

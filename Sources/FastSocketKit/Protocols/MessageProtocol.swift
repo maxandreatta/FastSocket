@@ -1,5 +1,5 @@
 //
-//  SendProtocol.swift
+//  MessageProtocol.swift
 //  FastSocket
 //
 //  Created by Vinzenz Weist on 03.05.19.
@@ -8,7 +8,7 @@
 
 import Foundation
 /// protocol for message compliance
-public protocol MessageProtocol {
+public protocol Message {
     // this protocol should be conformed
     // to the data types, which are allowed to
     // send and be received

@@ -24,7 +24,7 @@
 		AC0A2413233CD5BF00DEBF78 /* TransferParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */; };
 		AC0A2414233CD5BF00DEBF78 /* FastSocketCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */; };
 		AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FD233CD5BE00DEBF78 /* Frame.swift */; };
-		AC0A2416233CD5BF00DEBF78 /* ByteCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */; };
+		AC0A2416233CD5BF00DEBF78 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */; };
 		AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2400233CD5BE00DEBF78 /* Constants.swift */; };
 		AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */; };
 		AC0A2419233CD5BF00DEBF78 /* TransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2402233CD5BE00DEBF78 /* TransferType.swift */; };
@@ -39,6 +39,7 @@
 		AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */; };
 		AC0A2424233CD5BF00DEBF78 /* Timer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */; };
 		AC0A2425233CD5BF00DEBF78 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */; };
+		AC3AC4E32417173F00907B97 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AC4E22417173F00907B97 /* Int+Extensions.swift */; };
 		ACAF20B4233CD08E005DA16F /* FastSocketKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* FastSocketKitTests.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
@@ -66,7 +67,7 @@
 		AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferParameters.swift; sourceTree = "<group>"; };
 		AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketCallback.swift; sourceTree = "<group>"; };
 		AC0A23FD233CD5BE00DEBF78 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
-		AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteCountResult.swift; sourceTree = "<group>"; };
+		AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bytes.swift; sourceTree = "<group>"; };
 		AC0A2400233CD5BE00DEBF78 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opcodes.swift; sourceTree = "<group>"; };
 		AC0A2402233CD5BE00DEBF78 /* TransferType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferType.swift; sourceTree = "<group>"; };
@@ -88,6 +89,8 @@
 		AC0A242B233CD8D200DEBF78 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		AC0A242C233CD8DA00DEBF78 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = fastlane/CHANGELOG.md; sourceTree = "<group>"; };
 		AC0A242D233CD90700DEBF78 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
+		AC3AC4E22417173F00907B97 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		AC3AC4E424179A8500907B97 /* .fastsocket.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = .fastsocket.svg; sourceTree = "<group>"; };
 		"FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FastSocketKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FastSocketKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_12 /* FastSocketKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketKitTests.swift; sourceTree = "<group>"; };
@@ -117,10 +120,10 @@
 		AC0A23FA233CD5BE00DEBF78 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AC0A23FD233CD5BE00DEBF78 /* Frame.swift */,
+				AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */,
 				AC0A23FB233CD5BE00DEBF78 /* TransferParameters.swift */,
 				AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */,
-				AC0A23FD233CD5BE00DEBF78 /* Frame.swift */,
-				AC0A23FE233CD5BE00DEBF78 /* ByteCountResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				AC0A240F233CD5BF00DEBF78 /* UInt32+Extensions.swift */,
+				AC3AC4E22417173F00907B97 /* Int+Extensions.swift */,
 				AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */,
 				AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */,
 				AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */,
@@ -209,6 +213,7 @@
 				AC0A2428233CD8D200DEBF78 /* .swiftlint.yml */,
 				AC0A242D233CD90700DEBF78 /* .travis.yml */,
 				AC0A242A233CD8D200DEBF78 /* .slather.yml */,
+				AC3AC4E424179A8500907B97 /* .fastsocket.svg */,
 				AC0A242C233CD8DA00DEBF78 /* CHANGELOG.md */,
 				AC0A2429233CD8D200DEBF78 /* README.md */,
 				OBJ_7 /* Sources */,
@@ -298,7 +303,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 9999;
-				LastUpgradeCheck = 9999;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					"FastSocketKit::FastSocketKit" = {
 						ProvisioningStyle = Manual;
@@ -317,6 +322,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = OBJ_5;
 			productRefGroup = OBJ_14 /* Products */;
@@ -358,9 +364,10 @@
 			buildActionMask = 0;
 			files = (
 				AC0A2413233CD5BF00DEBF78 /* TransferParameters.swift in Sources */,
+				AC3AC4E32417173F00907B97 /* Int+Extensions.swift in Sources */,
 				AC0A241B233CD5BF00DEBF78 /* MessageProtocol.swift in Sources */,
 				AC0A2424233CD5BF00DEBF78 /* Timer+Extension.swift in Sources */,
-				AC0A2416233CD5BF00DEBF78 /* ByteCountResult.swift in Sources */,
+				AC0A2416233CD5BF00DEBF78 /* Bytes.swift in Sources */,
 				AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */,
 				AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */,
 				AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */,
@@ -416,7 +423,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 209;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -427,7 +434,7 @@
 				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKit_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.8.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -450,7 +457,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 200;
+				CURRENT_PROJECT_VERSION = 209;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -461,7 +468,7 @@
 				INFOPLIST_FILE = FastSocketKit.xcodeproj/FastSocketKit_Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.8.0;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -509,17 +516,43 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"SWIFT_PACKAGE=1",
 					"DEBUG=1",
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
@@ -547,10 +580,10 @@
 		OBJ_37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -576,10 +609,10 @@
 		OBJ_38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -606,15 +639,40 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"SWIFT_PACKAGE=1",
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";
