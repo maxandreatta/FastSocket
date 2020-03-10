@@ -7,18 +7,18 @@
 //
 import Foundation
 
-// 0         1           N
-// +---------+-----------+
-// |0|1 2 3 4|0 1 2 3... |
-// +-+-------+-----------+
-// |O| FRAME |  PAYLOAD  |
-// |P| LENGTH|    (N)    |
-// |C|  (4)  |           |
-// +-+-------+-----------+
-// :Payload continued... :
-// + - - - - - - - - - - +
-// |Payload continued... |
-// +---------------------+
+// 0          1            N
+// +----------+------------+
+// |0|1 2 3 4 | 0 1 2 3... |
+// +-+--------+------------+
+// |O| FRAME  |  PAYLOAD   |
+// |P| LENGTH |    (N)     |
+// |C|   (4)  |            |
+// +-+--------+------------+
+// : Payload continued...  :
+// + - - - - - - - - - - - +
+// | Payload continued...  |
+// +-----------------------+
 //
 // This describes the framing protocol.
 // - OPC:
@@ -26,9 +26,9 @@ import Foundation
 //      - 0x1: this is the string byte which is used for string based messages
 //      - 0x2: this is the data byte which is used for data based messages
 //      - 0x3: this is the fin byte, which is part of OPC but is on the first place in the protocol
-//      - 0x6 - 0xF: this bytes are reserved
+//      - 0x6 - 0xFF: this bytes are reserved
 // - FRAME LENGTH:
-//      - this uses 8 bytes to store the entire frame size as a big endian uint32 value
+//      - this uses 4 bytes to store the entire frame size as a big endian uint32 value
 // - PAYLOAD:
 //      - continued payload data
 
@@ -40,7 +40,7 @@ internal final class Frame: FrameProtocol {
     /// private property to get parse the overhead size of a frame
     private var contentSize: UInt32 {
         guard readBuffer.count >= Constant.overheadSize else { return .zero }
-        let size = Data(readBuffer[1...Constant.overheadSize - 1])
+        let size = Data(readBuffer[.first...Constant.overheadSize.penultimate])
         return size.integer
     }
     /// crate instance of Frame
@@ -79,12 +79,13 @@ internal final class Frame: FrameProtocol {
             throw FastSocketError.zeroData
         }
         readBuffer.append(data)
+        let length = contentSize
         guard readBuffer.count <= Constant.maximumFrameLength else {
             throw FastSocketError.readBufferOverflow
         }
-        guard readBuffer.count >= Constant.overheadSize, readBuffer.count >= contentSize else { return }
-        while readBuffer.count >= contentSize && contentSize != .zero {
-            let slice = Data(readBuffer[...(contentSize - 1)])
+        guard readBuffer.count >= Constant.overheadSize, readBuffer.count >= length else { return }
+        while readBuffer.count >= length && length != .zero {
+            let slice = Data(readBuffer[...(length.penultimate)])
             switch slice.first {
             case Opcode.string.rawValue:
                 guard let bytes = slice.trim, let message = String(bytes: bytes, encoding: .utf8) else {
@@ -99,8 +100,8 @@ internal final class Frame: FrameProtocol {
             default:
                 throw FastSocketError.unknownOpcode
             }
-            if readBuffer.count > contentSize {
-                readBuffer = Data(readBuffer[contentSize...])
+            if readBuffer.count > length {
+                readBuffer = Data(readBuffer[length...])
             } else {
                 readBuffer = Data()
             }
