@@ -62,7 +62,7 @@ let socket = FastSocket(host: "example.com", port: 8080)
 let socket = FastSocket(host: "example.com", port: 8000)
 socket.parameters = .tls
 
-...
+// ...
 
 socket.connect()
 ```
