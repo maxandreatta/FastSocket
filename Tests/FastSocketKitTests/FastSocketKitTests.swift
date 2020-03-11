@@ -4,9 +4,11 @@ import XCTest
 
 class FastSocketKitTests: XCTestCase {
     /// the host address
-    var host: String = "localhost"
+    var host: String = "ifast.dev"
     /// the port
     var port: UInt16 = 7878
+    /// timeout for all tests
+    var timeout: TimeInterval = 15.0
 
     /// a test for sending strings and responding data from the backend
     /// this is the definition of a download speedtest
@@ -38,7 +40,7 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 10.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// a test for sending data and responding strings from the backend
     /// this is the definition of a upload speedtest
@@ -70,15 +72,15 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 15.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// a test for multiple sending data to the backend and receive
     /// multiple strings from the backend
     func testMultipleSendDataAndReceiveString() {
         let exp = expectation(description: "Wait for speed test to finish")
-        let buffer = Data(count: 50)
+        let buffer = Data(count: 1024)
         var messages = 0
-        let sendValue = 50_000
+        let sendValue = 1000
         var index = 0
         let socket = FastSocket(host: host, port: port)
         socket.on.ready = {
@@ -110,15 +112,15 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 30.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// a test for multiple sending strings to the backend and receive
     /// multiple data from the backend
     func testMultipleSendStringAndReceiveData() {
         let exp = expectation(description: "Wait for speed test to finish")
-        let buffer = "50"
+        let buffer = "1024"
         var messages = 0
-        let sendValue = 50_000
+        let sendValue = 1000
         var index = 0
         let socket = FastSocket(host: host, port: port)
         socket.on.ready = {
@@ -150,7 +152,7 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 30.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// a test to look if the client can close a connection
     func testClose() {
@@ -168,7 +170,7 @@ class FastSocketKitTests: XCTestCase {
             XCTFail("Failed with Error: \(error)")
         }
         socket.connect()
-        wait(for: [exp], timeout: 15.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// a test to measure how long the handshake takes
     /// and the connection is ready to be used
@@ -189,7 +191,7 @@ class FastSocketKitTests: XCTestCase {
         }
         startTime = Date().timeIntervalSince1970
         socket.connect()
-        wait(for: [exp], timeout: 15.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// a test to look if the timeout stops trying to connect
     /// if the host doesnt respond
@@ -202,7 +204,7 @@ class FastSocketKitTests: XCTestCase {
             exp.fulfill()
         }
         socket.connect()
-        wait(for: [exp], timeout: 15.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// a test to look if the framework recognize empty host addresses
     func testFastSocketError() {
@@ -292,7 +294,7 @@ class FastSocketKitTests: XCTestCase {
             timer?.cancel()
             exp.fulfill()
         }
-        wait(for: [exp], timeout: 2.0)
+        wait(for: [exp], timeout: timeout)
     }
     /// measue parser performance
     func testMeasureParserPerformance() {
