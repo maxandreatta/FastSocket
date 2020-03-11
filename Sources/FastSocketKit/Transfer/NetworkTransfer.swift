@@ -27,8 +27,8 @@ internal final class NetworkTransfer: TransferProtocol {
     ///     - parameters: NWParameters `optional`
     ///     - queue: Dispatch Qeue `optional`
     required init(host: String, port: UInt16, parameters: NWParameters = .tcp, queue: DispatchQueue = DispatchQueue(label: "\(Constant.prefixNetwork)\(UUID().uuidString)", qos: .userInitiated)) {
-        self.queue = queue
         self.connection = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(integerLiteral: port), using: parameters)
+        self.queue = queue
     }
     /// connect to a host
     /// prevent reconnecting after a connection
