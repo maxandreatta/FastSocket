@@ -297,7 +297,6 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					"FastSocketKit::FastSocketKit" = {
-						DevelopmentTeam = G85MEVL4XP;
 						ProvisioningStyle = Manual;
 					};
 					"FastSocketKit::FastSocketKitTests" = {
@@ -414,7 +413,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 220;
-				DEVELOPMENT_TEAM = G85MEVL4XP;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -449,7 +448,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 220;
-				DEVELOPMENT_TEAM = G85MEVL4XP;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
