@@ -16,9 +16,7 @@ extension String: Message {
 internal extension String {
     /// returns the utf8 representation of a string
     var utf8: Data {
-        guard let data = self.data(using: .utf8) else {
-            return Data()
-        }
+        guard let data = self.data(using: .utf8) else { return Data() }
         return data
     }
 }

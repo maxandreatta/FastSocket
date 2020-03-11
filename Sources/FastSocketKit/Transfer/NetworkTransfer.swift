@@ -78,6 +78,7 @@ internal final class NetworkTransfer: TransferProtocol {
         }
     }
 }
+
 // MARK: - extension for private functions
 private extension NetworkTransfer {
     /// cleanup a connection

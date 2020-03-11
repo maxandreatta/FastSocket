@@ -74,6 +74,7 @@ public final class FastSocket: FastSocketProtocol {
         }
     }
 }
+
 // MARK: - extension for private functions
 private extension FastSocket {
     /// private func to reset all needed values
@@ -121,6 +122,7 @@ private extension FastSocket {
         timer.cancel()
     }
 }
+
 // MARK: - extension for closure handling
 private extension FastSocket {
     /// closures from the transfer protocol

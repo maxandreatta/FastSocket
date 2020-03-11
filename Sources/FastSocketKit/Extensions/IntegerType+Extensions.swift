@@ -15,9 +15,7 @@ internal extension FixedWidthInteger {
     /// convert an integer value with BigEndianUint64
     /// to an Data array
     var data: Data {
-        withUnsafeBytes(of: self.bigEndian) { bytes in
-            Data(bytes)
-        }
+        withUnsafeBytes(of: self.bigEndian) { bytes in Data(bytes) }
     }
     /// penultimate represents the -1 element of an index
     /// this should only be used on index based enumerations

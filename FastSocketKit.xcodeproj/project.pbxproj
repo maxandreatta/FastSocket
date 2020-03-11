@@ -81,10 +81,10 @@
 		AC0A2429233CD8D200DEBF78 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AC0A242A233CD8D200DEBF78 /* .slather.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .slather.yml; sourceTree = "<group>"; };
 		AC0A242B233CD8D200DEBF78 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		AC0A242C233CD8DA00DEBF78 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = fastlane/CHANGELOG.md; sourceTree = "<group>"; };
 		AC0A242D233CD90700DEBF78 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
 		AC3AC4E22417173F00907B97 /* IntegerType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IntegerType+Extensions.swift"; sourceTree = "<group>"; };
 		AC3AC4E424179A8500907B97 /* .fastsocket.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = .fastsocket.svg; sourceTree = "<group>"; };
+		ACD4A1F6241913F5000C865D /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		"FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FastSocketKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FastSocketKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_12 /* FastSocketKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastSocketKitTests.swift; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 				AC0A242D233CD90700DEBF78 /* .travis.yml */,
 				AC0A242A233CD8D200DEBF78 /* .slather.yml */,
 				AC3AC4E424179A8500907B97 /* .fastsocket.svg */,
-				AC0A242C233CD8DA00DEBF78 /* CHANGELOG.md */,
+				ACD4A1F6241913F5000C865D /* CHANGELOG.md */,
 				AC0A2429233CD8D200DEBF78 /* README.md */,
 				OBJ_7 /* Sources */,
 				OBJ_10 /* Tests */,
