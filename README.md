@@ -8,25 +8,20 @@
     </h1>
 </div>
 
-`FastSocket` is a proprietary bi-directional message based communication protocol on top of TCP (optionally over other layers in the future). The idea behind this project was, to create a TCP communication like the [WebSocket Protocol](https://tools.ietf.org/html/rfc6455) with less overhead and the ability to track every 8192 bytes read or written on the socket without waiting for the whole message to be transmitted. This allows it to use it as **protocol for speed tests** for measuring the TCP throughput performance. Our server-sided implementation is written in [golang](https://golang.org/) and it's optimized for maximum speed and performance.
+`FastSocket` is a proprietary bi-directional message based communication protocol on top of TCP. The idea behind this project was, to create a TCP communication like the [WebSocket Protocol](https://tools.ietf.org/html/rfc6455) with less overhead and the ability to track bytes that are read or written on the socket very granularly, without waiting for the whole message to be transmitted. This allows it to use it as performance protocol for measuring the TCP throughput performance. Our server-sided implementation is written in [golang](https://golang.org/) and it's optimized for maximum speed and performance.
 
-The server sided implementation of the FastSocket Protocol can be found here: [FastSocketServer](https://github.com/Vinz1911/FastSocketServer). The repository also contains a demo implementation of the server code with a simple speedtest.
+The server sided implementation of the FastSocket Protocol can be found here: [FastSocketServer](https://github.com/Vinz1911/FastSocketServer). The repository also contains a demo implementation of the server code with a simple speedtest backend.
 
 ## Features:
-- [X] send and receive text and data messages
-- [X] async, non-blocking & very fast
-- [X] threading is handled by the framework itself
-- [X] track send & received bytes
-- [X] allows you to chose the network interface!
-- [X] zer0 dependencies, native swift implementation with Network.framework
-- [X] custom error management
-- [X] all errors are routed through the error closure
-- [X] maximum frame size 16777216 bytes (with overhead)
-- [X] content length base framing instead of fin byte termination
-- [X] send/receive multiple messages at once
-- [X] TLS support
-- [X] XCFramework support
-- [X] Swift Packages support
+|                         Feature                         |                                   Feature                                   |
+|:-------------------------------------------------------:|:---------------------------------------------------------------------------:|
+| - [X] send and receive text and data messages           | - [X] async, non-blocking & very fast                                       |
+| - [X] threading is handled by the framework itself      | - [X] track send & received bytes                                           |
+| - [X] allows you to chose the network interface!        | - [X] zer0 dependencies, native swift implementation with Network.framework |
+| - [X] custom error management                           | - [X] all errors are routed through the error closure                       |
+| - [X] maximum frame size 16777216 bytes (with overhead) | - [X] content length base framing instead of fin byte termination           |
+| - [X] send/receive multiple messages at once            | - [X] TLS support                                                           |
+| - [X] XCFramework support                               | - [X] Swift Packages support                                                |
 
 ## License:
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=flat)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
