@@ -5,8 +5,8 @@
 //  Created by Vinzenz Weist on 03.05.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
-
 import Foundation
+
 /// protocol for message compliance
 public protocol Message {
     // this protocol should be conformed

@@ -7,6 +7,7 @@
 //
 import Foundation
 import Network
+
 /// TransferProtocol is the conformance for the FastSocket Protocol `Engine`
 /// this will be used to implement a fallback with foundation in the future
 internal protocol TransferProtocol: class {
@@ -16,10 +17,9 @@ internal protocol TransferProtocol: class {
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    ///     - type: the transfer type (.tcp or .tls)
-    ///     - transferParameters: TransportParameters `optional`
+    ///     - parameters: NWParameters `optional`
     ///     - queue: Dispatch Qeue `optional`
-    init(host: String, port: UInt16, type: TransferType, parameters: TransferParameters, queue: DispatchQueue)
+    init(host: String, port: UInt16, parameters: NWParameters, queue: DispatchQueue)
     /// connect to a host
     /// prevent reconnecting after a connection
     /// was successfully established
