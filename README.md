@@ -8,7 +8,7 @@
     </h1>
 </div>
 
-`FastSocket` is a proprietary bi-directional message based communication protocol on top of TCP. The idea behind this project was, to create a TCP communication like the [WebSocket Protocol](https://tools.ietf.org/html/rfc6455) with less overhead and the ability to track bytes that are read or written on the socket very granularly, without waiting for the whole message to be transmitted. This allows it to use it as performance protocol for measuring the TCP throughput performance. Our server-sided implementation is written in [golang](https://golang.org/) and it's optimized for maximum speed and performance.
+`FastSocket` is a proprietary bi-directional message based communication protocol on top of TCP. The idea behind this project was, to create a TCP communication like the [WebSocket Protocol](https://tools.ietf.org/html/rfc6455) with less overhead and the ability to track bytes that are read or written on the socket very granularly, without waiting for the whole message to be transmitted. This allows it to use it as **performance protocol** for measuring the TCP throughput performance. Our server-sided implementation is written in [golang](https://golang.org/) and it's optimized for maximum speed and performance.
 
 The server sided implementation of the FastSocket Protocol can be found here: [FastSocketServer](https://github.com/Vinz1911/FastSocketServer). The repository also contains a demo implementation of the server code with a simple speedtest backend.
 
