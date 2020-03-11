@@ -12,7 +12,7 @@ import Network
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
 /// only 5 Bytes overhead per message, the handshake is done directly on TCP level.
-/// The motivation behind this protocol was, to use it as `Speedtest Protocol`, a
+/// The motivation behind this protocol was, to use it as `Performance Protocol`, a
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSockets is the answer
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
 public final class FastSocket: FastSocketProtocol {
