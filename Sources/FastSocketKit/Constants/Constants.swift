@@ -6,6 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
+
 /// Constants used by the protocol
 internal enum Constant {
     /// queue prefix for network

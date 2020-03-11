@@ -1,7 +1,7 @@
 <div align="center">
     <h1>
         <br>
-            <a href="https://github.com/Vinz1911/FastSocket"><img src="https://github.com/Vinz1911/FastSocket/blob/develop/.fastsocket.svg" alt="FastSocket" width="600"></a>
+            <a href="https://github.com/Vinz1911/FastSocket"><img src="https://github.com/Vinz1911/FastSocket/blob/master/.fastsocket.svg" alt="FastSocket" width="600"></a>
         <br>
             FastSocket
         <br>
@@ -188,6 +188,8 @@ socket.parameters.allowFastOpen = true
 socket.parameters.requiredInterfaceType = .cellular
 ```
 
-## Authors:
+## Author:
 [Vinzenz Weist](https://github.com/Vinz1911)
+
+## Supporter:
 [Juan Romero](https://github.com/rukano)

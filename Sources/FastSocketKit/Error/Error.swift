@@ -6,6 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
+
 /// Error handling for the FastSocket Protocol
 public enum FastSocketError: Int, Error {
     /// none is a placeholder
@@ -43,6 +44,7 @@ public enum FastSocketError: Int, Error {
     /// thrown if opcode was unknown
     case unknownOpcode = 1000
 }
+
 // MARK: - extension for public functions
 public extension FastSocketError {
     static var errorDomain: String { "fastsocket.error" }

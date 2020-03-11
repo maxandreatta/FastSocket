@@ -4,11 +4,9 @@ import XCTest
 
 class FastSocketKitTests: XCTestCase {
     /// the host address
-    var host: String = "ifast.dev"
+    var host: String = "localhost"
     /// the port
     var port: UInt16 = 7878
-    /// the transfer type
-    var type: TransferType = .tcp
 
     /// a test for sending strings and responding data from the backend
     /// this is the definition of a download speedtest
@@ -16,7 +14,7 @@ class FastSocketKitTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = "50000"
         var datacount = 0
-        let socket = FastSocket(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -48,7 +46,7 @@ class FastSocketKitTests: XCTestCase {
         let exp = expectation(description: "Wait for speed test to finish")
         let buffer = Data(count: 50000)
         var datacount = 0
-        let socket = FastSocket(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port)
         socket.on.ready = {
             socket.send(message: buffer)
         }
@@ -82,7 +80,7 @@ class FastSocketKitTests: XCTestCase {
         var messages = 0
         let sendValue = 50_000
         var index = 0
-        let socket = FastSocket(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port)
         socket.on.ready = {
             func send() {
                 socket.send(message: buffer) {
@@ -122,7 +120,7 @@ class FastSocketKitTests: XCTestCase {
         var messages = 0
         let sendValue = 50_000
         var index = 0
-        let socket = FastSocket(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port)
         socket.on.ready = {
             func send() {
                 socket.send(message: buffer) {
@@ -157,7 +155,7 @@ class FastSocketKitTests: XCTestCase {
     /// a test to look if the client can close a connection
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port)
         socket.on.ready = {
             socket.disconnect()
         }
@@ -176,7 +174,7 @@ class FastSocketKitTests: XCTestCase {
     /// and the connection is ready to be used
     func testPerformance() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = FastSocket(host: host, port: port, type: type)
+        let socket = FastSocket(host: host, port: port)
         var startTime = Date().timeIntervalSince1970
         socket.on.ready = {
             debugPrint(Date().timeIntervalSince1970 - startTime)

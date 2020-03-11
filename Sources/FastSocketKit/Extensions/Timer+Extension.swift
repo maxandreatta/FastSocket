@@ -6,6 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
+
 // internal extensions
 internal extension Timer {
     /// Creates and returns a DispatchSourceTimer

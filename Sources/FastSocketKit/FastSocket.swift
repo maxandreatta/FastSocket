@@ -7,6 +7,7 @@
 //
 import Foundation
 import Network
+
 /// FastSocket is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
@@ -20,14 +21,13 @@ public final class FastSocket: FastSocketProtocol {
     /// access to the Network.framework parameter options
     /// that gives you the ability (for example) to define on which
     /// interface the traffic should be send
-    public var parameters = TransferParameters()
+    public var parameters: NWParameters = .tcp
     private var host: String
     private var port: UInt16
     private var frame = Frame()
     private var transfer: TransferProtocol?
     private var timer: DispatchSourceTimer?
     private var digest = Data()
-    private var type: TransferType
     private var isLocked = false
     private var queue = DispatchQueue(label: "\(Constant.prefixFrame).\(UUID().uuidString)")
     /// create a instance of FastSocket
@@ -35,10 +35,9 @@ public final class FastSocket: FastSocketProtocol {
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
     ///     - type: the transfer type (.tcp or .tls)
-    public required init(host: String, port: UInt16, type: TransferType = .tcp) {
+    public required init(host: String, port: UInt16) {
         self.host = host
         self.port = port
-        self.type = type
     }
     /// connect to the server
     /// try to establish a connection to a
@@ -59,6 +58,7 @@ public final class FastSocket: FastSocketProtocol {
     /// generic send function, send data or string based messages
     /// - parameters:
     ///     - message: generic type (accepts data or string)
+    ///     - completion: callback when data was processed by the stack `optional`
     public func send<T: Message>(message: T, _ completion: (() -> Void)? = nil) {
         guard isLocked, let transfer = transfer else { return }
         self.queue.async { [weak self] in
@@ -86,7 +86,7 @@ private extension FastSocket {
         }
         isLocked = false
         digest = Data()
-        transfer = NetworkTransfer(host: host, port: port, type: type, parameters: parameters)
+        transfer = NetworkTransfer(host: host, port: port, parameters: parameters)
         callbacks()
     }
     /// suspends timeout and report on error
