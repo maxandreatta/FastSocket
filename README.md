@@ -13,15 +13,15 @@
 The server sided implementation of the FastSocket Protocol can be found here: [FastSocketServer](https://github.com/Vinz1911/FastSocketServer). The repository also contains a demo implementation of the server code with a simple speedtest backend.
 
 ## Features:
-| Feature                                                 | Feature                                                                     |
-|:--------------------------------------------------------|:----------------------------------------------------------------------------|
-| - [X] send and receive text and data messages           | - [X] async, non-blocking & very fast                                       |
-| - [X] threading is handled by the framework itself      | - [X] track send & received bytes                                           |
-| - [X] allows you to chose the network interface!        | - [X] zer0 dependencies, native swift implementation with Network.framework |
-| - [X] custom error management                           | - [X] all errors are routed through the error closure                       |
-| - [X] maximum frame size 16777216 bytes (with overhead) | - [X] content length base framing instead of fin byte termination           |
-| - [X] send/receive multiple messages at once            | - [X] TLS support                                                           |
-| - [X] XCFramework support                               | - [X] Swift Packages support                                                |
+| Feature                                             | Feature                                                                 |
+|:----------------------------------------------------|:------------------------------------------------------------------------|
+| - send and receive text and data messages           | - async, non-blocking & very fast                                       |
+| - threading is handled by the framework itself      | - track send & received bytes                                           |
+| - allows you to chose the network interface!        | - zer0 dependencies, native swift implementation with Network.framework |
+| - custom error management                           | - all errors are routed through the error closure                       |
+| - maximum frame size 16777216 bytes (with overhead) | - content length base framing instead of fin byte termination           |
+| - send/receive multiple messages at once            | - TLS support                                                           |
+| - XCFramework support                               | - Swift Packages support                                                |
 
 ## License:
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg?longCache=true&style=flat)](https://github.com/Vinz1911/FastSocket/blob/master/LICENSE)
