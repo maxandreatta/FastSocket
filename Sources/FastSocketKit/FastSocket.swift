@@ -14,13 +14,13 @@ import Network
 /// only 5 Bytes overhead per message, the handshake is done directly on TCP level.
 /// The motivation behind this protocol was, to use it as `Speedtest Protocol`, a
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSockets is the answer
-/// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD
+/// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
 public final class FastSocket: FastSocketProtocol {
     /// access to the event based closures
     public var on = FastSocketCallback()
-    /// access to the Network.framework parameter options
-    /// that gives you the ability (for example) to define on which
-    /// interface the traffic should be send
+    /// parameters provides full access to the Network.framework
+    /// NWParameters object. Overwrite with .paramters = .tls if
+    /// a secure TLS connection is required
     public var parameters: NWParameters = .tcp
     private var host: String
     private var port: UInt16
@@ -34,7 +34,6 @@ public final class FastSocket: FastSocketProtocol {
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    ///     - type: the transfer type (.tcp or .tls)
     public required init(host: String, port: UInt16) {
         self.host = host
         self.port = port

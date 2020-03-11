@@ -18,9 +18,9 @@ import Network
 public protocol FastSocketProtocol: class {
     /// public access to the event based closures
     var on: FastSocketCallback { get set }
-    /// public access to the Network.framework parameter options
-    /// that gives you the ability (for example) to define on which
-    /// interface the traffic should be send
+    /// parameters provides full access to the Network.framework
+    /// NWParameters object. Overwrite with .paramters = .tls if
+    /// a secure TLS connection is required
     var parameters: NWParameters { get set }
     /// create a instance of FastSocket
     /// - parameters:

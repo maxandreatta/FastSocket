@@ -2,7 +2,7 @@
 //  Constants.swift
 //  FastSocket
 //
-//  Created by Romero, Juan, SEVEN PRINCIPLES on 04.04.19.
+//  Created by Vinzenz Weist on 11.03.20.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
