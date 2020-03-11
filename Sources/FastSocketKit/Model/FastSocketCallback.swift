@@ -6,6 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
+
 /// FastSocketClosures are used by the Protocol to provide
 /// necessary features
 public struct FastSocketCallback {

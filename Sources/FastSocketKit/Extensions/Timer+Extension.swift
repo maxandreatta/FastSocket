@@ -6,6 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
+
 // internal extensions
 internal extension Timer {
     /// Creates and returns a DispatchSourceTimer
@@ -16,9 +17,10 @@ internal extension Timer {
     static func interval(interval: TimeInterval, withRepeat: Bool, block: @escaping () -> Void) -> DispatchSourceTimer {
         let dispatchTimer = DispatchSource.makeTimerSource(flags: .strict, queue: DispatchQueue(label: "\(Constant.prefixTimer)\(UUID().uuidString)"))
         dispatchTimer.setEventHandler(handler: block)
-        if withRepeat {
+        switch withRepeat {
+        case true:
             dispatchTimer.schedule(deadline: .now(), repeating: interval)
-        } else {
+        case false:
             dispatchTimer.schedule(deadline: .now() + interval, repeating: .never)
         }
         dispatchTimer.resume()

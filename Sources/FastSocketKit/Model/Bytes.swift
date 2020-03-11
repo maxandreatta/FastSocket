@@ -6,6 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
+
 /// generic result type for transmitted bytes
 public enum Bytes {
     /// input bytes are the bytes

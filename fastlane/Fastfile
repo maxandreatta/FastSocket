@@ -85,7 +85,7 @@ platform :ios do
       api_token: ENV["GITHUB_RELEASE"],
       name: "Framework Release " + version,
       tag_name: version,
-      description: (File.read("./CHANGELOG.md") rescue "Changelog is missing!"),
+      description: (File.read("../CHANGELOG.md") rescue "Changelog is missing!"),
       upload_assets: ["./fastlane/framework/FastSocketKit.xcframework"]
     )
   end

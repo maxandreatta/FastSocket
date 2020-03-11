@@ -1,7 +1,7 @@
 <div align="center">
     <h1>
         <br>
-            <a href="https://github.com/Vinz1911/FastSocket"><img src="https://github.com/Vinz1911/FastSocket/blob/develop/.fastsocket.svg" alt="FastSocket" width="600"></a>
+            <a href="https://github.com/Vinz1911/FastSocket"><img src="https://github.com/Vinz1911/FastSocket/blob/master/.fastsocket.svg" alt="FastSocket" width="600"></a>
         <br>
             FastSocket
         <br>
@@ -52,10 +52,19 @@ Full support for [SwiftPackageManager](https://developer.apple.com/documentation
 ```swift
 // import the Framework
 import FastSocketKit
+
 // normal init with TCP (unsecure) transfer type
 let socket = FastSocket(host: "example.com", port: 8080)
-// enhanced init with the ability to set TLS (secure) as transfer type
-let socket = FastSocket(host: "example.com", port: 443, type: .tls)
+
+// use TLS (secure) instead of TCP (unsecure)
+// NOTE: The backend must be setted up with support for TLS otherwise
+// this will not work and end up in an TLS Error
+let socket = FastSocket(host: "example.com", port: 8000)
+socket.parameters = .tls
+
+// ...
+
+socket.connect()
 ```
 
 ## Closures:
@@ -116,15 +125,12 @@ socket.on.bytes = { bytes in
 }
 ```
 
-## Connect:
+## Connect & Disconnect:
 ```swift
 // try to connect to the host
 // timeout after 3.0 seconds
 socket.connect()
-```
 
-## Disconnect:
-```swift
 // closes the connection
 socket.disconnect()
 ```
@@ -177,17 +183,29 @@ func send() {
 // that allows us to use lot of TCP features like fast open or
 // to select the network interface type
 
+// import the Framework
+import FastSocketKit
+
+// init FastSocket object
+let socket = FastSocket(host: "example.com", port: 8080)
+
+// ...
+
 // set the traffics service class
 socket.parameters.serviceClass = .interactiveVoice
-
-// enable fast open
-socket.parameters.allowFastOpen = true
 
 // select the interface type
 // if it's not available, it will cancel with an error
 socket.parameters.requiredInterfaceType = .cellular
+
+// also the entire parameters object can be overwritten
+socket.parameters = NWParamters()
 ```
 
-## Authors:
-[Vinzenz Weist](https://github.com/Vinz1911)
-[Juan Romero](https://github.com/rukano)
+## Author:
+👨🏼‍💻 [Vinzenz Weist](https://github.com/Vinz1911)
+
+This is my heart project, it's made with a lot of love and dedication ❤️
+
+## Supporter:
+👨🏽‍💻 [Juan Romero](https://github.com/rukano)

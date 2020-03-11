@@ -6,6 +6,7 @@
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
 //
 import Foundation
+
 /// Opcodes are used to evaluate and control the framing,
 /// the handshake and the transfer process
 internal enum Opcode: UInt8 {
