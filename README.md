@@ -13,8 +13,8 @@
 The server sided implementation of the FastSocket Protocol can be found here: [FastSocketServer](https://github.com/Vinz1911/FastSocketServer). The repository also contains a demo implementation of the server code with a simple speedtest backend.
 
 ## Features:
-|                         Feature                         |                                   Feature                                   |
-|:-------------------------------------------------------:|:---------------------------------------------------------------------------:|
+| Feature                                                 | Feature                                                                     |
+|:--------------------------------------------------------|:----------------------------------------------------------------------------|
 | - [X] send and receive text and data messages           | - [X] async, non-blocking & very fast                                       |
 | - [X] threading is handled by the framework itself      | - [X] track send & received bytes                                           |
 | - [X] allows you to chose the network interface!        | - [X] zer0 dependencies, native swift implementation with Network.framework |
