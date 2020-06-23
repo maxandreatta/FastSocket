@@ -14,12 +14,6 @@ extension Data: Message {
 
 // internal extensions
 internal extension Data {
-    /// helper for frame
-    /// trims a frame to it's raw content
-    var trim: Data? {
-        guard self.count >= Constant.overheadSize else { return nil }
-        return Data(self[Constant.overheadSize...])
-    }
     /// slice data into chunks, dynamically based
     /// on maximum iterations for sending, minimum size
     /// is 8192 per sliceBytes

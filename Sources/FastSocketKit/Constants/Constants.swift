@@ -18,7 +18,7 @@ internal enum Constant {
     /// queue prefix for framing protocol
     static let prefixFrame = "frame.dispatch"
     /// for tcp socket reading, minimum stream length
-    static let minimumIncompleteLength: Int = .first
+    static let minimumIncompleteLength: Int = .one
     /// maximum tcp readbuffer size
     static let maximumLength: Int = 8192
     /// timeout time

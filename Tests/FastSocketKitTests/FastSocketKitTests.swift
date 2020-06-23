@@ -4,7 +4,7 @@ import XCTest
 
 class FastSocketKitTests: XCTestCase {
     /// the host address
-    var host: String = "ifast.dev"
+    var host: String = "94.130.72.153"
     /// the port
     var port: UInt16 = 7878
     /// timeout for all tests
