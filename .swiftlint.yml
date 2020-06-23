@@ -6,3 +6,4 @@ excluded:
   - Tests/FastSocketKitTests
 
 line_length: 300
+cyclomatic_complexity: 12

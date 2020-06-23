@@ -40,8 +40,16 @@ internal final class Frame: FrameProtocol {
     /// private property to get parse the overhead size of a frame
     private var contentSize: UInt32 {
         guard readBuffer.count >= Constant.overheadSize else { return .zero }
-        let size = Data(readBuffer[.first...Constant.overheadSize.penultimate])
+        let size = Data(readBuffer[.one...Constant.overheadSize.penultimate])
         return size.integer
+    }
+    // boolean which indicates if buffer is empty and can be flushed
+    private var isEmpty: Bool { readBuffer.count <= contentSize }
+    /// helper for frame
+    /// trims a frame to it's raw content
+    private func trim(data: Data) -> Data? {
+        guard data.count >= Constant.overheadSize else { return nil }
+        return Data(data[Constant.overheadSize...Int(contentSize.penultimate)])
     }
     /// crate instance of Frame
     internal required init() {
@@ -85,25 +93,26 @@ internal final class Frame: FrameProtocol {
         }
         guard readBuffer.count >= Constant.overheadSize, readBuffer.count >= length else { return }
         while readBuffer.count >= length && length != .zero {
-            let slice = Data(readBuffer[...(length.penultimate)])
+            let slice = readBuffer
             switch slice.first {
             case Opcode.string.rawValue:
-                guard let bytes = slice.trim, let message = String(bytes: bytes, encoding: .utf8) else {
+                guard let bytes = trim(data: slice), let message = String(bytes: bytes, encoding: .utf8) else {
                     throw FastSocketError.parsingFailure
                 }
                 completion(message)
             case Opcode.data.rawValue:
-                guard let message = slice.trim else {
+                guard let message = trim(data: slice) else {
                     throw FastSocketError.parsingFailure
                 }
                 completion(message)
             default:
                 throw FastSocketError.unknownOpcode
             }
-            if readBuffer.count > length {
-                readBuffer = Data(readBuffer[length...])
-            } else {
+            switch isEmpty {
+            case true:
                 readBuffer = Data()
+            case false:
+                readBuffer = Data(readBuffer[length...])
             }
         }
     }

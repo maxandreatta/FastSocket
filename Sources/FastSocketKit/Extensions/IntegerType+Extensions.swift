@@ -11,7 +11,7 @@ import Network
 // internal extensions
 internal extension FixedWidthInteger {
     /// first represents the static 1 identify element
-    static var first: Int { 1 }
+    static var one: Int { 1 }
     /// convert an integer value with BigEndianUint64
     /// to an Data array
     var data: Data {
@@ -22,6 +22,6 @@ internal extension FixedWidthInteger {
     /// cannot be applied on negativ values
     var penultimate: Int {
         guard self > .zero else { return Int(self) }
-        return Int(self) - .first
+        return Int(self) - .one
     }
 }
