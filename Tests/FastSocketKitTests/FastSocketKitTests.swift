@@ -226,14 +226,14 @@ class FastSocketKitTests: XCTestCase {
     /// a test to look if the framing recognize a memory overflow
     func testFrameErrorOverflow() {
         let frame = Frame()
-        let data = Data(count: Constant.maximumFrameLength)
+        let data = Data(count: Constant.frameSize)
         XCTAssertThrowsError(try frame.create(message: data)) { error in
             XCTAssertEqual(error as! FastSocketError, FastSocketError.writeBufferOverflow)
         }
     }
     /// a test to look if the closures work
     func testClosureCall() {
-        let closures = FastSocketCallback()
+        let closures = Closures()
         closures.ready()
         closures.close()
         closures.message("")
@@ -261,11 +261,12 @@ class FastSocketKitTests: XCTestCase {
     }
     /// a test to compare the errors description
     func testError() {
-        XCTAssertEqual(FastSocketError.errorDomain, "fastsocket.error")
+        XCTAssertEqual(FastSocketError.errorDomain, "com.weist.fastsocket.error")
         XCTAssertEqual(FastSocketError.none.errorUserInfo["NSLocalizedDescription"], "null")
         XCTAssertEqual(FastSocketError.handshakeInitializationFailed.errorUserInfo["NSLocalizedDescription"], "cannot create handshake data, please retry")
         XCTAssertEqual(FastSocketError.handshakeVerificationFailed.errorUserInfo["NSLocalizedDescription"], "handshake verification failed, hash values are different. this can happen if theres a proxy network between...")
         XCTAssertEqual(FastSocketError.emptyHost.errorUserInfo["NSLocalizedDescription"], "host address cannot be empty!")
+        XCTAssertEqual(FastSocketError.zeroPort.errorUserInfo["NSLocalizedDescription"], "port cannot be zero!")
         XCTAssertEqual(FastSocketError.timeoutError.errorUserInfo["NSLocalizedDescription"], "connection timeout error")
         XCTAssertEqual(FastSocketError.networkUnreachable.errorUserInfo["NSLocalizedDescription"], "network is down or not reachable")
         XCTAssertEqual(FastSocketError.sendFailed.errorUserInfo["NSLocalizedDescription"], "send failure, data was not written")
@@ -299,7 +300,7 @@ class FastSocketKitTests: XCTestCase {
     /// measue parser performance
     func testMeasureParserPerformance() {
         let frame = Frame()
-        let data = Data(count: Constant.maximumFrameLength - Constant.overheadSize)
+        let data = Data(count: Constant.frameSize - Constant.overheadSize)
         let message = try! frame.create(message: data)
         measure {
             try! frame.parse(data: message) { message in }

@@ -13,6 +13,8 @@ public enum FastSocketError: Int, Error {
     case none = 0
     /// thrown if empty host address
     case emptyHost = 90
+    /// thrown if port is zero
+    case zeroPort = 91
     /// thrown if handshake preparations failed
     case handshakeInitializationFailed = 100
     /// thrown if handshake comparisation failed (e.g. different hash values)
@@ -35,7 +37,7 @@ public enum FastSocketError: Int, Error {
     case parsingFailure = 300
     /// thrown if message parser get's zer0 data
     case zeroData = 301
-    /// thrown if something werid happen to the readbuffer
+    /// thrown if something weird happen to the readbuffer
     case readBufferIssue = 302
     /// thrown if a readbuffer overflow is encountered
     case readBufferOverflow = 303
@@ -45,60 +47,45 @@ public enum FastSocketError: Int, Error {
     case unknownOpcode = 1000
 }
 
-// MARK: - extension for public functions
 public extension FastSocketError {
-    static var errorDomain: String { "fastsocket.error" }
+    static var errorDomain: String { "com.weist.fastsocket.error" }
     var errorCode: Int { rawValue }
     var errorUserInfo: [String: String] {
         switch self {
         case .none:
             return [NSLocalizedDescriptionKey: "null"]
-
         case .emptyHost:
             return [NSLocalizedDescriptionKey: "host address cannot be empty!"]
-
+        case .zeroPort:
+            return [NSLocalizedDescriptionKey: "port cannot be zero!"]
         case .handshakeInitializationFailed:
             return [NSLocalizedDescriptionKey: "cannot create handshake data, please retry"]
-
         case .handshakeVerificationFailed:
             return [NSLocalizedDescriptionKey: "handshake verification failed, hash values are different. this can happen if theres a proxy network between..."]
-
         case .timeoutError:
             return [NSLocalizedDescriptionKey: "connection timeout error"]
-
         case .networkUnreachable:
             return [NSLocalizedDescriptionKey: "network is down or not reachable"]
-
         case .sendFailed:
             return [NSLocalizedDescriptionKey: "send failure, data was not written"]
-
         case .sendToEarly:
             return [NSLocalizedDescriptionKey: "socket is not ready, could not send"]
-
         case .socketClosed:
             return [NSLocalizedDescriptionKey: "socket was closed"]
-
         case .socketUnexpectedClosed:
             return [NSLocalizedDescriptionKey: "socket was unexpected closed"]
-
         case .writeBeforeClear:
             return [NSLocalizedDescriptionKey: "previous data not finally written!, cannot write on socket"]
-
         case .parsingFailure:
             return [NSLocalizedDescriptionKey: "message parsing error, no valid UTF-8"]
-
         case .zeroData:
             return [NSLocalizedDescriptionKey: "data is empty cannot parse into message"]
-
         case .readBufferIssue:
             return [NSLocalizedDescriptionKey: "readbuffer issue, is empty or wrong data"]
-
         case .readBufferOverflow:
             return [NSLocalizedDescriptionKey: "readbuffer overflow!"]
-
         case .writeBufferOverflow:
             return [NSLocalizedDescriptionKey: "writebuffer overflow!"]
-
         case .unknownOpcode:
             return [NSLocalizedDescriptionKey: "unknown opcode, cannot parse message"]
         }

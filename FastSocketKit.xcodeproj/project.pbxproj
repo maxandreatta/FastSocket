@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		AC0A2414233CD5BF00DEBF78 /* FastSocketCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */; };
+		AC0A2414233CD5BF00DEBF78 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FC233CD5BE00DEBF78 /* Closures.swift */; };
 		AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FD233CD5BE00DEBF78 /* Frame.swift */; };
 		AC0A2416233CD5BF00DEBF78 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */; };
 		AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2400233CD5BE00DEBF78 /* Constants.swift */; };
@@ -61,7 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketCallback.swift; sourceTree = "<group>"; };
+		AC0A23FC233CD5BE00DEBF78 /* Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
 		AC0A23FD233CD5BE00DEBF78 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bytes.swift; sourceTree = "<group>"; };
 		AC0A2400233CD5BE00DEBF78 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 			children = (
 				AC0A23FD233CD5BE00DEBF78 /* Frame.swift */,
 				AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */,
-				AC0A23FC233CD5BE00DEBF78 /* FastSocketCallback.swift */,
+				AC0A23FC233CD5BE00DEBF78 /* Closures.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -365,7 +365,7 @@
 				AC0A241A233CD5BF00DEBF78 /* TransferProtocol.swift in Sources */,
 				AC0A241C233CD5BF00DEBF78 /* FrameProtocol.swift in Sources */,
 				AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */,
-				AC0A2414233CD5BF00DEBF78 /* FastSocketCallback.swift in Sources */,
+				AC0A2414233CD5BF00DEBF78 /* Closures.swift in Sources */,
 				AC0A241F233CD5BF00DEBF78 /* Error.swift in Sources */,
 				AC0A2420233CD5BF00DEBF78 /* FastSocket.swift in Sources */,
 				AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */,
@@ -427,7 +427,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Weist.FastSocketKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weist.FastSocketKit;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -462,7 +462,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = Weist.FastSocketKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weist.FastSocketKit;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

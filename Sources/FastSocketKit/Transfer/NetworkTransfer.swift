@@ -13,20 +13,20 @@ import Network
 /// the `Engine` of the FastSocket Protocol.
 /// It allows to enter directly the TCP Options
 internal final class NetworkTransfer: TransferProtocol {
-    internal var on = FastSocketCallback()
+    internal var on = Closures()
     private var connection: NWConnection
     private var monitor = NWPathMonitor()
-    private var connectionState: NWConnection.State?
+    private var state: NWConnection.State?
     private var queue: DispatchQueue
-    private var isRunning: Bool = false
-    private var isProcessed: Bool = true
+    private var running: Bool = false
+    private var processed: Bool = true
     /// create a instance of NetworkTransfer
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
     ///     - parameters: NWParameters `optional`
     ///     - queue: Dispatch Qeue `optional`
-    required init(host: String, port: UInt16, parameters: NWParameters = .tcp, queue: DispatchQueue = DispatchQueue(label: "\(Constant.prefixNetwork)\(UUID().uuidString)", qos: .userInitiated)) {
+    required init(host: String, port: UInt16, parameters: NWParameters = .tcp, queue: DispatchQueue = DispatchQueue(label: Constant.prefix.unique, qos: .userInitiated)) {
         self.connection = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(integerLiteral: port), using: parameters)
         self.queue = queue
     }
@@ -34,11 +34,11 @@ internal final class NetworkTransfer: TransferProtocol {
     /// prevent reconnecting after a connection
     /// was successfully established
     internal func connect() {
-        guard !isRunning else { return }
-        isRunning = true
-        connectionStateHandler()
-        networkPathMonitor()
-        readLoop()
+        guard !running else { return }
+        running = true
+        status()
+        proctor()
+        reader()
         connection.start(queue: queue)
     }
     /// disconnect from host and
@@ -51,12 +51,12 @@ internal final class NetworkTransfer: TransferProtocol {
     /// - parameters:
     ///     - data: the data which should be written on the socket
     internal func send(data: Data, _ completion: @escaping () -> Void) {
-        guard connectionState == .ready else {
+        guard state == .ready else {
             on.error(FastSocketError.sendToEarly)
             return
         }
-        guard isProcessed else { return }
-        isProcessed = false
+        guard processed else { return }
+        processed = false
         queue.async { [weak self] in
             guard let self = self else { return }
             let queued = data.chunk
@@ -70,7 +70,7 @@ internal final class NetworkTransfer: TransferProtocol {
                     }
                     self.on.bytes(.output(data.count))
                     if i == queued.endIndex.penultimate {
-                        self.isProcessed = true
+                        self.processed = true
                         completion()
                     }
                 }))
@@ -83,14 +83,14 @@ internal final class NetworkTransfer: TransferProtocol {
 private extension NetworkTransfer {
     /// cleanup a connection
     private func clean() {
-        isRunning = false
+        running = false
         connection.cancel()
     }
     /// check connection state
-    private func connectionStateHandler() {
+    private func status() {
         connection.stateUpdateHandler = { [weak self] state in
             guard let self = self else { return }
-            self.connectionState = state
+            self.state = state
             switch state {
             case .ready:
                 self.on.ready()
@@ -107,18 +107,18 @@ private extension NetworkTransfer {
     }
     /// a network path monitor
     /// used to detect if network is unrechable
-    private func networkPathMonitor() {
+    private func proctor() {
         monitor.pathUpdateHandler = { [weak self] path in
             guard let self = self else { return }
             guard path.status == .unsatisfied else { return }
             self.clean()
             self.on.error(FastSocketError.networkUnreachable)
         }
-        monitor.start(queue: DispatchQueue(label: "\(Constant.prefixNetwork)\(UUID().uuidString)", qos: .userInitiated))
+        monitor.start(queue: DispatchQueue(label: Constant.prefix.unique, qos: .userInitiated))
     }
     /// readloop for the tcp socket incoming data
-    private func readLoop() {
-        guard isRunning else { return }
+    private func reader() {
+        guard running else { return }
         queue.async { [weak self] in
             guard let self = self else { return }
             self.connection.receive(minimumIncompleteLength: Constant.minimumIncompleteLength, maximumLength: Constant.maximumLength) { [weak self] data, _, isComplete, error in
@@ -138,7 +138,7 @@ private extension NetworkTransfer {
                     self.clean()
                     self.on.close()
                 case false:
-                    self.readLoop()
+                    self.reader()
                 }
             }
         }

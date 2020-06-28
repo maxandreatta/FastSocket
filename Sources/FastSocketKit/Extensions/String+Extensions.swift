@@ -19,4 +19,8 @@ internal extension String {
         guard let data = self.data(using: .utf8) else { return Data() }
         return data
     }
+    /// make a string unique
+    var unique: String {
+        self + UUID().uuidString
+    }
 }

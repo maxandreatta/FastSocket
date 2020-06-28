@@ -13,7 +13,7 @@ import Foundation
 // +-+--------+------------+
 // |O| FRAME  |  PAYLOAD   |
 // |P| LENGTH |    (N)     |
-// |C|   (4)  |            |
+// |C|  (4)   |            |
 // +-+--------+------------+
 // : Payload continued...  :
 // + - - - - - - - - - - - +
@@ -36,20 +36,20 @@ import Foundation
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal final class Frame: FrameProtocol {
-    private var readBuffer = Data()
+    private var buffer = Data()
     /// private property to get parse the overhead size of a frame
-    private var contentSize: UInt32 {
-        guard readBuffer.count >= Constant.overheadSize else { return .zero }
-        let size = Data(readBuffer[.one...Constant.overheadSize.penultimate])
+    private var size: UInt32 {
+        guard buffer.count >= Constant.overheadSize else { return .zero }
+        let size = Data(buffer[.one...Constant.overheadSize.penultimate])
         return size.integer
     }
     // boolean which indicates if buffer is empty and can be flushed
-    private var isEmpty: Bool { readBuffer.count <= contentSize }
+    private var empty: Bool { buffer.count <= size }
     /// helper for frame
     /// trims a frame to it's raw content
     private func trim(data: Data) -> Data? {
         guard data.count >= Constant.overheadSize else { return nil }
-        return Data(data[Constant.overheadSize...Int(contentSize.penultimate)])
+        return Data(data[Constant.overheadSize...Int(size.penultimate)])
     }
     /// crate instance of Frame
     internal required init() {
@@ -74,7 +74,7 @@ internal final class Frame: FrameProtocol {
         default:
             throw FastSocketError.unknownOpcode
         }
-        guard frame.count <= Constant.maximumFrameLength else {
+        guard frame.count <= Constant.frameSize else {
             throw FastSocketError.writeBufferOverflow
         }
         return frame
@@ -86,14 +86,14 @@ internal final class Frame: FrameProtocol {
         guard !data.isEmpty else {
             throw FastSocketError.zeroData
         }
-        readBuffer.append(data)
-        let length = contentSize
-        guard readBuffer.count <= Constant.maximumFrameLength else {
+        buffer.append(data)
+        let size = self.size
+        guard buffer.count <= Constant.frameSize else {
             throw FastSocketError.readBufferOverflow
         }
-        guard readBuffer.count >= Constant.overheadSize, readBuffer.count >= length else { return }
-        while readBuffer.count >= length && length != .zero {
-            let slice = readBuffer
+        guard buffer.count >= Constant.overheadSize, buffer.count >= size else { return }
+        while buffer.count >= size && size != .zero {
+            let slice = buffer
             switch slice.first {
             case Opcode.string.rawValue:
                 guard let bytes = trim(data: slice), let message = String(bytes: bytes, encoding: .utf8) else {
@@ -108,11 +108,11 @@ internal final class Frame: FrameProtocol {
             default:
                 throw FastSocketError.unknownOpcode
             }
-            switch isEmpty {
+            switch empty {
             case true:
-                readBuffer = Data()
+                buffer = Data()
             case false:
-                readBuffer = Data(readBuffer[length...])
+                buffer = Data(buffer[size...])
             }
         }
     }

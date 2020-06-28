@@ -17,19 +17,17 @@ import Network
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
 public final class FastSocket: FastSocketProtocol {
     /// access to the event based closures
-    public var on = FastSocketCallback()
-    /// parameters provides full access to the Network.framework
-    /// NWParameters object. Overwrite with .paramters = .tls if
-    /// a secure TLS connection is required
+    public var on = Closures()
     public var parameters: NWParameters = .tcp
+    ///private variables
     private var host: String
     private var port: UInt16
     private var frame = Frame()
     private var transfer: TransferProtocol?
     private var timer: DispatchSourceTimer?
     private var digest = Data()
-    private var isLocked = false
-    private var queue = DispatchQueue(label: "\(Constant.prefixFrame).\(UUID().uuidString)")
+    private var locked = false
+    private var queue = DispatchQueue(label: Constant.prefix.unique)
     /// create a instance of FastSocket
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
@@ -42,7 +40,7 @@ public final class FastSocket: FastSocketProtocol {
     /// try to establish a connection to a
     /// FastSocket compliant server
     public func connect() {
-        initialize()
+        setup()
         guard let transfer = transfer else { return }
         transfer.connect()
         startTimeout()
@@ -59,7 +57,7 @@ public final class FastSocket: FastSocketProtocol {
     ///     - message: generic type (accepts data or string)
     ///     - completion: callback when data was processed by the stack `optional`
     public func send<T: Message>(message: T, _ completion: (() -> Void)? = nil) {
-        guard isLocked, let transfer = transfer else { return }
+        guard locked, let transfer = transfer else { return }
         self.queue.async { [weak self] in
             guard let self = self else { return }
             do {
@@ -79,15 +77,18 @@ public final class FastSocket: FastSocketProtocol {
 private extension FastSocket {
     /// private func to reset all needed values
     /// and initialize
-    private func initialize() {
+    private func setup() {
         guard !host.isEmpty else {
             onError(FastSocketError.emptyHost)
             return
         }
-        isLocked = false
-        digest = Data()
+        guard port != .zero else {
+            onError(FastSocketError.zeroPort)
+            return
+        }
+        locked = false
         transfer = NetworkTransfer(host: host, port: port, parameters: parameters)
-        callbacks()
+        closures()
     }
     /// suspends timeout and report on error
     /// - parameters:
@@ -112,7 +113,7 @@ private extension FastSocket {
     }
     /// start timeout on connecting
     private func startTimeout() {
-        timer = Timer.interval(interval: Constant.timeout, withRepeat: false) {
+        timer = Timer.interval(interval: Constant.timeout) {
             self.onError(FastSocketError.timeoutError)
         }
     }
@@ -121,13 +122,9 @@ private extension FastSocket {
         guard let timer = timer else { return }
         timer.cancel()
     }
-}
-
-// MARK: - extension for closure handling
-private extension FastSocket {
     /// closures from the transfer protocol
     /// handles incoming data and handshake
-    private func callbacks() {
+    private func closures() {
         guard let transfer = transfer else { return }
         transfer.on.ready = { [weak self] in
             guard let self = self else { return }
@@ -136,7 +133,7 @@ private extension FastSocket {
         transfer.on.message = { [weak self] data in
             guard let self = self else { return }
             guard case let data as Data = data else { return }
-            switch self.isLocked {
+            switch self.locked {
             case true:
                 self.queue.async { [weak self] in
                     guard let self = self else { return }
@@ -153,7 +150,7 @@ private extension FastSocket {
                     self.onError(FastSocketError.handshakeVerificationFailed)
                     return
                 }
-                self.isLocked = true
+                self.locked = true
                 self.stopTimeout()
                 self.on.ready()
             }

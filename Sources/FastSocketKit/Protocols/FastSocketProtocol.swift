@@ -17,10 +17,8 @@ import Network
 /// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
 public protocol FastSocketProtocol: class {
     /// public access to the event based closures
-    var on: FastSocketCallback { get set }
-    /// parameters provides full access to the Network.framework
-    /// NWParameters object. Overwrite with .paramters = .tls if
-    /// a secure TLS connection is required
+    var on: Closures { get set }
+    /// network.framework parameters, default = .tcp
     var parameters: NWParameters { get set }
     /// create a instance of FastSocket
     /// - parameters:

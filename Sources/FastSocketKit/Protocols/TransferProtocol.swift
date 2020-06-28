@@ -12,7 +12,7 @@ import Network
 /// this will be used to implement a fallback with foundation in the future
 internal protocol TransferProtocol: class {
     /// the events
-    var on: FastSocketCallback { get set }
+    var on: Closures { get set }
     /// create a instance of NetworkTransfer
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"

@@ -14,8 +14,8 @@ internal extension Timer {
     ///     - interval: TimerInterval in Seconds
     ///     - withRepeat: true if you want to repeat, false for only call it once
     ///     - block: closure
-    static func interval(interval: TimeInterval, withRepeat: Bool, block: @escaping () -> Void) -> DispatchSourceTimer {
-        let dispatchTimer = DispatchSource.makeTimerSource(flags: .strict, queue: DispatchQueue(label: "\(Constant.prefixTimer)\(UUID().uuidString)"))
+    static func interval(interval: TimeInterval, withRepeat: Bool = false, block: @escaping () -> Void) -> DispatchSourceTimer {
+        let dispatchTimer = DispatchSource.makeTimerSource(flags: .strict, queue: DispatchQueue(label: Constant.prefix.unique))
         dispatchTimer.setEventHandler(handler: block)
         switch withRepeat {
         case true:
