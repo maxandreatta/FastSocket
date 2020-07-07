@@ -27,10 +27,9 @@ class FastSocketKitTests: XCTestCase {
             }
         }
         socket.on.bytes = { bytes in
-            if case .input(let count) = bytes {
-                datacount += count
-                debugPrint("Data Count: \(datacount)")
-            }
+            guard let byte = bytes.input else { return }
+            datacount += byte
+            debugPrint("Data Count: \(datacount)")
         }
         socket.on.close = {
             debugPrint("connection closed")
@@ -59,10 +58,9 @@ class FastSocketKitTests: XCTestCase {
             }
         }
         socket.on.bytes = { bytes in
-            if case .output(let count) = bytes {
-                datacount += count
-                debugPrint("Data Count: \(datacount)")
-            }
+            guard let byte = bytes.output else { return }
+            datacount += byte
+            debugPrint("Data Count: \(datacount)")
         }
         socket.on.close = {
             debugPrint("connection closed")
@@ -237,8 +235,7 @@ class FastSocketKitTests: XCTestCase {
         closures.ready()
         closures.close()
         closures.message("")
-        closures.bytes(.input(.zero))
-        closures.bytes(.output(.zero))
+        closures.bytes(Bytes())
         closures.error(FastSocketError.none)
     }
     /// a test to look if the framework recognize early send error

@@ -68,7 +68,7 @@ internal final class NetworkTransfer: TransferProtocol {
                         self.on.error(error)
                         return
                     }
-                    self.on.bytes(.output(data.count))
+                    self.on.bytes(Bytes(output: data.count))
                     if i == queued.endIndex.penultimate {
                         self.processed = true
                         completion()
@@ -131,7 +131,7 @@ private extension NetworkTransfer {
                 }
                 if let data = data {
                     self.on.message(data)
-                    self.on.bytes(.input(data.count))
+                    self.on.bytes(Bytes(input: data.count))
                 }
                 switch isComplete {
                 case true:

@@ -7,12 +7,10 @@
 //
 import Foundation
 
-/// generic result type for transmitted bytes
-public enum Bytes {
-    /// input bytes are the bytes
-    /// which are *readed from the socket*
-    case input(Int)
-    /// output bytes are the bytes
-    /// which are *written on the socket*
-    case output(Int)
+/// result object for transmitted bytes
+public struct Bytes {
+    /// return the input bytes
+    public var input: Int?
+    /// return the output bytes
+    public var output: Int?
 }
