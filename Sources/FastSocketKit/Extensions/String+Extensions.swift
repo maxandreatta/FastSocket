@@ -10,6 +10,8 @@ import Network
 
 extension String: Message {
     // conformance to send protocol
+    public var opcode: UInt8 { Opcode.string.rawValue }
+    public var raw: Data { Data(self.utf8) }
 }
 
 // internal extensions

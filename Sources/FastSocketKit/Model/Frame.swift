@@ -7,7 +7,6 @@
 //
 import Foundation
 
-// 0          1            N
 // +----------+------------+
 // |0|1 2 3 4 | 0 1 2 3... |
 // +-+--------+------------+
@@ -61,19 +60,9 @@ internal final class Frame: FrameProtocol {
     ///     - message: generic parameter, accepts string and data
     internal func create<T: Message>(message: T) throws -> Data {
         var frame = Data()
-        switch message {
-        case let message as String:
-            let message = message.utf8
-            frame.append(Opcode.string.rawValue)
-            frame.append(UInt32(message.count + Constant.overheadSize).data)
-            frame.append(message)
-        case let message as Data:
-            frame.append(Opcode.data.rawValue)
-            frame.append(UInt32(message.count + Constant.overheadSize).data)
-            frame.append(message)
-        default:
-            throw FastSocketError.unknownOpcode
-        }
+        frame.append(message.opcode)
+        frame.append(UInt32(message.raw.count + Constant.overheadSize).data)
+        frame.append(message.raw)
         guard frame.count <= Constant.frameSize else {
             throw FastSocketError.writeBufferOverflow
         }
@@ -93,27 +82,19 @@ internal final class Frame: FrameProtocol {
         }
         guard buffer.count >= Constant.overheadSize, buffer.count >= size else { return }
         while buffer.count >= size && size != .zero {
-            let slice = buffer
-            switch slice.first {
-            case Opcode.string.rawValue:
-                guard let bytes = trim(data: slice), let message = String(bytes: bytes, encoding: .utf8) else {
+            if buffer.first == Opcode.string.rawValue {
+                guard let bytes = trim(data: buffer), let message = String(bytes: bytes, encoding: .utf8) else {
                     throw FastSocketError.parsingFailure
                 }
                 completion(message)
-            case Opcode.data.rawValue:
-                guard let message = trim(data: slice) else {
+            }
+            if buffer.first == Opcode.data.rawValue {
+                guard let message = trim(data: buffer) else {
                     throw FastSocketError.parsingFailure
                 }
                 completion(message)
-            default:
-                throw FastSocketError.unknownOpcode
             }
-            switch empty {
-            case true:
-                buffer = Data()
-            case false:
-                buffer = Data(buffer[size...])
-            }
+            if empty { buffer = Data() } else { buffer = Data(buffer[size...]) }
         }
     }
 }

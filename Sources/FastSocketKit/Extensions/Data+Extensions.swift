@@ -10,6 +10,8 @@ import Foundation
 
 extension Data: Message {
     // conformance to send protocol
+    public var opcode: UInt8 { Opcode.data.rawValue }
+    public var raw: Data { self }
 }
 
 // internal extensions
