@@ -8,7 +8,7 @@
 import Foundation
 
 /// Error handling for the Octanium Protocol
-public enum FastSocketError: Int, Error {
+public enum OctaniumError: Int, Error {
     /// none is a placeholder
     case none = 0
     /// thrown if empty host address
@@ -47,8 +47,8 @@ public enum FastSocketError: Int, Error {
     case unknownOpcode = 1000
 }
 
-public extension FastSocketError {
-    static var errorDomain: String { "com.weist.fastsocket.error" }
+public extension OctaniumError {
+    static var errorDomain: String { "de.octanium.error" }
     var errorCode: Int { rawValue }
     var errorUserInfo: [String: String] {
         switch self {

@@ -17,23 +17,25 @@ import Network
 /// Octanium allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
 public final class Octanium: OctaniumProtocol {
     /// access to the event based closures
-    public var delegate: OctaniumDelegate?
+    public var callback: OctaniumCallback = OctaniumCallback()
     public var parameters: NWParameters = .tcp
     ///private variables
     private var host: String
     private var port: UInt16
-    private var frame = Frame()
+    private var qos: DispatchQoS
+    private var frame: Frame = Frame()
     private var connection: ConnectionProtocol?
     private var timer: DispatchSourceTimer?
-    private var digest = Data()
-    private var locked = false
-    /// create a instance of FastSocket
+    private var digest: Data = Data()
+    private var locked: Bool = false
+    /// create a instance of Octanium
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    public required init(host: String, port: UInt16) {
+    public required init(host: String, port: UInt16, qos: DispatchQoS = .background) {
         self.host = host
         self.port = port
+        self.qos = qos
     }
     /// connect to the server
     /// try to establish a connection to a
@@ -71,15 +73,15 @@ public final class Octanium: OctaniumProtocol {
     /// and initialize
     private func setup() {
         guard !host.isEmpty else {
-            onError(FastSocketError.emptyHost)
+            onError(OctaniumError.emptyHost)
             return
         }
         guard port != .zero else {
-            onError(FastSocketError.zeroPort)
+            onError(OctaniumError.zeroPort)
             return
         }
         locked = false
-        connection = Connection(host: host, port: port, parameters: parameters)
+        connection = Connection(host: host, port: port, parameters: parameters, qos: qos)
     }
     /// suspends timeout and report on error
     /// - parameters:
@@ -89,15 +91,14 @@ public final class Octanium: OctaniumProtocol {
             timer.cancel()
         }
         guard let error = error else { return }
-        guard let delegate = self.delegate else { return }
-        delegate.didGetError(error)
+        callback.didGetError(error)
         disconnect()
     }
     /// send the handshake frame
     private func handshake() {
         guard let connection = connection else { return }
         guard let data = UUID().uuidString.data(using: .utf8) else {
-            onError(FastSocketError.handshakeInitializationFailed)
+            onError(OctaniumError.handshakeInitializationFailed)
             return
         }
         digest = data.sha256
@@ -106,7 +107,7 @@ public final class Octanium: OctaniumProtocol {
     /// start timeout on connecting
     private func startTimeout() {
         timer = Timer.interval(interval: Constant.timeout) {
-            self.onError(FastSocketError.timeoutError)
+            self.onError(OctaniumError.timeoutError)
         }
     }
     /// stop timeout
@@ -118,41 +119,39 @@ public final class Octanium: OctaniumProtocol {
 
 // MARK: - Delegates
 extension Octanium: ConnectionDelegate {
+    /// perform ready action
     func didGetReady() {
         self.handshake()
     }
-    
+    /// perform close action
     func didGetClose() {
-        guard let delegate = self.delegate else { return }
-        delegate.didGetClose()
+        callback.didGetClose()
     }
-    
+    /// perform data action
+    /// - Parameter data: received data
     func didGetData(_ data: Data) {
-        guard let delegate = self.delegate else { return }
         switch self.locked {
         case true:
             self.frame.parse(data: data) { message, error in
                 if let error = error { self.onError(error) }
-                if let message = message { delegate.didGetMessage(message) }
+                if let message = message { callback.didGetMessage(message) }
             }
         case false:
             guard data == self.digest else {
-                self.onError(FastSocketError.handshakeVerificationFailed)
+                self.onError(OctaniumError.handshakeVerificationFailed)
                 return
             }
             self.locked = true
             self.stopTimeout()
-            delegate.didGetReady()
+            callback.didGetReady()
         }
     }
-    
+    /// perform bytes action
     func didGetBytes(_ bytes: Bytes) {
-        guard let delegate = self.delegate else { return }
-        delegate.didGetBytes(bytes)
+        callback.didGetBytes(bytes)
     }
-    
+    /// perform error action
     func didGetError(_ error: Error?) {
-        guard let delegate = self.delegate else { return }
-        delegate.didGetError(error)
+        callback.didGetError(error)
     }
 }

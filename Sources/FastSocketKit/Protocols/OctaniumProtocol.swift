@@ -17,14 +17,14 @@ import Network
 /// Octanium allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
 public protocol OctaniumProtocol: AnyObject {
     /// public access to the event based closures
-    var delegate: OctaniumDelegate? { get set }
+    var callback: OctaniumCallback { get set }
     /// network.framework parameters, default = .tcp
     var parameters: NWParameters { get set }
     /// create a instance of Octanium
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
-    init(host: String, port: UInt16)
+    init(host: String, port: UInt16, qos: DispatchQoS)
     /// connect to the server
     /// try to establish a connection to a
     /// Octanium compliant server

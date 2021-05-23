@@ -36,8 +36,8 @@ import Foundation
 internal protocol FrameProtocol: AnyObject {
     // create instance of Frame
     init()
-    /// generic func to create a fastsocket protocol compliant
-    /// message frame
+    /// generic func to create a octanium protocol
+    /// compliant message frame
     /// - parameters:
     ///     - message: generic parameter, accepts string and data
     func create<T: Message>(message: T, _ completion: (Error?) -> Void) -> Data

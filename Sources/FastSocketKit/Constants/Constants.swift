@@ -9,7 +9,7 @@ import Foundation
 
 /// Constants used by the protocol
 internal enum Constant {
-    static let prefix = "com.weist.fastsocket."
+    static let prefix = "de.octanium."
     /// for tcp socket reading, minimum stream length
     static let minimumIncompleteLength: Int = 8
     /// maximum tcp readbuffer size

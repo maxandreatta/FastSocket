@@ -55,7 +55,7 @@ internal final class Frame: FrameProtocol {
     internal required init() {
         // needs strong reference
     }
-    /// generic func to create a fastsocket protocol compliant
+    /// generic func to create a octanium protocol compliant
     /// message frame
     /// - parameters:
     ///     - message: generic parameter, accepts string and data
@@ -65,7 +65,7 @@ internal final class Frame: FrameProtocol {
         frame.append(UInt32(message.raw.count + overhead).data)
         frame.append(message.raw)
         guard frame.count <= Constant.frameSize else {
-            completion(FastSocketError.writeBufferOverflow)
+            completion(OctaniumError.writeBufferOverflow)
             return Data()
         }
         return frame
@@ -75,27 +75,27 @@ internal final class Frame: FrameProtocol {
     ///     - data: the received data
     internal func parse(data: Data, _ completion: (Message?, Error?) -> Void) {
         guard !data.isEmpty else {
-            completion(nil, FastSocketError.zeroData)
+            completion(nil, OctaniumError.zeroData)
             return
         }
         buffer.append(data)
         let size = self.size
         guard buffer.count <= Constant.frameSize else {
-            completion(nil, FastSocketError.readBufferOverflow)
+            completion(nil, OctaniumError.readBufferOverflow)
             return
         }
         guard buffer.count >= overhead, buffer.count >= size else { return }
         while buffer.count >= size && size != .zero {
             if buffer.first == Opcode.string.rawValue {
                 guard let bytes = trim(data: buffer), let message = String(bytes: bytes, encoding: .utf8) else {
-                    completion(nil, FastSocketError.parsingFailure)
+                    completion(nil, OctaniumError.parsingFailure)
                     return
                 }
                 completion(message, nil)
             }
             if buffer.first == Opcode.data.rawValue {
                 guard let message = trim(data: buffer) else {
-                    completion(nil, FastSocketError.parsingFailure)
+                    completion(nil, OctaniumError.parsingFailure)
                     return
                 }
                 completion(message, nil)

@@ -20,17 +20,3 @@ internal protocol ConnectionDelegate: AnyObject {
     /// called if an error is provided
     func didGetError(_ error: Error?)
 }
-
-/// Delegate for Octanium
-public protocol OctaniumDelegate: AnyObject {
-    /// called if the connection is ready
-    func didGetReady()
-    /// called if the connection was closed
-    func didGetClose()
-    /// called if a data or string based message was received
-    func didGetMessage(_ message: Message)
-    /// called if bytes are written or readed from the socket
-    func didGetBytes(_ bytes: Bytes)
-    /// called if an error is provided
-    func didGetError(_ error: Error?)
-}

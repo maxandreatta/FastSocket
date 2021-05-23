@@ -51,7 +51,7 @@ internal final class Connection: ConnectionProtocol {
     internal func send(data: Data, _ completion: (() -> Void)? = nil) {
         guard let delegate = self.delegate else { return }
         guard state == .ready else {
-            delegate.didGetError(FastSocketError.sendToEarly)
+            delegate.didGetError(OctaniumError.sendToEarly)
             return
         }
         guard processed else { return }
@@ -107,7 +107,7 @@ internal final class Connection: ConnectionProtocol {
             guard let self = self else { return }
             guard path.status == .unsatisfied else { return }
             self.clean()
-            delegate.didGetError(FastSocketError.networkUnreachable)
+            delegate.didGetError(OctaniumError.networkUnreachable)
         }
         monitor.start(queue: DispatchQueue(label: Constant.prefix.unique, qos: .userInitiated))
     }

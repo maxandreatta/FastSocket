@@ -46,12 +46,12 @@ Full support for [SwiftPackageManager](https://developer.apple.com/documentation
 import FastSocketKit
 
 // normal init with TCP (unsecure) transfer type
-let socket = FastSocket(host: "example.com", port: 8080)
+let socket = Octanium(host: "example.com", port: 8080)
 
 // use TLS (secure) instead of TCP (unsecure)
 // NOTE: The backend must be setted up with support for TLS otherwise
 // this will not work and end up in an TLS Error
-let socket = FastSocket(host: "example.com", port: 8000)
+let socket = Octanium(host: "example.com", port: 8000)
 socket.parameters = .tls
 
 // ...
@@ -61,23 +61,23 @@ socket.connect()
 
 ## Closures:
 ```swift
-socket.on.ready = {
+socket.callback.ready = {
     // this is called after the connection
     // was successfully established and is ready
 }
-socket.on.message = { message in
+socket.callback.message = { message in
     // this is called everytime
     // a message was received
 }
-socket.on.bytes = { bytes in
+socket.callback.bytes = { bytes in
     // this is called everytime bytes are readed 
     // or written from/on the socket
 }
-socket.on.close = {
+socket.callback.close = {
     // this is called after
     // the socket was closed
 }
-socket.on.error = { error in
+socket.callback.error = { error in
     // this is called everytime
     // an error appeared
 }
@@ -85,7 +85,7 @@ socket.on.error = { error in
 
 ## Cast Messages:
 ```swift
-socket.on.message = { message in
+socket.callback.message = { message in
     // it's only possible to cast messages
     // as Data or as String
     if case let message as Data = message {
@@ -101,7 +101,7 @@ socket.on.message = { message in
 
 ## Read Bytes Count:
 ```swift
-socket.on.bytes = { bytes in
+socket.callback.bytes = { bytes in
     // input bytes are the ones, which are
     // readed from the socket, this function
     // returns the byte count
@@ -171,15 +171,15 @@ func send() {
 
 ## Additional Parameters:
 ```swift
-// FastSocket was build in top of Apple's Network.framework
+// Octanium was build in top of Apple's Network.framework
 // that allows us to use lot of TCP features like fast open or
 // to select the network interface type
 
 // import the Framework
 import FastSocketKit
 
-// init FastSocket object
-let socket = FastSocket(host: "example.com", port: 8080)
+// init Octanium object
+let socket = Octanium(host: "example.com", port: 8080)
 
 // ...
 
