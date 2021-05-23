@@ -21,22 +21,24 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		AC0A2414233CD5BF00DEBF78 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FC233CD5BE00DEBF78 /* Closures.swift */; };
+		AC0A2414233CD5BF00DEBF78 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FC233CD5BE00DEBF78 /* Delegates.swift */; };
 		AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FD233CD5BE00DEBF78 /* Frame.swift */; };
 		AC0A2416233CD5BF00DEBF78 /* Bytes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */; };
 		AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2400233CD5BE00DEBF78 /* Constants.swift */; };
 		AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */; };
-		AC0A241A233CD5BF00DEBF78 /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */; };
+		AC0A241A233CD5BF00DEBF78 /* ConnectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2404233CD5BE00DEBF78 /* ConnectionProtocol.swift */; };
 		AC0A241B233CD5BF00DEBF78 /* MessageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */; };
 		AC0A241C233CD5BF00DEBF78 /* FrameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */; };
-		AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */; };
+		AC0A241E233CD5BF00DEBF78 /* OctaniumProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2408233CD5BE00DEBF78 /* OctaniumProtocol.swift */; };
 		AC0A241F233CD5BF00DEBF78 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240A233CD5BE00DEBF78 /* Error.swift */; };
-		AC0A2420233CD5BF00DEBF78 /* FastSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */; };
-		AC0A2421233CD5BF00DEBF78 /* NetworkTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */; };
+		AC0A2420233CD5BF00DEBF78 /* Octanium.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A240B233CD5BF00DEBF78 /* Octanium.swift */; };
 		AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */; };
 		AC0A2424233CD5BF00DEBF78 /* Timer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */; };
 		AC0A2425233CD5BF00DEBF78 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */; };
 		AC3AC4E32417173F00907B97 /* IntegerType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AC4E22417173F00907B97 /* IntegerType+Extensions.swift */; };
+		AC5D1CCC2659DE3900DB2491 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5D1CCB2659DE3900DB2491 /* Connection.swift */; };
+		AC786AEB2659E9B000C92077 /* FastSocketTestSendSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC786AEA2659E9B000C92077 /* FastSocketTestSendSingle.swift */; };
+		AC786AED2659E9EE00C92077 /* FastSocketTestSendMulti.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC786AEC2659E9EE00C92077 /* FastSocketTestSendMulti.swift */; };
 		ACAF20B4233CD08E005DA16F /* FastSocketKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* FastSocketKitTests.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_41 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
@@ -61,18 +63,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AC0A23FC233CD5BE00DEBF78 /* Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
+		AC0A23FC233CD5BE00DEBF78 /* Delegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
 		AC0A23FD233CD5BE00DEBF78 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bytes.swift; sourceTree = "<group>"; };
 		AC0A2400233CD5BE00DEBF78 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AC0A2401233CD5BE00DEBF78 /* Opcodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opcodes.swift; sourceTree = "<group>"; };
-		AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
+		AC0A2404233CD5BE00DEBF78 /* ConnectionProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionProtocol.swift; sourceTree = "<group>"; };
 		AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageProtocol.swift; sourceTree = "<group>"; };
 		AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameProtocol.swift; sourceTree = "<group>"; };
-		AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketProtocol.swift; sourceTree = "<group>"; };
+		AC0A2408233CD5BE00DEBF78 /* OctaniumProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OctaniumProtocol.swift; sourceTree = "<group>"; };
 		AC0A240A233CD5BE00DEBF78 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocket.swift; sourceTree = "<group>"; };
-		AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTransfer.swift; sourceTree = "<group>"; };
+		AC0A240B233CD5BF00DEBF78 /* Octanium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Octanium.swift; sourceTree = "<group>"; };
 		AC0A2410233CD5BF00DEBF78 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		AC0A2411233CD5BF00DEBF78 /* Timer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+Extension.swift"; sourceTree = "<group>"; };
 		AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
@@ -84,6 +85,9 @@
 		AC0A242D233CD90700DEBF78 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .travis.yml; sourceTree = "<group>"; };
 		AC3AC4E22417173F00907B97 /* IntegerType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IntegerType+Extensions.swift"; sourceTree = "<group>"; };
 		AC3AC4E424179A8500907B97 /* .fastsocket.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = .fastsocket.svg; sourceTree = "<group>"; };
+		AC5D1CCB2659DE3900DB2491 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		AC786AEA2659E9B000C92077 /* FastSocketTestSendSingle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketTestSendSingle.swift; sourceTree = "<group>"; };
+		AC786AEC2659E9EE00C92077 /* FastSocketTestSendMulti.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FastSocketTestSendMulti.swift; sourceTree = "<group>"; };
 		ACD4A1F6241913F5000C865D /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		"FastSocketKit::FastSocketKit::Product" /* FastSocketKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FastSocketKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FastSocketKit::FastSocketKitTests::Product" /* FastSocketKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FastSocketKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,7 +120,7 @@
 			children = (
 				AC0A23FD233CD5BE00DEBF78 /* Frame.swift */,
 				AC0A23FE233CD5BE00DEBF78 /* Bytes.swift */,
-				AC0A23FC233CD5BE00DEBF78 /* Closures.swift */,
+				AC0A23FC233CD5BE00DEBF78 /* Delegates.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -133,8 +137,8 @@
 		AC0A2403233CD5BE00DEBF78 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				AC0A2408233CD5BE00DEBF78 /* FastSocketProtocol.swift */,
-				AC0A2404233CD5BE00DEBF78 /* TransferProtocol.swift */,
+				AC0A2408233CD5BE00DEBF78 /* OctaniumProtocol.swift */,
+				AC0A2404233CD5BE00DEBF78 /* ConnectionProtocol.swift */,
 				AC0A2406233CD5BE00DEBF78 /* FrameProtocol.swift */,
 				AC0A2405233CD5BE00DEBF78 /* MessageProtocol.swift */,
 			);
@@ -149,14 +153,6 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		AC0A240C233CD5BF00DEBF78 /* Transfer */ = {
-			isa = PBXGroup;
-			children = (
-				AC0A240D233CD5BF00DEBF78 /* NetworkTransfer.swift */,
-			);
-			path = Transfer;
-			sourceTree = "<group>";
-		};
 		AC0A240E233CD5BF00DEBF78 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +162,14 @@
 				AC0A2412233CD5BF00DEBF78 /* Data+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AC5D1CC92659DDD400DB2491 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				AC5D1CCB2659DE3900DB2491 /* Connection.swift */,
+			);
+			path = Connection;
 			sourceTree = "<group>";
 		};
 		OBJ_10 /* Tests */ = {
@@ -179,6 +183,8 @@
 		OBJ_11 /* FastSocketKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				AC786AEA2659E9B000C92077 /* FastSocketTestSendSingle.swift */,
+				AC786AEC2659E9EE00C92077 /* FastSocketTestSendMulti.swift */,
 				OBJ_12 /* FastSocketKitTests.swift */,
 				OBJ_13 /* XCTestManifests.swift */,
 			);
@@ -224,8 +230,8 @@
 		OBJ_8 /* FastSocketKit */ = {
 			isa = PBXGroup;
 			children = (
-				AC0A240B233CD5BF00DEBF78 /* FastSocket.swift */,
-				AC0A240C233CD5BF00DEBF78 /* Transfer */,
+				AC0A240B233CD5BF00DEBF78 /* Octanium.swift */,
+				AC5D1CC92659DDD400DB2491 /* Connection */,
 				AC0A23FA233CD5BE00DEBF78 /* Model */,
 				AC0A2403233CD5BE00DEBF78 /* Protocols */,
 				AC0A23FF233CD5BE00DEBF78 /* Constants */,
@@ -360,16 +366,16 @@
 				AC0A2416233CD5BF00DEBF78 /* Bytes.swift in Sources */,
 				AC0A2415233CD5BF00DEBF78 /* Frame.swift in Sources */,
 				AC0A2423233CD5BF00DEBF78 /* String+Extensions.swift in Sources */,
-				AC0A241E233CD5BF00DEBF78 /* FastSocketProtocol.swift in Sources */,
+				AC0A241E233CD5BF00DEBF78 /* OctaniumProtocol.swift in Sources */,
 				AC0A2425233CD5BF00DEBF78 /* Data+Extensions.swift in Sources */,
-				AC0A241A233CD5BF00DEBF78 /* TransferProtocol.swift in Sources */,
+				AC0A241A233CD5BF00DEBF78 /* ConnectionProtocol.swift in Sources */,
 				AC0A241C233CD5BF00DEBF78 /* FrameProtocol.swift in Sources */,
 				AC0A2418233CD5BF00DEBF78 /* Opcodes.swift in Sources */,
-				AC0A2414233CD5BF00DEBF78 /* Closures.swift in Sources */,
+				AC5D1CCC2659DE3900DB2491 /* Connection.swift in Sources */,
+				AC0A2414233CD5BF00DEBF78 /* Delegates.swift in Sources */,
 				AC0A241F233CD5BF00DEBF78 /* Error.swift in Sources */,
-				AC0A2420233CD5BF00DEBF78 /* FastSocket.swift in Sources */,
+				AC0A2420233CD5BF00DEBF78 /* Octanium.swift in Sources */,
 				AC0A2417233CD5BF00DEBF78 /* Constants.swift in Sources */,
-				AC0A2421233CD5BF00DEBF78 /* NetworkTransfer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,7 +391,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				AC786AED2659E9EE00C92077 /* FastSocketTestSendMulti.swift in Sources */,
 				OBJ_41 /* XCTestManifests.swift in Sources */,
+				AC786AEB2659E9B000C92077 /* FastSocketTestSendSingle.swift in Sources */,
 				ACAF20B4233CD08E005DA16F /* FastSocketKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

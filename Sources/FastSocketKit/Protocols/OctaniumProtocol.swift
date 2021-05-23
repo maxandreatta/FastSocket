@@ -1,6 +1,6 @@
 //
-//  FastSocketProtocol.swift
-//  FastSocket
+//  OctaniumProtocol.swift
+//  Octanium
 //
 //  Created by Vinzenz Weist on 16.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
@@ -8,26 +8,26 @@
 import Foundation
 import Network
 
-/// FastSocket is a proprietary communication protocol directly
+/// Octanium is a proprietary communication protocol directly
 /// written on top of TCP. It's a message based protocol which allows you
 /// to send text and binary based messages. The protocol is so small it have
 /// only 5 Bytes overhead per message, the handshake is done directly on TCP level.
 /// The motivation behind this protocol was, to use it as `Performance Protocol`, a
 /// low level TCP communication protocol to measure TCP throughput performance. -> FastSockets is the answer
-/// FastSocket allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
-public protocol FastSocketProtocol: class {
+/// Octanium allows to enter all possible TCP Options if needed and is completely non-blocking and async, thanks to GCD.
+public protocol OctaniumProtocol: AnyObject {
     /// public access to the event based closures
-    var on: Closures { get set }
+    var delegate: OctaniumDelegate? { get set }
     /// network.framework parameters, default = .tcp
     var parameters: NWParameters { get set }
-    /// create a instance of FastSocket
+    /// create a instance of Octanium
     /// - parameters:
     ///     - host: a server endpoint to connect, e.g.: "example.com"
     ///     - port: the port to connect, e.g.: 8000
     init(host: String, port: UInt16)
     /// connect to the server
     /// try to establish a connection to a
-    /// FastSocket compliant server
+    /// Octanium compliant server
     func connect()
     /// disconnect from the server
     /// closes the connection `normally`

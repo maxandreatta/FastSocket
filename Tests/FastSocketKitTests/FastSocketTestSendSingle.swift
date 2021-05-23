@@ -17,7 +17,7 @@ private enum TestCase {
 }
 
 class FastSocketTestSendSingle: XCTestCase {
-    private var socket = FastSocket(host: "116.203.236.97", port: 7878)
+    private var socket = Octanium(host: "116.203.236.97", port: 7878)
     private var buffer = "50000"
     private var inputBytes = 0
     private var outputBytes = 0
@@ -43,7 +43,7 @@ class FastSocketTestSendSingle: XCTestCase {
     }
 }
 
-extension FastSocketTestSendSingle: FastSocketDelegate {
+extension FastSocketTestSendSingle: OctaniumDelegate {
     internal func didGetReady() {
         if cases == .string {
             socket.send(message: buffer)

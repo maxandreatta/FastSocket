@@ -1,6 +1,6 @@
 //
 //  FrameProtocol.swift
-//  FastSocket
+//  Octanium
 //
 //  Created by Vinzenz Weist on 29.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
@@ -33,16 +33,16 @@ import Foundation
 //      - continued payload data
 
 /// The framing protocol
-internal protocol FrameProtocol: class {
+internal protocol FrameProtocol: AnyObject {
     // create instance of Frame
     init()
     /// generic func to create a fastsocket protocol compliant
     /// message frame
     /// - parameters:
     ///     - message: generic parameter, accepts string and data
-    func create<T: Message>(message: T) throws -> Data
-    /// parse a FastSocket Protocol compliant messsage back to it's raw data
+    func create<T: Message>(message: T, _ completion: (Error?) -> Void) -> Data
+    /// parse a Octanium Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data
-    func parse(data: Data, _ completion: (Message) -> Void) throws
+    func parse(data: Data, _ completion: (Message?, Error?) -> Void)
 }

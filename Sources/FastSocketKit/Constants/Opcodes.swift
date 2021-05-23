@@ -1,6 +1,6 @@
 //
 //  Opcodes.swift
-//  FastSocket
+//  Octanium
 //
 //  Created by Vinzenz Weist on 02.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.

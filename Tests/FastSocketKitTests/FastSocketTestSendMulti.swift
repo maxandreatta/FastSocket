@@ -17,14 +17,14 @@ private enum TestCase {
 }
 
 class FastSocketTestSendMulti: XCTestCase {
-    private var socket = FastSocket(host: "94.130.72.153", port: 7878)
-    private var buffer = "50000"
+    private var socket = Octanium(host: "116.203.236.97", port: 7878)
+    private var buffer = "1000"
     private var inputBytes = 0
     private var outputBytes = 0
     private var messages = 0
     private var index = 0
     private let timeout = 15.0
-    private let sendValue = 1000
+    private let sendValue = 100
     private var cases: TestCase? = nil
     private var exp: XCTestExpectation?
     /// set up
@@ -46,7 +46,7 @@ class FastSocketTestSendMulti: XCTestCase {
     }
 }
 
-extension FastSocketTestSendMulti: FastSocketDelegate {
+extension FastSocketTestSendMulti: OctaniumDelegate {
     internal func didGetReady() {
         if cases == .string {
             func send() {
@@ -58,10 +58,22 @@ extension FastSocketTestSendMulti: FastSocketDelegate {
                     self.index += 1
                 }
             }
+            guard self.index < self.sendValue else { return }
             send()
         }
+        
         if cases == .data {
-            socket.send(message: Data(count: Int(buffer)!))
+            func send() {
+                socket.send(message: Data(count: Int(buffer)!)) { [weak self] in
+                    guard let self = self else { return }
+                    if self.index != self.sendValue {
+                        send()
+                    }
+                    self.index += 1
+                }
+            }
+            guard self.index < self.sendValue else { return }
+            send()
         }
     }
     
@@ -70,14 +82,13 @@ extension FastSocketTestSendMulti: FastSocketDelegate {
     }
     
     internal func didGetMessage(_ message: Message) {
-        if case let message as Data = message {
-            XCTAssertEqual(message.count, Int(buffer))
+        if messages == sendValue {
+            debugPrint("RECEIVED THIS COUNT: \(message)")
+            debugPrint("Responded Times: \(messages)")
+            XCTAssertEqual(messages, sendValue)
             exp?.fulfill()
         }
-        if case let message as String = message {
-            XCTAssertEqual(message, buffer)
-            exp?.fulfill()
-        }
+        messages += 1
     }
     
     internal func didGetBytes(_ bytes: Bytes) {

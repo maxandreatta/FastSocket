@@ -1,6 +1,6 @@
 //
 //  Frame.swift
-//  FastSocket
+//  Octanium
 //
 //  Created by Vinzenz Weist on 25.03.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
@@ -31,15 +31,16 @@ import Foundation
 // - PAYLOAD:
 //      - continued payload data
 
-/// Frame is a helper class for the FastSocket Protocol
+/// Frame is a helper class for the Octanium Protocol
 /// it is used to create new message frames or to parse
 /// received Data back to it's raw type
 internal final class Frame: FrameProtocol {
     private var buffer = Data()
+    private var overhead: Int = 5
     /// private property to get parse the overhead size of a frame
     private var size: UInt32 {
-        guard buffer.count >= Constant.overheadSize else { return .zero }
-        let size = Data(buffer[.one...Constant.overheadSize.penultimate])
+        guard buffer.count >= overhead else { return .zero }
+        let size = Data(buffer[.one...overhead.penultimate])
         return size.integer
     }
     // boolean which indicates if buffer is empty and can be flushed
@@ -47,8 +48,8 @@ internal final class Frame: FrameProtocol {
     /// helper for frame
     /// trims a frame to it's raw content
     private func trim(data: Data) -> Data? {
-        guard data.count >= Constant.overheadSize else { return nil }
-        return Data(data[Constant.overheadSize...Int(size.penultimate)])
+        guard data.count >= overhead else { return nil }
+        return Data(data[overhead...Int(size.penultimate)])
     }
     /// crate instance of Frame
     internal required init() {
@@ -58,41 +59,46 @@ internal final class Frame: FrameProtocol {
     /// message frame
     /// - parameters:
     ///     - message: generic parameter, accepts string and data
-    internal func create<T: Message>(message: T) throws -> Data {
+    internal func create<T: Message>(message: T, _ completion: (Error?) -> Void) -> Data {
         var frame = Data()
         frame.append(message.opcode)
-        frame.append(UInt32(message.raw.count + Constant.overheadSize).data)
+        frame.append(UInt32(message.raw.count + overhead).data)
         frame.append(message.raw)
         guard frame.count <= Constant.frameSize else {
-            throw FastSocketError.writeBufferOverflow
+            completion(FastSocketError.writeBufferOverflow)
+            return Data()
         }
         return frame
     }
-    /// parse a FastSocket Protocol compliant messsage back to it's raw data
+    /// parse a Octanium Protocol compliant messsage back to it's raw data
     /// - parameters:
     ///     - data: the received data
-    internal func parse(data: Data, _ completion: (Message) -> Void) throws {
+    internal func parse(data: Data, _ completion: (Message?, Error?) -> Void) {
         guard !data.isEmpty else {
-            throw FastSocketError.zeroData
+            completion(nil, FastSocketError.zeroData)
+            return
         }
         buffer.append(data)
         let size = self.size
         guard buffer.count <= Constant.frameSize else {
-            throw FastSocketError.readBufferOverflow
+            completion(nil, FastSocketError.readBufferOverflow)
+            return
         }
-        guard buffer.count >= Constant.overheadSize, buffer.count >= size else { return }
+        guard buffer.count >= overhead, buffer.count >= size else { return }
         while buffer.count >= size && size != .zero {
             if buffer.first == Opcode.string.rawValue {
                 guard let bytes = trim(data: buffer), let message = String(bytes: bytes, encoding: .utf8) else {
-                    throw FastSocketError.parsingFailure
+                    completion(nil, FastSocketError.parsingFailure)
+                    return
                 }
-                completion(message)
+                completion(message, nil)
             }
             if buffer.first == Opcode.data.rawValue {
                 guard let message = trim(data: buffer) else {
-                    throw FastSocketError.parsingFailure
+                    completion(nil, FastSocketError.parsingFailure)
+                    return
                 }
-                completion(message)
+                completion(message, nil)
             }
             if empty { buffer = Data() } else { buffer = Data(buffer[size...]) }
         }

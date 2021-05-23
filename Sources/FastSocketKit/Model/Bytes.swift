@@ -1,6 +1,6 @@
 //
 //  Bytes.swift
-//  FastSocket
+//  Octanium
 //
 //  Created by Vinzenz Weist on 15.05.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.

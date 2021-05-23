@@ -1,6 +1,6 @@
 //
 //  Timer+Extension.swift
-//  FastSocket
+//  Octanium
 //
 //  Created by Vinzenz Weist on 24.04.19.
 //  Copyright © 2019 Vinzenz Weist. All rights reserved.
