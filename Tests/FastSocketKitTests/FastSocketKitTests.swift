@@ -4,7 +4,7 @@ import XCTest
 
 class FastSocketKitTests: XCTestCase {
     /// the host address
-    var host: String = "116.203.236.97"
+    var host: String = "localhost"
     /// the port
     var port: UInt16 = 7878
     /// timeout for all tests
@@ -16,60 +16,60 @@ class FastSocketKitTests: XCTestCase {
         let exp = expectation(description: "Wait for test to finish")
         let buffer = "50000"
         var datacount = 0
-        let socket = Octanium(host: host, port: port)
-        socket.callback.didGetReady = {
-            socket.send(message: buffer)
-        }
-        socket.callback.didGetMessage = { message in
-            if case let message as Data = message {
-                XCTAssertEqual(message.count, Int(buffer))
-                exp.fulfill()
+        let socket = NetworkConnection(host: host, port: port)
+        socket.state = { state in
+            switch state {
+            case .didGetReady:
+                socket.send(message: buffer)
+            case .didGetCancelled:
+                debugPrint("connection closed")
+            case .didGetError(let error):
+                guard let error = error else { return }
+                XCTFail("Failed with Error: \(error)")
+            case .didGetMessage(let message):
+                if case let message as Data = message {
+                    XCTAssertEqual(message.count, Int(buffer))
+                    exp.fulfill()
+                }
+            case .didGetBytes(let bytes):                
+                guard let byte = bytes.input else { return }
+                datacount += byte
+                debugPrint("Data Count: \(datacount)")
             }
         }
-        socket.callback.didGetBytes = { bytes in
-            guard let byte = bytes.input else { return }
-            datacount += byte
-            debugPrint("Data Count: \(datacount)")
-        }
-        socket.callback.didGetClose = {
-            debugPrint("connection closed")
-        }
-        socket.callback.didGetError = { error in
-            guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
-        }
-        socket.connect()
+        socket.openConnection()
         wait(for: [exp], timeout: timeout)
     }
+    
+    
     /// a test for sending data and responding strings from the backend
     /// this is the definition of a upload speedtest
     func testDataSendAndRespond() {
         let exp = expectation(description: "Wait for test to finish")
         let buffer = Data(count: 50000)
         var datacount = 0
-        let socket = Octanium(host: host, port: port)
-        socket.callback.didGetReady = {
-            socket.send(message: buffer)
-        }
-        socket.callback.didGetMessage = { message in
-            if case let message as String = message {
-                XCTAssertEqual(buffer.count, Int(message))
-                exp.fulfill()
+        let socket = NetworkConnection(host: host, port: port)
+        socket.state = { state in
+            switch state {
+            case .didGetReady:
+                socket.send(message: buffer)
+            case .didGetCancelled:
+                debugPrint("connection closed")
+            case .didGetError(let error):
+                guard let error = error else { return }
+                XCTFail("Failed with Error: \(error)")
+            case .didGetMessage(let message):
+                if case let message as String = message {
+                    XCTAssertEqual(buffer.count, Int(message))
+                    exp.fulfill()
+                }
+            case .didGetBytes(let bytes):
+                guard let byte = bytes.output else { return }
+                datacount += byte
+                debugPrint("Data Count: \(datacount)")
             }
         }
-        socket.callback.didGetBytes = { bytes in
-            guard let byte = bytes.output else { return }
-            datacount += byte
-            debugPrint("Data Count: \(datacount)")
-        }
-        socket.callback.didGetClose = {
-            debugPrint("connection closed")
-        }
-        socket.callback.didGetError = { error in
-            guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
-        }
-        socket.connect()
+        socket.openConnection()
         wait(for: [exp], timeout: timeout)
     }
     /// a test for multiple sending data to the backend and receive
@@ -80,36 +80,37 @@ class FastSocketKitTests: XCTestCase {
         var messages = 0
         let sendValue = 100
         var index = 0
-        let socket = Octanium(host: host, port: port)
-        socket.callback.didGetReady = {
-            func send() {
-                socket.send(message: buffer) {
-                    if index != sendValue {
-                        send()
+        let socket = NetworkConnection(host: host, port: port)
+        socket.state = { state in
+            switch state {
+            case .didGetReady:
+                func send() {
+                    socket.send(message: buffer) {
+                        if index != sendValue {
+                            send()
+                        }
+                        index += 1
                     }
-                    index += 1
                 }
-            }
-            send()
-        }
-        socket.callback.didGetMessage = { message in
-            if case let message as String = message {
-                if messages == sendValue {
-                    debugPrint("RECEIVED THIS COUNT: \(message)")
-                    debugPrint("Responded Times: \(messages)")
-                    exp.fulfill()
+                send()
+            case .didGetCancelled:
+                debugPrint("connection closed")
+            case .didGetError(let error):
+                guard let error = error else { return }
+                XCTFail("Failed with Error: \(error)")
+            case .didGetMessage(let message):
+                if case let message as String = message {
+                    if messages == sendValue {
+                        debugPrint("RECEIVED THIS COUNT: \(message)")
+                        debugPrint("Responded Times: \(messages)")
+                        exp.fulfill()
+                    }
+                    messages += 1
                 }
-                messages += 1
+            default: break
             }
         }
-        socket.callback.didGetClose = {
-            debugPrint("connection closed")
-        }
-        socket.callback.didGetError = { error in
-            guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
-        }
-        socket.connect()
+        socket.openConnection()
         wait(for: [exp], timeout: timeout)
     }
     /// a test for multiple sending strings to the backend and receive
@@ -120,42 +121,44 @@ class FastSocketKitTests: XCTestCase {
         var messages = 0
         let sendValue = 1000
         var index = 0
-        let socket = Octanium(host: host, port: port)
-        socket.callback.didGetReady = {
-            func send() {
-                socket.send(message: buffer) {
-                    if index != sendValue {
-                        send()
+        let socket = NetworkConnection(host: host, port: port)
+        socket.state = { state in
+            switch state {
+            case .didGetReady:
+                func send() {
+                    socket.send(message: buffer) {
+                        if index != sendValue {
+                            send()
+                        }
+                        index += 1
                     }
-                    index += 1
                 }
-            }
-            send()
-        }
-        socket.callback.didGetMessage = { message in
-            if case let message as Data = message {
-                if messages == sendValue {
-                    debugPrint("RECEIVED THIS COUNT: \(message.count)")
-                    debugPrint("Responded Times: \(messages)")
-                    exp.fulfill()
+                send()
+            case .didGetCancelled:
+                debugPrint("connection closed")
+            case .didGetError(let error):
+                guard let error = error else { return }
+                XCTFail("Failed with Error: \(error)")
+            case .didGetMessage(let message):
+                if case let message as Data = message {
+                    if messages == sendValue {
+                        debugPrint("RECEIVED THIS COUNT: \(message.count)")
+                        debugPrint("Responded Times: \(messages)")
+                        exp.fulfill()
+                    }
+                    messages += 1
                 }
-                messages += 1
+            default: break
             }
         }
-        socket.callback.didGetClose = {
-            debugPrint("connection closed")
-        }
-        socket.callback.didGetError = { error in
-            guard let error = error else { return }
-            XCTFail("Failed with Error: \(error)")
-        }
-        socket.connect()
+        socket.openConnection()
         wait(for: [exp], timeout: timeout)
     }
+    /*
     /// a test to look if the client can close a connection
     func testClose() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = Octanium(host: host, port: port)
+        let socket = NetworkConnection(host: host, port: port)
         socket.callback.didGetReady = {
             socket.disconnect()
         }
@@ -174,7 +177,7 @@ class FastSocketKitTests: XCTestCase {
     /// and the connection is ready to be used
     func testPerformance() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = Octanium(host: host, port: port)
+        let socket = NetworkKit(host: host, port: port)
         var startTime = Date().timeIntervalSince1970
         socket.callback.didGetReady = {
             debugPrint(Date().timeIntervalSince1970 - startTime)
@@ -195,7 +198,7 @@ class FastSocketKitTests: XCTestCase {
     /// if the host doesnt respond
     func testTimeout() {
         let exp = expectation(description: "Wait for connection close")
-        let socket = Octanium(host: "telekom.de", port: port)
+        let socket = NetworkKit(host: "telekom.de", port: port)
         socket.callback.didGetError = { error in
             guard let error = error else { return }
             XCTAssertEqual(error as! OctaniumError, OctaniumError.timeoutError)
@@ -206,7 +209,7 @@ class FastSocketKitTests: XCTestCase {
     }
     /// a test to look if the framework recognize empty host addresses
     func testFastSocketError() {
-        let socket = Octanium(host: "", port: port)
+        let socket = NetworkKit(host: "", port: port)
         socket.callback.didGetError = { error in
             guard let error = error else { return }
             XCTAssertEqual(error as! OctaniumError, OctaniumError.emptyHost)
@@ -215,7 +218,7 @@ class FastSocketKitTests: XCTestCase {
     }
     /// a test to look if the framing recognize empty data
     func testFrameErrorZeroData() {
-        let frame = Frame()
+        let frame = NetworkFrame()
         let data = Data(count: 0)
         frame.parse(data: data) { _, error in
             if let error = error {
@@ -225,7 +228,7 @@ class FastSocketKitTests: XCTestCase {
     }
     /// a test to look if the framing recognize a memory overflow
     func testFrameErrorOverflow() {
-        let frame = Frame()
+        let frame = PeerFrame()
         let data = Data(count: Constant.frameSize)
         _ = frame.create(message: data) { error in
             if let error = error {
@@ -239,13 +242,13 @@ class FastSocketKitTests: XCTestCase {
         closures.didGetReady()
         closures.didGetClose()
         closures.didGetMessage("")
-        closures.didGetBytes(Bytes())
+        closures.didGetBytes(ClientBytes())
         closures.didGetError(OctaniumError.none)
     }
     /// a test to look if the framework recognize early send error
     /// that will be thrown if you try to send a string before a connection is established
     func testSendStringError() {
-        let socket = Octanium(host: host, port: port)
+        let socket = NetworkKit(host: host, port: port)
         socket.callback.didGetError = { error in
             XCTAssertEqual(error as! OctaniumError, OctaniumError.sendToEarly)
         }
@@ -254,7 +257,7 @@ class FastSocketKitTests: XCTestCase {
     /// a test to look if the framework recognize early send error
     /// that will be thrown if you try to send data before a connection is established
     func testSendDataError() {
-        let socket = Octanium(host: host, port: port)
+        let socket = NetworkKit(host: host, port: port)
         socket.callback.didGetError = { error in
             XCTAssertEqual(error as! OctaniumError, OctaniumError.sendToEarly)
         }
@@ -262,7 +265,7 @@ class FastSocketKitTests: XCTestCase {
     }
     /// a test to compare the errors description
     func testError() {
-        XCTAssertEqual(OctaniumError.errorDomain, "de.octanium.error")
+        XCTAssertEqual(OctaniumError.errorDomain, "de.NetworkKit.error")
         XCTAssertEqual(OctaniumError.none.errorUserInfo["NSLocalizedDescription"], "null")
         XCTAssertEqual(OctaniumError.handshakeInitializationFailed.errorUserInfo["NSLocalizedDescription"], "cannot create handshake data, please retry")
         XCTAssertEqual(OctaniumError.handshakeVerificationFailed.errorUserInfo["NSLocalizedDescription"], "handshake verification failed, hash values are different. this can happen if theres a proxy network between...")
@@ -287,12 +290,7 @@ class FastSocketKitTests: XCTestCase {
     func testTimer() {
         let exp = expectation(description: "Timer")
         var timer: DispatchSourceTimer?
-        var isCalledTwice = false
-        timer = Timer.interval(interval: 1.0, withRepeat: true) {
-            guard isCalledTwice else {
-                isCalledTwice = true
-                return
-            }
+        timer = Timer.timeout(after: 1.0) {
             timer?.cancel()
             exp.fulfill()
         }
@@ -300,7 +298,7 @@ class FastSocketKitTests: XCTestCase {
     }
     /// measue parser performance
     func testMeasureParserPerformance() {
-        let frame = Frame()
+        let frame = PeerFrame()
         let data = Data(count: Constant.frameSize - 5)
         let message = frame.create(message: data) { error in
             if let error = error {
@@ -311,5 +309,6 @@ class FastSocketKitTests: XCTestCase {
             frame.parse(data: message) { message, error in }
         }
     }
+    */
 }
 

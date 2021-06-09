@@ -46,12 +46,12 @@ Full support for [SwiftPackageManager](https://developer.apple.com/documentation
 import FastSocketKit
 
 // normal init with TCP (unsecure) transfer type
-let socket = Octanium(host: "example.com", port: 8080)
+let socket = NetworkKit(host: "example.com", port: 8080)
 
 // use TLS (secure) instead of TCP (unsecure)
 // NOTE: The backend must be setted up with support for TLS otherwise
 // this will not work and end up in an TLS Error
-let socket = Octanium(host: "example.com", port: 8000)
+let socket = NetworkKit(host: "example.com", port: 8000)
 socket.parameters = .tls
 
 // ...
@@ -171,15 +171,15 @@ func send() {
 
 ## Additional Parameters:
 ```swift
-// Octanium was build in top of Apple's Network.framework
+// NetworkKit was build in top of Apple's Network.framework
 // that allows us to use lot of TCP features like fast open or
 // to select the network interface type
 
 // import the Framework
 import FastSocketKit
 
-// init Octanium object
-let socket = Octanium(host: "example.com", port: 8080)
+// init NetworkKit object
+let socket = NetworkKit(host: "example.com", port: 8080)
 
 // ...
 
