@@ -22,7 +22,6 @@ internal enum Constant {
     /// maximum tcp readbuffer size
     static let maximumLength: Int = 8192
     /// timeout time
-    static let timeout: TimeInterval = 3.0
     /// maximum per message size
     static let maximumFrameLength: Int = 16_777_216
     /// framing overhead

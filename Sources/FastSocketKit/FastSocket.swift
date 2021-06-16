@@ -29,6 +29,7 @@ public final class FastSocket: FastSocketProtocol {
     private var timer: DispatchSourceTimer?
     private var digest = Data()
     private var isLocked = false
+    private var timeout = 10
     private var queue = DispatchQueue(label: "\(Constant.prefixFrame).\(UUID().uuidString)")
     /// create a instance of FastSocket
     /// - parameters:
@@ -41,7 +42,9 @@ public final class FastSocket: FastSocketProtocol {
     /// connect to the server
     /// try to establish a connection to a
     /// FastSocket compliant server
-    public func connect() {
+    public func connect(timeout:Int) {
+        self.timeout = timeout
+        
         initialize()
         guard let transfer = transfer else { return }
         transfer.connect()
@@ -112,7 +115,7 @@ private extension FastSocket {
     }
     /// start timeout on connecting
     private func startTimeout() {
-        timer = Timer.interval(interval: Constant.timeout, withRepeat: false) {
+        timer = Timer.interval(interval: TimeInterval(self.timeout), withRepeat: false) {
             self.onError(FastSocketError.timeoutError)
         }
     }

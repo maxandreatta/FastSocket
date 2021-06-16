@@ -30,7 +30,7 @@ public protocol FastSocketProtocol: class {
     /// connect to the server
     /// try to establish a connection to a
     /// FastSocket compliant server
-    func connect()
+    func connect(timeout:Int)
     /// disconnect from the server
     /// closes the connection `normally`
     func disconnect()
